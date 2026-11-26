@@ -144,6 +144,17 @@ const CITIES=[
 {id:"fukuoka",name:"福岡",lat:33.59,lon:130.40,x:13,y:65,spot:"中洲屋台・那珂川",photo:"assets/fukuoka.webp"},
 {id:"naha",name:"那覇",lat:26.21,lon:127.68,x:11,y:94,spot:"守礼門",photo:"assets/naha.webp"}
 ];
+const PHOTOS={
+sapporo:{"f-jh":"assets/sapporo-f-jh.webp","f-hs":"assets/sapporo-f-hs.webp","f-u20":"assets/sapporo-f-young.webp","f-w30":"assets/sapporo.webp","f-w50":"assets/sapporo-f-w50.webp","f-s60":"assets/sapporo-f-s60.webp","f-s70":"assets/sapporo-f-senior.webp","m-jh":"assets/sapporo-m-jh.webp","m-hs":"assets/sapporo-m-hs.webp","m-u20":"assets/sapporo-m-young.webp","m-w30":"assets/sapporo-m-adult.webp","m-w50":"assets/sapporo-m-w50.webp","m-s60":"assets/sapporo-m-s60.webp","m-s70":"assets/sapporo-m-senior.webp"},
+sendai:{"f-jh":"assets/sendai-f-jh.webp","f-hs":"assets/sendai-f-hs.webp","f-u20":"assets/sendai-f-young.webp","f-w30":"assets/sendai-f-adult.webp","f-w50":"assets/sendai-f-w50.webp","f-s60":"assets/sendai-f-s60.webp","f-s70":"assets/sendai-f-senior.webp","m-jh":"assets/sendai-m-jh.webp","m-hs":"assets/sendai-m-hs.webp","m-u20":"assets/sendai-m-young.webp","m-w30":"assets/sendai.webp","m-w50":"assets/sendai-m-w50.webp","m-s60":"assets/sendai-m-s60.webp","m-s70":"assets/sendai-m-senior.webp"},
+tokyo:{"f-jh":"assets/tokyo-f-jh.webp","f-hs":"assets/tokyo-f-hs.webp","f-u20":"assets/tokyo.webp","f-w30":"assets/tokyo-f-adult.webp","f-w50":"assets/tokyo-f-w50.webp","f-s60":"assets/tokyo-f-s60.webp","f-s70":"assets/tokyo-f-senior.webp","m-jh":"assets/tokyo-m-jh.webp","m-hs":"assets/tokyo-m-hs.webp","m-u20":"assets/tokyo-m-young.webp","m-w30":"assets/tokyo-m-adult.webp","m-w50":"assets/tokyo-m-w50.webp","m-s60":"assets/tokyo-m-s60.webp","m-s70":"assets/tokyo-m-senior.webp"},
+nagoya:{"f-jh":"assets/nagoya-f-jh.webp","f-hs":"assets/nagoya-f-hs.webp","f-u20":"assets/nagoya-f-young.webp","f-w30":"assets/nagoya-f-adult.webp","f-w50":"assets/nagoya-f-w50.webp","f-s60":"assets/nagoya-f-s60.webp","f-s70":"assets/nagoya-f-senior.webp","m-jh":"assets/nagoya-m-jh.webp","m-hs":"assets/nagoya-m-hs.webp","m-u20":"assets/nagoya-m-young.webp","m-w30":"assets/nagoya-m-adult.webp","m-w50":"assets/nagoya-m-w50.webp","m-s60":"assets/nagoya-m-s60.webp","m-s70":"assets/nagoya.webp"},
+kyoto:{"f-jh":"assets/kyoto-f-jh.webp","f-hs":"assets/kyoto-f-hs.webp","f-u20":"assets/kyoto-f-young.webp","f-w30":"assets/kyoto-f-adult.webp","f-w50":"assets/kyoto-f-w50.webp","f-s60":"assets/kyoto-f-s60.webp","f-s70":"assets/kyoto.webp","m-jh":"assets/kyoto-m-jh.webp","m-hs":"assets/kyoto-m-hs.webp","m-u20":"assets/kyoto-m-young.webp","m-w30":"assets/kyoto-m-adult.webp","m-w50":"assets/kyoto-m-w50.webp","m-s60":"assets/kyoto-m-s60.webp","m-s70":"assets/kyoto-m-senior.webp"},
+osaka:{"f-jh":"assets/osaka-f-jh.webp","f-hs":"assets/osaka-f-hs.webp","f-u20":"assets/osaka-f-young.webp","f-w30":"assets/osaka.webp","f-w50":"assets/osaka-f-w50.webp","f-s60":"assets/osaka-f-s60.webp","f-s70":"assets/osaka-f-senior.webp","m-jh":"assets/osaka-m-jh.webp","m-hs":"assets/osaka-m-hs.webp","m-u20":"assets/osaka-m-young.webp","m-w30":"assets/osaka-m-adult.webp","m-w50":"assets/osaka-m-w50.webp","m-s60":"assets/osaka-m-s60.webp","m-s70":"assets/osaka-m-senior.webp"},
+fukuoka:{"f-jh":"assets/fukuoka-f-jh.webp","f-hs":"assets/fukuoka-f-hs.webp","f-u20":"assets/fukuoka-f-young.webp","f-w30":"assets/fukuoka-f-adult.webp","f-w50":"assets/fukuoka-f-w50.webp","f-s60":"assets/fukuoka-f-s60.webp","f-s70":"assets/fukuoka-f-senior.webp","m-jh":"assets/fukuoka-m-jh.webp","m-hs":"assets/fukuoka-m-hs.webp","m-u20":"assets/fukuoka.webp","m-w30":"assets/fukuoka-m-adult.webp","m-w50":"assets/fukuoka-m-w50.webp","m-s60":"assets/fukuoka-m-s60.webp","m-s70":"assets/fukuoka-m-senior.webp"},
+naha:{"f-jh":"assets/naha-f-jh.webp","f-hs":"assets/naha-f-hs.webp","f-u20":"assets/naha-f-young.webp","f-w30":"assets/naha.webp","f-w50":"assets/naha-f-w50.webp","f-s60":"assets/naha-f-s60.webp","f-s70":"assets/naha-f-senior.webp","m-jh":"assets/naha-m-jh.webp","m-hs":"assets/naha-m-hs.webp","m-u20":"assets/naha-m-young.webp","m-w30":"assets/naha-m-adult.webp","m-w50":"assets/naha-m-w50.webp","m-s60":"assets/naha-m-s60.webp","m-s70":"assets/naha-m-senior.webp"}};
+const BANDPREF={jh:["jh","u20","w30"],hs:["hs","u20","w30"],u20:["u20","w30"],w30:["w30"],w50:["w50","w30","s60"],s60:["s60","s70","w50"],s70:["s70","s60"]};
+function photoFor(c){const m=PHOTOS[c.id]||{};const order=BANDPREF[prefs.age]||["w30"];for(const b of order){const p=m[prefs.gender+"-"+b];if(p)return p;}return c.photo;}
 const BANDS=[
 {name:"極寒",icon:"🧣",max:4},
 {name:"防寒",icon:"🧥",max:9},
@@ -320,7 +331,7 @@ function render(){
 markChips();updateTiles();
 const c=CITIES.find(v=>v.id===prefs.city)||CITIES[5];
 document.getElementById("dCity").textContent=c.name;
-document.getElementById("dPhoto").src=c.photo;
+document.getElementById("dPhoto").src=photoFor(c);
 document.getElementById("dSpot").textContent=c.spot;
 const repName=REPPREF[c.id];
 document.getElementById("dProxy").textContent=(selectedPref&&repName&&selectedPref!==repName)?("（"+selectedPref+"の周辺は"+c.name+"の予報をもとに表示しています）"):"";
