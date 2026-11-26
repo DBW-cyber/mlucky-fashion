@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>MLucky 服装予報｜地図で選ぶ、今日の服装</title>
+<meta name="description" content="日本地図から地域を選ぶと、その土地の天気と、景色入りのおすすめコーデ（全身写真・商品名つき）が分かります。性別・年代の設定はあなたの端末の中だけに保存されます。">
+<style>
+:root{color-scheme:light}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Noto Sans JP",sans-serif;background:#f4f1e9;color:#22304a;font-size:17px;line-height:1.65;overflow-x:hidden}
+header{background:#141b31;color:#fff;padding:22px 16px 18px;text-align:center}
+header .brand{color:#e0bc5c;font-weight:700;letter-spacing:.14em;font-size:14px}
+header h1{margin:2px 0 4px;font-size:27px;letter-spacing:.06em}
+header p{margin:0;color:#c8cede;font-size:14.5px}
+main{max-width:680px;margin:0 auto;padding:14px 12px 8px}
+.card{background:#fff;border:1px solid #e3ddcd;border-radius:14px;padding:16px;margin:0 0 14px;box-shadow:0 1px 3px rgba(30,40,70,.06)}
+.card h2{margin:0 0 10px;font-size:20px;color:#141b31}
+.note{font-size:14px;color:#5c6478}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 2px}
+.chip{border:1.5px solid #c9cfdd;background:#fff;color:#22304a;border-radius:999px;padding:7px 14px;font-size:15.5px;cursor:pointer}
+.chip.on{background:#141b31;color:#fff;border-color:#141b31}
+.chip.gold.on{background:#e0bc5c;color:#141b31;border-color:#e0bc5c;font-weight:700}
+label.lab{font-size:14px;font-weight:700;color:#5c6478;display:block;margin-top:10px}
+.mapwrap{position:relative;width:100%;max-width:430px;margin:4px auto 0;aspect-ratio:300/480}
+.mapwrap svg{position:absolute;inset:0;width:100%;height:100%}
+#tilemap g{cursor:pointer}
+#tilemap text{user-select:none}
+.wxline{font-size:16.5px;margin:2px 0}
+.wxline b{color:#141b31}
+.big{font-size:21px;font-weight:800;color:#141b31}
+.photo{width:100%;border-radius:12px;display:block}
+ul.items{margin:8px 0 4px;padding-left:20px}
+ul.items li{margin:3px 0;font-size:16.5px}
+.tag{display:inline-block;background:#eef1f7;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#3c4a68;margin-right:6px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.gcard{border:1px solid #e3ddcd;border-radius:12px;overflow:hidden;background:#fff;cursor:pointer;text-align:left;padding:0}
+.gcard img{width:100%;display:block;aspect-ratio:3/4;object-fit:cover}
+.gcard .gt{padding:8px 10px 10px}
+.gcard .gn{font-weight:800;color:#141b31;font-size:16.5px}
+.gcard .gs{font-size:13.5px;color:#5c6478}
+table{width:100%;border-collapse:collapse;font-size:15.5px}
+th,td{border-bottom:1px solid #e7e2d2;padding:6px 4px;text-align:left}
+th{color:#141b31}
+footer{max-width:680px;margin:0 auto;padding:6px 12px 30px;font-size:14px;color:#5c6478}
+footer a{color:#3c5a9e}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<header>
+<div class="brand">MLucky（エムラッキー）</div>
+<h1>服装予報</h1>
+<p>地図で地域を選ぶと、その土地の天気と今日のおすすめコーデが分かります</p>
+</header>
+<main>
+<section class="card" id="prefs">
+<h2>わたしの設定</h2>
+<label class="lab">性別</label>
+<div class="chips" id="genderChips">
+<button type="button" class="chip" data-g="f">女性</button>
+<button type="button" class="chip" data-g="m">男性</button>
+</div>
+<label class="lab">年代</label>
+<div class="chips" id="ageChips">
+<button type="button" class="chip" data-a="jh">中学生</button>
+<button type="button" class="chip" data-a="hs">高校生</button>
+<button type="button" class="chip" data-a="u20">大学生・20代</button>
+<button type="button" class="chip" data-a="w30">30〜40代</button>
+<button type="button" class="chip" data-a="w50">50代</button>
+<button type="button" class="chip" data-a="s60">60代</button>
+<button type="button" class="chip" data-a="s70">70代以上</button>
+</div>
+<div id="studentRow" class="hidden">
+<label class="lab">学生の日</label>
+<div class="chips" id="dayChips">
+<button type="button" class="chip gold" data-d="weekday">平日（制服）</button>
+<button type="button" class="chip gold" data-d="holiday">休日（私服）</button>
+</div>
+</div>
+<p class="note">設定はあなたの端末のブラウザの中だけに保存されます。サーバーに送られたり、記録されたりすることはありません。</p>
+</section>
+
+<section class="card">
+<h2>日本地図から選ぶ</h2>
+<p class="note" style="margin-top:0">全47都道府県をタイルで並べた地図です。都道府県をタップすると、最も近い対象地域の天気とおすすめコーデが出ます。金色のタイルが対象地域で、今日の天気・服装・最高気温が出ます。</p>
+<div class="mapwrap" id="mapwrap">
+<svg id="tilemap" viewBox="0 0 300 480" width="100%" role="img" aria-label="日本地図（都道府県タイルマップ）"></svg>
+</div>
+</section>
+
+<section class="card" id="detail">
+<h2 id="dCity">大阪</h2>
+<div id="dWx"><p class="note">天気を読み込み中です…</p></div>
+<p class="note" id="dProxy"></p>
+<img class="photo" id="dPhoto" src="assets/osaka.webp" alt="おすすめコーデの全身写真">
+<p class="big" id="dTitle" style="margin:12px 0 2px"></p>
+<p style="margin:0"><span class="tag" id="dBand"></span><span class="note" id="dSpot"></span></p>
+<ul class="items" id="dItems"></ul>
+<div id="dNotes"></div>
+<p class="note" id="dTrend"></p>
+</section>
+
+<section class="card">
+<h2>都市別コーデ図鑑</h2>
+<p class="note" style="margin-top:0">8つの地域の代表コーデです。カードをタップすると、上の地図と詳細がその地域に切り替わります。</p>
+<div class="grid" id="gallery"></div>
+</section>
+
+<section class="card">
+<h2>服装の決め方</h2>
+<p>最高気温を目安に、羽織の厚さを7段階で決めています。朝晩は最低気温も見て、冷える日は1段階厚くしてください。</p>
+<table>
+<tr><th>最高気温</th><th>区分</th><th>羽織の目安</th></tr>
+<tr><td>4℃以下</td><td>極寒</td><td>ロングダウン＋極暖インナー</td></tr>
+<tr><td>5〜9℃</td><td>防寒</td><td>ダウン＋ニット＋マフラー</td></tr>
+<tr><td>10〜14℃</td><td>厚手</td><td>中綿コート＋ニット</td></tr>
+<tr><td>15〜19℃</td><td>春秋</td><td>トレンチやジャケット</td></tr>
+<tr><td>20〜24℃</td><td>軽い羽織</td><td>シャツジャケットやカーディガン</td></tr>
+<tr><td>25〜29℃</td><td>薄着</td><td>半袖＋冷房対策の羽織</td></tr>
+<tr><td>30℃以上</td><td>盛夏</td><td>速乾・UV対策・帽子</td></tr>
+</table>
+<p style="margin-top:12px">流行の要素は、日本の大手アパレル各社の今季の提案と、主要なファッションメディアの紹介記事の両方に共通して出てくるものだけを取り入れています。アイテムは商品名のみで表記し、メーカー名・ブランド名は付けていません。</p>
+<p class="note">学生（中学生・高校生）は、平日は制服を前提に「制服の上・下に足す防寒と雨対策」、休日は私服コーデを出します。60代・70代以上は、軽さ・前開き・滑りにくい靴底など、着やすさの配慮を優先します。</p>
+<p class="note">天気データ：Open-Meteo（https://open-meteo.com）の予報を使用しています。写真はイメージです。実際のお出かけでは、体感や体調に合わせて調整してください。</p>
+</section>
+</main>
+<footer>
+<p>姉妹サイト：<a href="https://dbw-cyber.github.io/mlucky-uranai/">MLucky 強運占い｜今日の12星座ランキング</a></p>
+<p><a href="about.html">運営者情報・広告表記</a>　｜　<a href="privacy.html">プライバシーポリシー</a></p>
+<p>© 2026 MLucky</p>
+</footer>
+<script>
+"use strict";
+const CITIES=[
+{id:"sapporo",name:"札幌",lat:43.06,lon:141.35,x:79,y:9,spot:"大通公園・テレビ塔",photo:"assets/sapporo.webp"},
+{id:"sendai",name:"仙台",lat:38.27,lon:140.87,x:73,y:27,spot:"定禅寺通・青葉城址",photo:"assets/sendai.webp"},
+{id:"tokyo",name:"東京",lat:35.68,lon:139.69,x:82,y:43,spot:"渋谷スクランブル交差点",photo:"assets/tokyo.webp"},
+{id:"nagoya",name:"名古屋",lat:35.18,lon:136.91,x:61,y:55,spot:"名古屋城",photo:"assets/nagoya.webp"},
+{id:"kyoto",name:"京都",lat:35.01,lon:135.77,x:43,y:42,spot:"八坂の塔・石畳の小路",photo:"assets/kyoto.webp"},
+{id:"osaka",name:"大阪",lat:34.69,lon:135.50,x:35,y:59,spot:"大阪城",photo:"assets/osaka.webp"},
+{id:"fukuoka",name:"福岡",lat:33.59,lon:130.40,x:13,y:65,spot:"中洲屋台・那珂川",photo:"assets/fukuoka.webp"},
+{id:"naha",name:"那覇",lat:26.21,lon:127.68,x:11,y:94,spot:"守礼門",photo:"assets/naha.webp"}
+];
+const BANDS=[
+{name:"極寒",icon:"🧣",max:4},
+{name:"防寒",icon:"🧥",max:9},
+{name:"厚手の羽織",icon:"🧥",max:14},
+{name:"春秋の標準",icon:"🧥",max:19},
+{name:"軽い羽織",icon:"👚",max:24},
+{name:"薄着",icon:"👕",max:29},
+{name:"盛夏",icon:"👕",max:99}
+];
+const ITEMS={
+f:[
+["ロングダウンコート","極暖タートルネックニット","裏起毛プリーツスカート","防寒ブーツ","ニット帽と手袋"],
+["ダウンコート","タートルネックセーター","コーデュロイワイドパンツ","ショートブーツ","大判ストール"],
+["中綿キルティングコート","クルーネックニット","起毛タイトスカート","ローファー","チェックマフラー"],
+["トレンチコート","薄手ニットプルオーバー","テーパードパンツ","スニーカー","シルクスカーフ"],
+["リネン混シャツジャケット","カットソープルオーバー","フレアスカート","バレエシューズ","ストローバッグ"],
+["半袖ブラウス","サマーニットカーディガン（冷房対策）","クロップドワイドパンツ","サンダル","日傘"],
+["ノースリーブワンピース","UVカットパーカー","リネンパンツ","スポーツサンダル","帽子と日傘"]],
+m:[
+["ロングダウンコート","極暖ハイネックインナー","裏起毛イージーパンツ","防寒ブーツ","ニット帽と手袋"],
+["ダウンジャケット","クルーネックセーター","ウール混スラックス","レザースニーカー","マフラー"],
+["ステンカラーコート","ニットカーディガン","チノパンツ","ローファー","チェックシャツ"],
+["テーラードジャケット","オックスフォードシャツ","スラックス","レザースニーカー","薄手カーディガン"],
+["オープンカラーシャツ","無地Tシャツ","アンクルパンツ","スニーカー","ライトアウター"],
+["リネンシャツ","ポロシャツ","チノショートパンツ","スニーカー","キャップ"],
+["速乾Tシャツ","ドライショートパンツ","スポーツサンダル","キャップ","冷感タオル"]]};
+const STUDENT_WEEKDAY=[
+["制服の上にロングダウンコート","制服の下に極暖クルーネックインナー","防寒タイツ・厚手靴下","手袋とマフラー","撥水ブーツ"],
+["制服の上にダウンコート","制服の下に保温インナー","裏起毛タイツ","マフラー","ショートブーツ"],
+["制服の上にキルティングジャケット","制服の下に薄手保温インナー","カーディガン","ローファー","折りたたみ傘"],
+["制服＋ベスト","薄手カーディガン","靴下","ローファー","ハンカチ"],
+["制服（移行期は薄手の羽織を）","吸汗インナー","薄手カーディガン","ローファー","汗拭きタオル"],
+["夏制服","吸汗速乾インナー","日傘（通学時）","汗拭きタオル","水筒"],
+["夏制服","冷感インナー","帽子（通学時）","汗拭きタオル","水筒"]];
+const TREND=[
+"今季の流行メモ：各社・各メディア共通の要素は、厚手素材のワントーンと、首・手首まで覆う防寒の丁寧さです。",
+"今季の流行メモ：共通の要素は、ダークトーンの差し色に明るいニットを合わせる配色です。",
+"今季の流行メモ：共通の要素は、キルティングやチェック柄など、表面感のある素材です。",
+"今季の流行メモ：共通の要素は、ベージュ〜ブラウンのワントーンと、ゆとりのあるシルエットです。",
+"今季の流行メモ：共通の要素は、シャツを羽織として使う軽いレイヤードです。",
+"今季の流行メモ：共通の要素は、リネンなど天然素材の涼しい質感と、白・生成りの明るい色です。",
+"今季の流行メモ：共通の要素は、UV対策と速乾を兼ねた機能素材と、帽子の活用です。"];
+const WX={0:["☀️","晴れ"],1:["🌤️","晴れ時々くもり"],2:["🌤️","晴れ時々くもり"],3:["☁️","くもり"],45:["🌫️","霧"],48:["🌫️","霧"],51:["🌦️","霧雨"],53:["🌦️","霧雨"],55:["🌦️","霧雨"],56:["🌧️","雨"],57:["🌧️","雨"],61:["🌧️","雨"],63:["☔","雨"],65:["☔","雨"],66:["☔","雨"],67:["☔","雨"],71:["🌨️","雪"],73:["❄️","雪"],75:["❄️","雪"],77:["❄️","雪"],80:["🌦️","にわか雨"],81:["🌦️","にわか雨"],82:["🌧️","にわか雨"],85:["🌨️","雪"],86:["🌨️","雪"],95:["⛈️","雷雨"],96:["⛈️","雷雨"],99:["⛈️","雷雨"]};
+const LSKEY="mlucky_fashion_prefs";
+let prefs={gender:"f",age:"w30",day:"weekday",city:"osaka"};
+try{const raw=localStorage.getItem(LSKEY);if(raw){const p=JSON.parse(raw);if(p&&typeof p==="object"){prefs=Object.assign(prefs,p);}}}catch(e){}
+function savePrefs(){try{localStorage.setItem(LSKEY,JSON.stringify(prefs));}catch(e){}}
+let wxData={};
+function bandOf(tmax){for(let i=0;i<BANDS.length;i++){if(tmax<=BANDS[i].max)return i;}return BANDS.length-1;}
+function isStudent(){return prefs.age==="jh"||prefs.age==="hs";}
+function isSenior(){return prefs.age==="s60"||prefs.age==="s70";}
+function markChips(){
+document.querySelectorAll("#genderChips .chip").forEach(c=>c.classList.toggle("on",c.dataset.g===prefs.gender));
+document.querySelectorAll("#ageChips .chip").forEach(c=>c.classList.toggle("on",c.dataset.a===prefs.age));
+document.querySelectorAll("#dayChips .chip").forEach(c=>c.classList.toggle("on",c.dataset.d===prefs.day));
+document.getElementById("studentRow").classList.toggle("hidden",!isStudent());
+}
+const PREFS=[
+{name:"北海道",gx:9,gy:0,city:"sapporo"},
+{name:"青森",gx:8,gy:1,city:"sendai"},
+{name:"秋田",gx:7,gy:2,city:"sendai"},
+{name:"岩手",gx:8,gy:2,city:"sendai"},
+{name:"山形",gx:7,gy:3,city:"sendai"},
+{name:"宮城",gx:8,gy:3,city:"sendai"},
+{name:"新潟",gx:6,gy:4,city:"nagoya"},
+{name:"福島",gx:7,gy:4,city:"sendai"},
+{name:"富山",gx:5,gy:5,city:"nagoya"},
+{name:"群馬",gx:6,gy:5,city:"tokyo"},
+{name:"栃木",gx:7,gy:5,city:"tokyo"},
+{name:"茨城",gx:8,gy:5,city:"tokyo"},
+{name:"石川",gx:4,gy:6,city:"nagoya"},
+{name:"長野",gx:5,gy:6,city:"nagoya"},
+{name:"埼玉",gx:6,gy:6,city:"tokyo"},
+{name:"千葉",gx:8,gy:6,city:"tokyo"},
+{name:"福井",gx:3,gy:7,city:"nagoya"},
+{name:"岐阜",gx:4,gy:7,city:"nagoya"},
+{name:"山梨",gx:5,gy:7,city:"nagoya"},
+{name:"東京",gx:6,gy:7,city:"tokyo"},
+{name:"鳥取",gx:1,gy:7,city:"osaka"},
+{name:"島根",gx:0,gy:7,city:"osaka"},
+{name:"兵庫",gx:1,gy:8,city:"osaka"},
+{name:"神奈川",gx:6,gy:8,city:"tokyo"},
+{name:"静岡",gx:5,gy:8,city:"nagoya"},
+{name:"愛知",gx:4,gy:8,city:"nagoya"},
+{name:"滋賀",gx:3,gy:8,city:"kyoto"},
+{name:"京都",gx:2,gy:8,city:"kyoto"},
+{name:"岡山",gx:1,gy:9,city:"osaka"},
+{name:"広島",gx:0,gy:9,city:"osaka"},
+{name:"大阪",gx:2,gy:9,city:"osaka"},
+{name:"奈良",gx:3,gy:9,city:"osaka"},
+{name:"三重",gx:4,gy:9,city:"nagoya"},
+{name:"山口",gx:0,gy:10,city:"osaka"},
+{name:"和歌山",gx:3,gy:10,city:"osaka"},
+{name:"福岡",gx:1,gy:11,city:"fukuoka"},
+{name:"香川",gx:2,gy:11,city:"osaka"},
+{name:"徳島",gx:3,gy:11,city:"osaka"},
+{name:"佐賀",gx:0,gy:12,city:"fukuoka"},
+{name:"大分",gx:2,gy:12,city:"fukuoka"},
+{name:"愛媛",gx:3,gy:12,city:"osaka"},
+{name:"長崎",gx:0,gy:13,city:"fukuoka"},
+{name:"熊本",gx:1,gy:13,city:"fukuoka"},
+{name:"宮崎",gx:2,gy:13,city:"fukuoka"},
+{name:"高知",gx:3,gy:13,city:"osaka"},
+{name:"鹿児島",gx:1,gy:14,city:"fukuoka"},
+{name:"沖縄",gx:0,gy:15,city:"naha"}
+];
+const REPPREF={sapporo:"北海道",sendai:"宮城",tokyo:"東京",nagoya:"愛知",kyoto:"京都",osaka:"大阪",fukuoka:"福岡",naha:"沖縄"};
+let selectedPref=REPPREF[prefs.city]||"大阪";
+const SVGNS="http://www.w3.org/2000/svg";
+function buildTiles(){
+const svg=document.getElementById("tilemap");
+PREFS.forEach(p=>{
+const rep=REPPREF[p.city]===p.name;
+const g=document.createElementNS(SVGNS,"g");
+const rect=document.createElementNS(SVGNS,"rect");
+rect.setAttribute("x",p.gx*30+1.5);rect.setAttribute("y",p.gy*30+1.5);
+rect.setAttribute("width",27);rect.setAttribute("height",27);rect.setAttribute("rx",4);
+if(rep){rect.setAttribute("fill","#fff");rect.setAttribute("stroke","#e0bc5c");rect.setAttribute("stroke-width",2);rect.setAttribute("id","tilerect-"+p.city);}
+else{rect.setAttribute("fill","#fbfaf6");rect.setAttribute("stroke","#ccd3e0");rect.setAttribute("stroke-width",1);}
+g.appendChild(rect);
+const name=document.createElementNS(SVGNS,"text");
+name.setAttribute("x",p.gx*30+15);name.setAttribute("text-anchor","middle");
+name.setAttribute("font-size",p.name.length>=3?8.5:(rep?10:9));
+name.setAttribute("fill","#141b31");
+if(rep){name.setAttribute("y",p.gy*30+12.5);name.setAttribute("font-weight","700");name.setAttribute("id","tilename-"+p.city);}
+else{name.setAttribute("y",p.gy*30+18);}
+name.textContent=p.name;
+g.appendChild(name);
+if(rep){
+const sub=document.createElementNS(SVGNS,"text");
+sub.setAttribute("x",p.gx*30+15);sub.setAttribute("y",p.gy*30+23.5);
+sub.setAttribute("text-anchor","middle");sub.setAttribute("font-size",8.5);
+sub.setAttribute("textLength",24);sub.setAttribute("lengthAdjust","spacingAndGlyphs");
+sub.setAttribute("fill","#5c6478");sub.setAttribute("id","tilewx-"+p.city);
+sub.textContent="…";
+g.appendChild(sub);
+}
+g.addEventListener("click",()=>{prefs.city=p.city;selectedPref=p.name;savePrefs();render();document.getElementById("detail").scrollIntoView({behavior:"smooth",block:"start"});});
+svg.appendChild(g);
+});
+}
+function buildGallery(){
+const g=document.getElementById("gallery");
+CITIES.forEach(c=>{
+const b=document.createElement("button");
+b.type="button";b.className="gcard";
+b.innerHTML='<img src="'+c.photo+'" alt="'+c.name+'のコーデ写真"><div class="gt"><div class="gn">'+c.name+'</div><div class="gs">'+c.spot+'</div></div>';
+b.addEventListener("click",()=>{prefs.city=c.id;selectedPref=REPPREF[c.id];savePrefs();render();window.scrollTo({top:0,behavior:"smooth"});});
+g.appendChild(b);
+});
+}
+function updateTiles(){
+CITIES.forEach(c=>{
+const rect=document.getElementById("tilerect-"+c.id);
+const name=document.getElementById("tilename-"+c.id);
+const sub=document.getElementById("tilewx-"+c.id);
+if(!rect||!name||!sub)return;
+const sel=prefs.city===c.id;
+rect.setAttribute("fill",sel?"#141b31":"#fff");
+name.setAttribute("fill",sel?"#fff":"#141b31");
+const w=wxData[c.id];
+if(w){
+const band=bandOf(w.tmax);
+sub.textContent=(WX[w.code]?WX[w.code][0]:"🌡️")+BANDS[band].icon+" "+Math.round(w.tmax)+"℃";
+}else{
+sub.textContent="…";
+}
+sub.setAttribute("fill",sel?"#fff":"#5c6478");
+});
+}
+function render(){
+markChips();updateTiles();
+const c=CITIES.find(v=>v.id===prefs.city)||CITIES[5];
+document.getElementById("dCity").textContent=c.name;
+document.getElementById("dPhoto").src=c.photo;
+document.getElementById("dSpot").textContent=c.spot;
+const repName=REPPREF[c.id];
+document.getElementById("dProxy").textContent=(selectedPref&&repName&&selectedPref!==repName)?("（"+selectedPref+"の周辺は"+c.name+"の予報をもとに表示しています）"):"";
+const w=wxData[c.id];
+const wxEl=document.getElementById("dWx");
+if(!w){wxEl.innerHTML='<p class="note">天気を読み込み中です…</p>';return;}
+const band=bandOf(w.tmax);
+const wtxt=WX[w.code]?WX[w.code][1]:"—";const wico=WX[w.code]?WX[w.code][0]:"🌡️";
+let html='<p class="wxline">今日：'+wico+' <b>'+wtxt+'</b>　最高 <b>'+Math.round(w.tmax)+'℃</b>／最低 <b>'+Math.round(w.tmin)+'℃</b>　降水確率 <b>'+(w.pop==null?"—":Math.round(w.pop)+"%")+'</b></p>';
+if(w.t2){const wx2=WX[w.code2]?WX[w.code2][1]:"—";const wi2=WX[w.code2]?WX[w.code2][0]:"🌡️";html+='<p class="wxline">明日：'+wi2+' <b>'+wx2+'</b>　最高 <b>'+Math.round(w.tmax2)+'℃</b>／最低 <b>'+Math.round(w.tmin2)+'℃</b></p>';}
+wxEl.innerHTML=html;
+document.getElementById("dBand").textContent=BANDS[band].name+"（最高 "+Math.round(w.tmax)+"℃）";
+let items, title;
+if(isStudent()&&prefs.day==="weekday"){items=STUDENT_WEEKDAY[band].slice();title=c.name+"の今日コーデ（制服＋防寒）";}
+else{items=ITEMS[prefs.gender][band].slice();title=c.name+"の今日のおすすめコーデ";}
+const rainy=(w.pop!=null&&w.pop>=50)||[51,53,55,56,57,61,63,65,66,67,80,81,82,95,96,99].includes(w.code);
+if(rainy&&!items.includes("折りたたみ傘"))items.push("折りたたみ傘");
+document.getElementById("dTitle").textContent=title;
+document.getElementById("dItems").innerHTML=items.map(i=>"<li>"+i+"</li>").join("");
+let notes="";
+if(isStudent()&&prefs.day==="weekday")notes+='<p class="note">平日は制服が前提です。制服の上・下に足す防寒と雨対策を出しています。</p>';
+if(isStudent()&&prefs.day==="holiday")notes+='<p class="note">休日は私服コーデです。大手各社の実際の商品から選べる、具体的な組み合わせにしています。</p>';
+if(isSenior())notes+='<p class="note">シニアの配慮：軽くて前開きの羽織、滑りにくい靴底、体温調節しやすい重ね着を優先しています。</p>';
+if(rainy)notes+='<p class="note">雨の備え：降水確率が高めです。撥水素材の羽織と折りたたみ傘を足しています。</p>';
+if(w.tmin<=w.tmax-8)notes+='<p class="note">朝晩の冷え込み：最低気温との差が大きい日です。出発が早い・帰りが遅い場合は1段階厚くしてください。</p>';
+document.getElementById("dNotes").innerHTML=notes;
+document.getElementById("dTrend").textContent=TREND[band];
+}
+function fetchWx(){
+const lats=CITIES.map(c=>c.lat).join(","),lons=CITIES.map(c=>c.lon).join(",");
+const url="https://api.open-meteo.com/v1/forecast?latitude="+lats+"&longitude="+lons+"&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&forecast_days=2&timezone=Asia%2FTokyo";
+fetch(url).then(r=>r.json()).then(j=>{
+const arr=Array.isArray(j)?j:[j];
+arr.forEach((d,i)=>{
+const c=CITIES[i];if(!c||!d.daily)return;
+wxData[c.id]={code:d.daily.weather_code[0],tmax:d.daily.temperature_2m_max[0],tmin:d.daily.temperature_2m_min[0],pop:d.daily.precipitation_probability_max?d.daily.precipitation_probability_max[0]:null,code2:d.daily.weather_code[1],tmax2:d.daily.temperature_2m_max[1],tmin2:d.daily.temperature_2m_min[1],t2:true};
+});
+render();
+}).catch(()=>{document.getElementById("dWx").innerHTML='<p class="note">天気を取得できませんでした。通信環境を確認して、ページを開き直してください。</p>';});
+}
+document.querySelectorAll("#genderChips .chip").forEach(c=>c.addEventListener("click",()=>{prefs.gender=c.dataset.g;savePrefs();render();}));
+document.querySelectorAll("#ageChips .chip").forEach(c=>c.addEventListener("click",()=>{prefs.age=c.dataset.a;savePrefs();render();}));
+document.querySelectorAll("#dayChips .chip").forEach(c=>c.addEventListener("click",()=>{prefs.day=c.dataset.d;savePrefs();render();}));
+buildTiles();buildGallery();render();fetchWx();
+</script>
+</body>
+</html>
