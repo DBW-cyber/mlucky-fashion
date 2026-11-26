@@ -122,7 +122,8 @@ footer a{color:#3c5a9e}
 <tr><td>25〜29℃</td><td>薄着</td><td>半袖＋冷房対策の羽織</td></tr>
 <tr><td>30℃以上</td><td>盛夏</td><td>速乾・UV対策・帽子</td></tr>
 </table>
-<p style="margin-top:12px">流行の要素は、日本の大手アパレル各社の今季の提案と、主要なファッションメディアの紹介記事の両方に共通して出てくるものだけを取り入れています。アイテムは商品名のみで表記し、メーカー名・ブランド名は付けていません。</p>
+<p style="margin-top:12px">単品は「当季の流行商品」から選んでいます。季節ごとに、大手アパレル各社の今季の提案と主要なファッションメディアの紹介記事の両方に共通して出てくる単品を集めた「今季の商品プール」を用意し、気温の区分に合うものを優先して組み合わせます（★印が今季の流行単品）。アイテムは商品名のみで表記し、メーカー名・ブランド名は付けていません。プールは季節ごとに更新します。</p>
+<p class="note">天気による補正：雨の日は降水確率に応じて折りたたみ傘と撥水の備えを足します。雪の日は傘ではなく、防寒小物と滑りにくい足元を優先します。晴れて暑い日はUV対策、風の強い日（最大風速8m/s以上）は防風素材の羽織をすすめます。昼と朝晩の体感差が大きい日は、脱ぎ着できる重ね着を1枚足します。</p>
 <p class="note">学生（中学生・高校生）は、平日は制服を前提に「制服の上・下に足す防寒と雨対策」、休日は私服コーデを出します。60代・70代以上は、軽さ・前開き・滑りにくい靴底など、着やすさの配慮を優先します。</p>
 <p class="note">天気データ：Open-Meteo（https://open-meteo.com）の予報を使用しています。写真はイメージです。実際のお出かけでは、体感や体調に合わせて調整してください。</p>
 </section>
@@ -197,6 +198,14 @@ const TREND=[
 "今季の流行メモ：共通の要素は、シャツを羽織として使う軽いレイヤードです。",
 "今季の流行メモ：共通の要素は、リネンなど天然素材の涼しい質感と、白・生成りの明るい色です。",
 "今季の流行メモ：共通の要素は、UV対策と速乾を兼ねた機能素材と、帽子の活用です。"];
+const TREND_POOL={
+spring:[["トレンチコート",3,4],["スプリングコート",2,3],["デニムジャケット",3,4],["ボーダーカットソー",3,5],["シアーシャツ",4,5],["プリーツスカート",3,4,"f"],["ワイドパンツ",3,5],["ローファー",2,4]],
+summer:[["リネンシャツ",5,6],["アロハシャツ",6,6],["ポロシャツ",5,6],["ハーフパンツ",5,6],["サマーワンピース",5,6,"f"],["かごバッグ",5,6,"f"],["UVカットパーカー",4,6],["スポーツサンダル",5,6]],
+autumn:[["キルティングジャケット",1,3],["レザージャケット",2,3],["ニットベスト",2,3],["チェックシャツ",2,3],["コーデュロイパンツ",1,3],["スウェードブーツ",1,3],["ロングスカート",2,3,"f"],["タートルネックニット",1,2]],
+winter:[["ダウンコート",0,1],["ボアベスト",1,2],["ニット帽",0,1],["タートルネックニット",0,2],["裏起毛パンツ",0,2],["ムートンブーツ",0,1],["カシミヤマフラー",0,1],["コーデュロイシャツ",1,2]]};
+const SEASON_NAME={spring:"春",summer:"夏",autumn:"秋",winter:"冬"};
+function seasonOf(d){const m=d.getMonth()+1;if(m>=3&&m<=5)return "spring";if(m>=6&&m<=8)return "summer";if(m>=9&&m<=11)return "autumn";return "winter";}
+function wxCat(code){if([71,73,75,77,85,86].includes(code))return "snow";if([95,96,99].includes(code))return "thunder";if([51,53,55,56,57,61,63,65,66,67,80,81,82].includes(code))return "rain";if(code===0||code===1)return "sun";return "cloud";}
 const WX={0:["☀️","晴れ"],1:["🌤️","晴れ時々くもり"],2:["🌤️","晴れ時々くもり"],3:["☁️","くもり"],45:["🌫️","霧"],48:["🌫️","霧"],51:["🌦️","霧雨"],53:["🌦️","霧雨"],55:["🌦️","霧雨"],56:["🌧️","雨"],57:["🌧️","雨"],61:["🌧️","雨"],63:["☔","雨"],65:["☔","雨"],66:["☔","雨"],67:["☔","雨"],71:["🌨️","雪"],73:["❄️","雪"],75:["❄️","雪"],77:["❄️","雪"],80:["🌦️","にわか雨"],81:["🌦️","にわか雨"],82:["🌧️","にわか雨"],85:["🌨️","雪"],86:["🌨️","雪"],95:["⛈️","雷雨"],96:["⛈️","雷雨"],99:["⛈️","雷雨"]};
 const LSKEY="mlucky_fashion_prefs";
 let prefs={gender:"f",age:"w30",day:"weekday",city:"osaka"};
@@ -343,6 +352,7 @@ if(!hasWx){wxEl.innerHTML='<p class="note">天気を読み込み中です…</p>
 else{
 const wtxt=WX[w.code]?WX[w.code][1]:"—";const wico=WX[w.code]?WX[w.code][0]:"🌡️";
 let html='<p class="wxline">今日：'+wico+' <b>'+wtxt+'</b>　最高 <b>'+Math.round(w.tmax)+'℃</b>／最低 <b>'+Math.round(w.tmin)+'℃</b>　降水確率 <b>'+(w.pop==null?"—":Math.round(w.pop)+"%")+'</b></p>';
+if(w.wind!=null&&w.wind>=8)html+='　最大風速 <b>'+Math.round(w.wind)+'m/s</b>';
 if(w.t2){const wx2=WX[w.code2]?WX[w.code2][1]:"—";const wi2=WX[w.code2]?WX[w.code2][0]:"🌡️";html+='<p class="wxline">明日：'+wi2+' <b>'+wx2+'</b>　最高 <b>'+Math.round(w.tmax2)+'℃</b>／最低 <b>'+Math.round(w.tmin2)+'℃</b></p>';}
 wxEl.innerHTML=html;
 }
@@ -350,28 +360,54 @@ document.getElementById("dBand").textContent=BANDS[band].name+(hasWx?("（最高
 let items, title;
 if(isStudent()&&prefs.day==="weekday"){items=STUDENT_WEEKDAY[band].slice();title=c.name+"の今日コーデ（制服＋防寒）";}
 else{items=ITEMS[prefs.gender][band].slice();title=c.name+"の今日のおすすめコーデ";}
-const rainy=hasWx&&((w.pop!=null&&w.pop>=50)||[51,53,55,56,57,61,63,65,66,67,80,81,82,95,96,99].includes(w.code));
-if(rainy&&!items.includes("折りたたみ傘"))items.push("折りたたみ傘");
+const studentWeekday=isStudent()&&prefs.day==="weekday";
+const cat=hasWx?wxCat(w.code):null;
+const season=seasonOf(new Date());
+let trendHits=[];
+if(!studentWeekday){
+const poolItems=TREND_POOL[season].filter(p=>band>=p[1]&&band<=p[2]&&(!p[3]||p[3]===prefs.gender));
+let appended=0;
+poolItems.forEach(p=>{
+const nm=p[0];
+const idx=items.findIndex(it=>it.includes(nm)||nm.includes(it));
+if(idx>=0){if(!items[idx].includes("★"))items[idx]=items[idx]+" ★";trendHits.push(nm);}
+else if(appended<2){items.push(nm+" ★");trendHits.push(nm);appended++;}
+});
+}
+let rainy=false;
+if(hasWx&&((cat==="rain"||cat==="thunder")&&(w.pop==null||w.pop>=30)||(cat!=="snow"&&w.pop!=null&&w.pop>=50))){
+rainy=true;if(!items.some(i=>i.includes("傘")))items.push("折りたたみ傘");
+}
+if(hasWx&&cat==="snow"&&band<=2&&!items.some(i=>i.includes("手袋")))items.push("手袋");
+if(hasWx&&cat==="sun"&&band>=5&&!items.some(i=>i.includes("日傘")||i.includes("帽子")||i.includes("キャップ")))items.push(prefs.gender==="f"?"日傘":"キャップ");
+let gapNote=false,gapAdd=false;
+if(hasWx){const g=band-bandOf(w.tmin);if(g>=2)gapAdd=true;else if(g>=1||w.tmin<=w.tmax-8)gapNote=true;}
+if(gapAdd&&!studentWeekday&&!items.some(i=>i.includes("カーディガン")))items.push("薄手カーディガン（脱ぎ着用）");
 document.getElementById("dTitle").textContent=title;
 document.getElementById("dItems").innerHTML=items.map(i=>"<li>"+i+"</li>").join("");
 let notes="";
-if(isStudent()&&prefs.day==="weekday")notes+='<p class="note">平日は制服が前提です。制服の上・下に足す防寒と雨対策を出しています。</p>';
+if(studentWeekday)notes+='<p class="note">平日は制服が前提です。制服の上・下に足す防寒と雨対策を出しています。</p>';
 if(isStudent()&&prefs.day==="holiday")notes+='<p class="note">休日は私服コーデです。大手各社の実際の商品から選べる、具体的な組み合わせにしています。</p>';
 if(isSenior())notes+='<p class="note">シニアの配慮：軽くて前開きの羽織、滑りにくい靴底、体温調節しやすい重ね着を優先しています。</p>';
 if(!hasWx&&wxFailed)notes+='<p class="note">天気データを取得できなかったため、季節の目安で表示しています。通信環境のよい場所で開き直すと、実況に合わせて更新されます。</p>';
-if(rainy)notes+='<p class="note">雨の備え：降水確率が高めです。撥水素材の羽織と折りたたみ傘を足しています。</p>';
-if(hasWx&&w.tmin<=w.tmax-8)notes+='<p class="note">朝晩の冷え込み：最低気温との差が大きい日です。出発が早い・帰りが遅い場合は1段階厚くしてください。</p>';
+if(trendHits.length)notes+='<p class="note">★＝今季（'+SEASON_NAME[season]+'）の流行単品です。大手各社の今季提案と主要メディア共通の要素から選んでいます（商品名のみ、メーカー名は載せていません）。</p>';
+if(rainy)notes+='<p class="note">雨の備え：撥水素材の羽織と折りたたみ傘を足しています。'+(cat==="thunder"?"雷雨の日は長傘が安心です。":"")+'</p>';
+if(hasWx&&cat==="snow")notes+='<p class="note">雪の備え：足元が滑りやすい日です。滑りにくい靴底を選び、傘より帽子・フードがおすすめです。</p>';
+if(hasWx&&cat==="sun"&&band>=5)notes+='<p class="note">晴れて暑い日です。UV対策と水分補給を忘れずに。</p>';
+if(hasWx&&w.wind!=null&&w.wind>=8)notes+='<p class="note">風の強い日です。防風素材の羽織がおすすめです。</p>';
+if(gapAdd)notes+='<p class="note">朝晩の冷え込み：昼と朝晩で体感が2段階ほど変わる日です。脱ぎ着できる重ね着を1枚足しています。</p>';
+else if(gapNote)notes+='<p class="note">朝晩の冷え込み：最低気温との差が大きい日です。出発が早い・帰りが遅い場合は1段階厚くしてください。</p>';
 document.getElementById("dNotes").innerHTML=notes;
-document.getElementById("dTrend").textContent=TREND[band];
+document.getElementById("dTrend").textContent=trendHits.length?("今季の流行メモ：今季（"+SEASON_NAME[season]+"）の要素は「"+trendHits.slice(0,3).join("」「")+"」です。流行単品は当季の商品から選定しています。"):TREND[band];
 }
 function fetchWx(){
 const lats=CITIES.map(c=>c.lat).join(","),lons=CITIES.map(c=>c.lon).join(",");
-const url="https://api.open-meteo.com/v1/forecast?latitude="+lats+"&longitude="+lons+"&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&forecast_days=2&timezone=Asia%2FTokyo";
+const url="https://api.open-meteo.com/v1/forecast?latitude="+lats+"&longitude="+lons+"&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max&forecast_days=2&timezone=Asia%2FTokyo";
 fetch(url).then(r=>r.json()).then(j=>{
 const arr=Array.isArray(j)?j:[j];
 arr.forEach((d,i)=>{
 const c=CITIES[i];if(!c||!d.daily)return;
-wxData[c.id]={code:d.daily.weather_code[0],tmax:d.daily.temperature_2m_max[0],tmin:d.daily.temperature_2m_min[0],pop:d.daily.precipitation_probability_max?d.daily.precipitation_probability_max[0]:null,code2:d.daily.weather_code[1],tmax2:d.daily.temperature_2m_max[1],tmin2:d.daily.temperature_2m_min[1],t2:true};
+wxData[c.id]={code:d.daily.weather_code[0],tmax:d.daily.temperature_2m_max[0],tmin:d.daily.temperature_2m_min[0],pop:d.daily.precipitation_probability_max?d.daily.precipitation_probability_max[0]:null,wind:d.daily.wind_speed_10m_max?d.daily.wind_speed_10m_max[0]:null,code2:d.daily.weather_code[1],tmax2:d.daily.temperature_2m_max[1],tmin2:d.daily.temperature_2m_min[1],t2:true};
 });
 render();
 }).catch(()=>{wxFailed=true;render();});
