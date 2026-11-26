@@ -312,7 +312,7 @@ const g=document.getElementById("gallery");
 CITIES.forEach(c=>{
 const b=document.createElement("button");
 b.type="button";b.className="gcard";
-b.innerHTML='<img src="'+c.photo+'" alt="'+c.name+'のコーデ写真"><div class="gt"><div class="gn">'+c.name+'</div><div class="gs">'+c.spot+'</div></div>';
+b.innerHTML='<img id="gimg-'+c.id+'" src="'+c.photo+'" alt="'+c.name+'のコーデ写真"><div class="gt"><div class="gn">'+c.name+'</div><div class="gs">'+c.spot+'</div></div>';
 b.addEventListener("click",()=>{prefs.city=c.id;selectedPref=REPPREF[c.id];savePrefs();render();document.getElementById("detail").scrollIntoView({behavior:"smooth",block:"start"});});
 g.appendChild(b);
 });
@@ -341,6 +341,7 @@ markChips();updateTiles();
 const c=CITIES.find(v=>v.id===prefs.city)||CITIES[5];
 document.getElementById("dCity").textContent=c.name;
 document.getElementById("dPhoto").src=photoFor(c);
+CITIES.forEach(cc=>{const im=document.getElementById("gimg-"+cc.id);if(im)im.src=photoFor(cc);});
 document.getElementById("dSpot").textContent=c.spot;
 const repName=REPPREF[c.id];
 document.getElementById("dProxy").textContent=(selectedPref&&repName&&selectedPref!==repName)?("（"+selectedPref+"の周辺は"+c.name+"の予報をもとに表示しています）"):"";
