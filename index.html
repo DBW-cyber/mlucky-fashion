@@ -25,11 +25,13 @@ main{max-width:680px;margin:0 auto;padding:10px 12px 8px}
 .chip.on{background:#141b31;color:#fff;border-color:#141b31;box-shadow:0 2px 6px rgba(20,27,49,.25)}
 #prefs{padding:10px 12px;container-type:inline-size}
 
-#ageChips,#ageTop{flex-wrap:nowrap;gap:4px;gap:1.17cqw;justify-content:flex-end}
-.toprow{display:flex;flex-wrap:nowrap;gap:5px;gap:1.46cqw;justify-content:flex-end;align-items:center}
-.toprow .chips{margin:0}
+#ageChips,#ageTop{flex-wrap:nowrap;gap:4px;gap:1.17cqw}
+.guideline{display:flex;flex-wrap:nowrap;gap:5px;gap:1.46cqw;justify-content:space-between;align-items:center}
+.guideline .chips{margin:0}
+.guideline .setupguide{margin:0}
+.secondrow{display:flex;flex-wrap:nowrap;gap:5px;gap:1.46cqw;justify-content:flex-start;align-items:center;margin-top:5px;margin-top:1.46cqw}
+.secondrow .chips{margin:0}
 #genderChips{flex-wrap:nowrap}
-#ageChips{margin-top:5px;margin-top:1.46cqw}
 #ageChips .chip,#ageTop .chip,#genderChips .chip{font-size:11px;font-size:3.22cqw;padding:2px 6px;padding:.58cqw 1.75cqw;white-space:nowrap;min-height:24px;min-height:7.02cqw}
 @media (max-width:360px){#ageChips .chip,#ageTop .chip,#genderChips .chip{font-size:10.5px;padding:2px 4px}}
 .chip.gold.on{background:#e0bc5c;color:#141b31;border-color:#e0bc5c;font-weight:700}
@@ -78,23 +80,25 @@ footer a{color:#3c5a9e}
 </header>
 <main>
 <section class="card" id="prefs">
+<div class="guideline">
 <p class="setupguide">各項目をタップしてね</p>
-<div class="toprow">
-<div class="chips" id="genderChips">
-<button type="button" class="chip" data-g="f">女性</button>
-<button type="button" class="chip" data-g="m">男性</button>
-</div>
 <div class="chips" id="ageTop">
 <button type="button" class="chip" data-a="jh">中学</button>
 <button type="button" class="chip" data-a="hs">高校</button>
 <button type="button" class="chip" data-a="u20">大学20代</button>
 </div>
 </div>
+<div class="secondrow">
+<div class="chips" id="genderChips">
+<button type="button" class="chip" data-g="f">女性</button>
+<button type="button" class="chip" data-g="m">男性</button>
+</div>
 <div class="chips" id="ageChips">
 <button type="button" class="chip" data-a="w30">30〜40代</button>
 <button type="button" class="chip" data-a="w50">50代</button>
 <button type="button" class="chip" data-a="s60">60代</button>
 <button type="button" class="chip" data-a="s70">70代〜</button>
+</div>
 </div>
 <div id="studentRow" class="hidden">
 <div class="chips" id="dayChips" style="margin-top:7px">
