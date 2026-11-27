@@ -36,6 +36,13 @@ label.lab{font-size:13px;font-weight:700;color:#5c6478;display:block;margin-top:
 .mkbtn{position:absolute;transform:translate(-50%,-50%);width:80px;height:42px;background:transparent;border:0;cursor:pointer;padding:0;z-index:3;line-height:0}
 .tapring{display:none;position:absolute;inset:0;border-radius:999px;border:2.5px solid #e0bc5c;background:rgba(224,188,92,.22);box-shadow:0 0 0 3px rgba(224,188,92,.35),0 0 16px rgba(224,188,92,.9)}
 .mkbtn.sel .tapring{display:block}
+.wxbadge{position:absolute;z-index:2;pointer-events:none;background:rgba(255,255,255,.85);border:1px solid rgba(120,140,170,.35);border-radius:999px;padding:0 4px;font-size:9.5px;line-height:1.55;color:#22304a;white-space:nowrap;box-shadow:0 1px 3px rgba(31,80,140,.18)}
+.wxbadge:empty{display:none}
+.wxb-r{transform:translate(9px,-50%)}
+.wxb-l{transform:translate(calc(-100% - 9px),-50%)}
+.wxb-t{transform:translate(-30%,calc(-100% - 5px))}
+.wxb-b{transform:translate(-50%,9px)}
+.wxb-ru{transform:translate(9px,-112%)}
 .wxline{font-size:16.5px;margin:2px 0}
 .wxline b{color:#141b31}
 .big{font-size:21px;font-weight:800;color:#141b31}
@@ -234,6 +241,17 @@ document.getElementById("studentRow").classList.toggle("hidden",!isStudent());
 const REPPREF={sapporo:"北海道",sendai:"宮城",tokyo:"東京",nagoya:"愛知",kyoto:"京都",osaka:"大阪",fukuoka:"福岡",naha:"沖縄"};
 let selectedPref=REPPREF[prefs.city]||"大阪";
 const MAPPOS={sapporo:[65.5,18.5],sendai:[82.2,43.8],tokyo:[75.7,60.9],nagoya:[58.5,76.1],kyoto:[50.8,44.9],osaka:[47.8,81.8],fukuoka:[18.8,68.2],naha:[8.2,83.2]};
+const DOTPOS={sapporo:[75.2,18.4],sendai:[73.6,43.5],tokyo:[66.2,60.8],nagoya:[55.8,62.9],kyoto:[50.7,61.3],osaka:[48.0,64.4],fukuoka:[27.2,68.2],naha:[16.7,83.3]};
+const WXSIDE={sapporo:"r",sendai:"l",tokyo:"t",nagoya:"r",kyoto:"ru",osaka:"l",fukuoka:"r",naha:"b"};
+function updateBadges(){
+CITIES.forEach(function(c){
+const el=document.getElementById("wxb-"+c.id); if(!el)return;
+const w=wxData[c.id];
+if(!w){el.textContent="";return;}
+const ic=(WX[w.code]||[""])[0];
+el.textContent=ic+" "+Math.round(w.tmin)+"〜"+Math.round(w.tmax)+"°";
+});
+}
 function buildMap(){
 const wrap=document.getElementById("jmap");
 CITIES.forEach(function(c){
@@ -245,6 +263,8 @@ b.setAttribute("aria-label",c.name+"を選ぶ");
 b.innerHTML='<span class="tapring"></span>';
 b.onclick=function(){ pickCity(c.id); };
 wrap.appendChild(b);
+const dp=DOTPOS[c.id];
+if(dp){const s=document.createElement("span");s.className="wxbadge wxb-"+WXSIDE[c.id];s.id="wxb-"+c.id;s.style.left=dp[0]+"%";s.style.top=dp[1]+"%";wrap.appendChild(s);}
 });
 }
 function pickCity(id){prefs.city=id;selectedPref=REPPREF[id];savePrefs();render();}
@@ -328,6 +348,7 @@ if(gapAdd)notes+='<p class="note">朝晩の冷え込み：昼と朝晩で体感�
 else if(gapNote)notes+='<p class="note">朝晩の冷え込み：最低気温との差が大きい日です。出発が早い・帰りが遅い場合は1段階厚くしてください。</p>';
 document.getElementById("dNotes").innerHTML=notes;
 document.getElementById("dTrend").textContent=trendHits.length?("今季の流行メモ：今季（"+SEASON_NAME[season]+"）の要素は「"+trendHits.slice(0,3).join("」「")+"」です。流行単品は当季の商品から選定しています。"):TREND[band];
+updateBadges();
 }
 function fetchWx(){
 const lats=CITIES.map(c=>c.lat).join(","),lons=CITIES.map(c=>c.lon).join(",");
