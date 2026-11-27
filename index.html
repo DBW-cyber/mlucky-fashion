@@ -248,7 +248,7 @@ function isStudent(){return prefs.age==="jh"||prefs.age==="hs";}
 function isSenior(){return prefs.age==="s60"||prefs.age==="s70";}
 function markChips(){
 document.querySelectorAll("#genderChips .chip").forEach(c=>c.classList.toggle("on",c.dataset.g===prefs.gender));
-document.querySelectorAll("#ageChips .chip").forEach(c=>c.classList.toggle("on",c.dataset.a===prefs.age));
+document.querySelectorAll("#ageChips .chip,#ageTop .chip").forEach(c=>c.classList.toggle("on",c.dataset.a===prefs.age));
 document.querySelectorAll("#dayChips .chip").forEach(c=>c.classList.toggle("on",c.dataset.d===prefs.day));
 document.getElementById("studentRow").classList.toggle("hidden",!isStudent());
 }
@@ -382,7 +382,7 @@ render();
 }).catch(()=>{wxFailed=true;render();});
 }
 document.querySelectorAll("#genderChips .chip").forEach(c=>c.addEventListener("click",()=>{prefs.gender=c.dataset.g;savePrefs();render();}));
-document.querySelectorAll("#ageChips .chip").forEach(c=>c.addEventListener("click",()=>{prefs.age=c.dataset.a;savePrefs();render();}));
+document.querySelectorAll("#ageChips .chip,#ageTop .chip").forEach(c=>c.addEventListener("click",()=>{prefs.age=c.dataset.a;savePrefs();render();}));
 document.querySelectorAll("#dayChips .chip").forEach(c=>c.addEventListener("click",()=>{prefs.day=c.dataset.d;savePrefs();render();}));
 buildMap();buildGallery();render();fetchWx();
 </script>
