@@ -255,6 +255,7 @@ const b=document.createElement("button");
 b.type="button"; b.className="mkbtn"; b.id="mapmk-"+c.id;
 b.style.left=p[0]+"%"; b.style.top=p[1]+"%";
 b.setAttribute("aria-label",c.name+"を選ぶ");
+if(c.id==="sapporo"){b.style.width="27px";b.style.height="14px";}
 b.innerHTML='<span class="tapring"></span>';
 b.onclick=function(){ pickCity(c.id); };
 wrap.appendChild(b);
