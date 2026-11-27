@@ -110,12 +110,6 @@ footer a{color:#3c5a9e}
 <button type="button" class="chip" data-a="s70">70代〜</button>
 </div>
 </div>
-<div id="studentRow" class="hidden">
-<div class="chips" id="dayChips" style="margin-top:7px">
-<button type="button" class="chip gold" data-d="weekday">平日（制服）</button>
-<button type="button" class="chip gold" data-d="holiday">休日（私服）</button>
-</div>
-</div>
 <div class="mapwrap" id="mapwrap">
 <div id="jmap"><img class="mapimg" src="assets/japan-map-v2.webp" alt="日本地図"></div>
 </div>
@@ -247,13 +241,14 @@ let wxData={};
 let wxFailed=false;
 const FALLBACK_BAND=[1,1,2,3,4,5,6,6,5,4,2,1];
 function bandOf(tmax){for(let i=0;i<BANDS.length;i++){if(tmax<=BANDS[i].max)return i;}return BANDS.length-1;}
+const HOLIDAYS=new Set(["2026-01-01","2026-01-12","2026-02-11","2026-02-23","2026-03-20","2026-04-29","2026-05-03","2026-05-04","2026-05-05","2026-05-06","2026-07-20","2026-08-11","2026-09-21","2026-09-22","2026-09-23","2026-10-12","2026-11-03","2026-11-23","2027-01-01","2027-01-11","2027-02-11","2027-02-23","2027-03-20","2027-04-29","2027-05-03","2027-05-04","2027-05-05","2027-07-19","2027-08-11","2027-09-20","2027-09-23","2027-10-11","2027-11-03","2027-11-23"]);
+function autoDay(){const d=new Date();const p=n=>String(n).padStart(2,"0");const key=d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate());const wd=d.getDay();return (wd===0||wd===6||HOLIDAYS.has(key))?"holiday":"weekday";}
 function isStudent(){return prefs.age==="jh"||prefs.age==="hs";}
 function isSenior(){return prefs.age==="s60"||prefs.age==="s70";}
 function markChips(){
 document.querySelectorAll("#genderChips .chip").forEach(c=>c.classList.toggle("on",c.dataset.g===prefs.gender));
 document.querySelectorAll("#ageChips .chip,#ageTop .chip").forEach(c=>c.classList.toggle("on",c.dataset.a===prefs.age));
-document.querySelectorAll("#dayChips .chip").forEach(c=>c.classList.toggle("on",c.dataset.d===prefs.day));
-document.getElementById("studentRow").classList.toggle("hidden",!isStudent());
+
 }
 const REPPREF={sapporo:"北海道",sendai:"宮城",tokyo:"東京",nagoya:"愛知",kyoto:"京都",osaka:"大阪",fukuoka:"福岡",naha:"沖縄"};
 let selectedPref=REPPREF[prefs.city]||"大阪";
@@ -326,9 +321,9 @@ wxEl.innerHTML=html;
 }
 document.getElementById("dBand").textContent=BANDS[band].name+(hasWx?("（最高 "+Math.round(w.tmax)+"℃）"):"（季節の目安）");
 let items, title;
-if(isStudent()&&prefs.day==="weekday"){items=STUDENT_WEEKDAY[band].slice();title=c.name+"の今日コーデ（制服＋防寒）";}
+if(isStudent()&&autoDay()==="weekday"){items=STUDENT_WEEKDAY[band].slice();title=c.name+"の今日コーデ（制服＋防寒）";}
 else{items=ITEMS[prefs.gender][band].slice();title=c.name+"の今日のおすすめコーデ";}
-const studentWeekday=isStudent()&&prefs.day==="weekday";
+const studentWeekday=isStudent()&&autoDay()==="weekday";
 const cat=hasWx?wxCat(w.code):null;
 const season=seasonOf(new Date());
 let trendHits=[];
@@ -355,7 +350,7 @@ document.getElementById("dTitle").textContent=title;
 document.getElementById("dItems").innerHTML=items.map(i=>"<li>"+i+"</li>").join("");
 let notes="";
 if(studentWeekday)notes+='<p class="note">平日は制服が前提です。制服の上・下に足す防寒と雨対策を出しています。</p>';
-if(isStudent()&&prefs.day==="holiday")notes+='<p class="note">休日は私服コーデです。大手各社の実際の商品から選べる、具体的な組み合わせにしています。</p>';
+if(isStudent()&&autoDay()==="holiday")notes+='<p class="note">今日は休日なので私服コーデです。大手各社の実際の商品から選べる、具体的な組み合わせにしています。</p>';
 if(isSenior())notes+='<p class="note">シニアの配慮：軽くて前開きの羽織、滑りにくい靴底、体温調節しやすい重ね着を優先しています。</p>';
 if(!hasWx&&wxFailed)notes+='<p class="note">天気データを取得できなかったため、季節の目安で表示しています。通信環境のよい場所で開き直すと、実況に合わせて更新されます。</p>';
 if(trendHits.length)notes+='<p class="note">★＝今季（'+SEASON_NAME[season]+'）の流行単品です。大手各社の今季提案と主要メディア共通の要素から選んでいます（商品名のみ、メーカー名は載せていません）。</p>';
@@ -386,7 +381,7 @@ render();
 }
 document.querySelectorAll("#genderChips .chip").forEach(c=>c.addEventListener("click",()=>{prefs.gender=c.dataset.g;savePrefs();render();}));
 document.querySelectorAll("#ageChips .chip,#ageTop .chip").forEach(c=>c.addEventListener("click",()=>{prefs.age=c.dataset.a;savePrefs();render();}));
-document.querySelectorAll("#dayChips .chip").forEach(c=>c.addEventListener("click",()=>{prefs.day=c.dataset.d;savePrefs();render();}));
+
 buildMap();buildGallery();render();fetchWx();
 </script>
 </body>
