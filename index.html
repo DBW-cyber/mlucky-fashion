@@ -39,7 +39,7 @@ main{max-width:680px;margin:0 auto;padding:6px 12px 8px}
 .achip img{max-width:100%;max-height:100%;display:block}
 #ageChips .chip.on img{filter:invert(1)}
 .guideline{display:flex;flex-wrap:nowrap;gap:5px;gap:1.46cqw;justify-content:space-between;align-items:center;position:relative}
-.tapicon{position:absolute;right:7.143%;top:50%;transform:translate(50%,-50%);height:30px;height:8.8cqw;width:auto;pointer-events:none}
+.tapicon{position:absolute;right:8.333%;top:50%;transform:translate(50%,-50%);height:30px;height:8.8cqw;width:auto;pointer-events:none}
 .guideline .chips{margin:0}
 .guideline .setupguide{margin:0}
 .secondrow{display:flex;flex-wrap:nowrap;gap:5px;gap:1.46cqw;justify-content:space-between;align-items:center;margin-top:5px;margin-top:1.46cqw}
@@ -121,7 +121,6 @@ footer a{color:#3c5a9e}
 </div>
 <div class="secondrow">
 <div class="chips" id="ageChips">
-<button type="button" class="chip achip" data-a="s70" aria-label="70代"><img src="assets/age-s70.webp?v=2" alt="70代"></button>
 <button type="button" class="chip achip" data-a="s60" aria-label="60代"><img src="assets/age-s60.webp?v=2" alt="60代"></button>
 <button type="button" class="chip achip" data-a="w50" aria-label="50代"><img src="assets/age-w50.webp?v=2" alt="50代"></button>
 <button type="button" class="chip achip" data-a="w30" aria-label="30~40代"><img src="assets/age-w30.webp" alt="30~40代"></button>
@@ -262,6 +261,7 @@ const WXIMG={"晴れ":"sunny","晴れ時々くもり":"suncloud","くもり":"cl
 const LSKEY="mlucky_fashion_prefs";
 let prefs={gender:"f",age:"u20",day:"weekday",city:"tokyo"};
 try{const raw=localStorage.getItem(LSKEY);if(raw){const p=JSON.parse(raw);if(p&&typeof p==="object"){prefs=Object.assign(prefs,p);}}}catch(e){}
+if(prefs.age==="s70")prefs.age="s60";
 function savePrefs(){try{localStorage.setItem(LSKEY,JSON.stringify(prefs));}catch(e){}}
 let wxData={};
 let wxFailed=false;
