@@ -53,6 +53,7 @@ main{max-width:680px;margin:0 auto;padding:6px 12px 8px}
 label.lab{font-size:13px;font-weight:700;color:#5c6478;display:block;margin-top:7px}
 .mapwrap{position:relative;width:100%;max-width:620px;margin:8px auto 0;container-type:inline-size}
 #jmap{position:relative;line-height:0}
+#wxSrc{position:absolute;right:8px;bottom:8px;right:2.2cqw;bottom:2.2cqw;font-size:10.5px;font-size:2.9cqw;line-height:1.3;background:rgba(255,255,255,.85);color:#42506b;padding:2px 7px;padding:.6cqw 2cqw;border-radius:999px;pointer-events:none;z-index:6}
 .mapimg{width:100%;height:auto;display:block;border-radius:20px;box-shadow:0 12px 32px rgba(31,111,183,.28)}
 .mkbtn{position:absolute;transform:translate(-50%,-50%);width:27px;width:7.8cqw;height:14px;height:4.1cqw;background:transparent;border:0;cursor:pointer;padding:0;z-index:3;line-height:0}
 .tapring{display:none;position:absolute;inset:0;border-radius:999px;border:2.5px solid #141b31;border-width:.72cqw;background:rgba(20,27,49,.14);box-shadow:0 0 0 3px rgba(20,27,49,.22),0 0 14px rgba(20,27,49,.45);box-shadow:0 0 0 .87cqw rgba(20,27,49,.22),0 0 4cqw rgba(20,27,49,.45)}
@@ -116,7 +117,7 @@ footer a{color:#3c5a9e}
 </div>
 </div>
 <div class="mapwrap" id="mapwrap">
-<div id="jmap"><img class="mapimg" src="assets/japan-map-v2.webp" alt="日本地図"></div>
+<div id="jmap"><img class="mapimg" src="assets/japan-map-v2.webp" alt="日本地図"><div id="wxSrc"></div></div>
 </div>
 <p class="note" style="margin:8px 0 0">設定はあなたの端末の中だけに保存されます。</p>
 </section>
@@ -322,13 +323,14 @@ const w=wxData[c.id];
 const wxEl=document.getElementById("dWx");
 const hasWx=!!w;
 const band=hasWx?bandOf(w.tmax!=null?w.tmax:(w.tmax2!=null?w.tmax2:15)):FALLBACK_BAND[(new Date()).getMonth()];
-if(!hasWx){wxEl.innerHTML='<p class="note">天気を読み込み中です…</p>';document.getElementById("dWxSide").textContent="";}
+if(!hasWx){wxEl.innerHTML='<p class="note">天気を読み込み中です…</p>';document.getElementById("dWxSide").textContent="";const se0=document.getElementById("wxSrc");if(se0)se0.textContent="";}
 else{
 const wtxt=w.label;const wico=LABELWX[w.label]||"🌡️";
 let tseg="";if(w.tmax!=null)tseg+="　最高 <b>"+Math.round(w.tmax)+"℃</b>";if(w.tmin!=null)tseg+=(tseg?"／":"　")+"最低 <b>"+Math.round(w.tmin)+"℃</b>";
 let html='<p class="wxline">今日：'+wico+' <b>'+wtxt+'</b>'+tseg+'</p>';
 
 let side="";if(w.pop!=null)side="降水確率 "+Math.round(w.pop)+"%";if(w.wind)side+=(side?"　":"")+"風："+w.wind;document.getElementById("dWxSide").textContent=side;
+const se1=document.getElementById("wxSrc");if(se1)se1.textContent=w.issuedTxt?("出典：気象庁（"+w.issuedTxt+"）"):"";
 if(w.label2){const wi2=LABELWX[w.label2]||"🌡️";let tseg2="";if(w.tmax2!=null)tseg2+="　最高 <b>"+Math.round(w.tmax2)+"℃</b>";if(w.tmin2!=null)tseg2+=(tseg2?"／":"　")+"最低 <b>"+Math.round(w.tmin2)+"℃</b>";html+='<p class="wxline">明日：'+wi2+' <b>'+w.label2+'</b>'+tseg2+'</p>';}
 wxEl.innerHTML=html;
 }
@@ -425,7 +427,7 @@ let pop=null;
 if(A1){const dp=today.split("-").map(Number);const yst=new Date(Date.UTC(dp[0],dp[1]-1,dp[2]-1)).toISOString().slice(0,10);
 s1.timeDefines.forEach(function(td,i){const sd=dstr(td);const hr=parseInt(td.slice(11,13),10);if(sd===today||(sd===yst&&hr===18)){const v=parseInt(A1.pops[i],10);if(!isNaN(v)&&(pop==null||v>pop))pop=v;}});}
 const wind=(A0.winds&&A0.winds[0])?shortWind(A0.winds[0]):"";
-wxData[c.id]={label:jmaLabel(A0.weatherCodes[0],A0.weathers?A0.weathers[0]:""),tmax:tmax,tmin:tmin,pop:pop,wind:wind,label2:A0.weatherCodes[1]?jmaLabel(A0.weatherCodes[1],A0.weathers?A0.weathers[1]:""):null,tmax2:tmax2,tmin2:tmin2};
+wxData[c.id]={issuedTxt:(issued.getMonth()+1)+"月"+issued.getDate()+"日"+issued.getHours()+"時発表",label:jmaLabel(A0.weatherCodes[0],A0.weathers?A0.weathers[0]:""),tmax:tmax,tmin:tmin,pop:pop,wind:wind,label2:A0.weatherCodes[1]?jmaLabel(A0.weatherCodes[1],A0.weathers?A0.weathers[1]:""):null,tmax2:tmax2,tmin2:tmin2};
 render();
 }).catch(function(){wxFailed=true;render();});
 });
