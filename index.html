@@ -216,7 +216,7 @@ function seasonOf(d){const m=d.getMonth()+1;if(m>=3&&m<=5)return "spring";if(m>=
 function wxCat(code){if([71,73,75,77,85,86].includes(code))return "snow";if([95,96,99].includes(code))return "thunder";if([51,53,55,56,57,61,63,65,66,67,80,81,82].includes(code))return "rain";if(code===0||code===1)return "sun";return "cloud";}
 const WX={0:["☀️","晴れ"],1:["🌤️","晴れ時々くもり"],2:["🌤️","晴れ時々くもり"],3:["☁️","くもり"],45:["🌫️","霧"],48:["🌫️","霧"],51:["🌦️","霧雨"],53:["🌦️","霧雨"],55:["🌦️","霧雨"],56:["🌧️","雨"],57:["🌧️","雨"],61:["🌧️","雨"],63:["☔","雨"],65:["☔","雨"],66:["☔","雨"],67:["☔","雨"],71:["🌨️","雪"],73:["❄️","雪"],75:["❄️","雪"],77:["❄️","雪"],80:["🌦️","にわか雨"],81:["🌦️","にわか雨"],82:["🌧️","にわか雨"],85:["🌨️","雪"],86:["🌨️","雪"],95:["⛈️","雷雨"],96:["⛈️","雷雨"],99:["⛈️","雷雨"]};
 const LSKEY="mlucky_fashion_prefs";
-let prefs={gender:"f",age:"w30",day:"weekday",city:"osaka"};
+let prefs={gender:"f",age:"u20",day:"weekday",city:"tokyo"};
 try{const raw=localStorage.getItem(LSKEY);if(raw){const p=JSON.parse(raw);if(p&&typeof p==="object"){prefs=Object.assign(prefs,p);}}}catch(e){}
 function savePrefs(){try{localStorage.setItem(LSKEY,JSON.stringify(prefs));}catch(e){}}
 let wxData={};
