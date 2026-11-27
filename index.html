@@ -99,15 +99,15 @@ footer a{color:#3c5a9e}
 </div>
 <div class="secondrow">
 <div class="chips" id="ageTop">
-<button type="button" class="chip" data-a="jh">中学</button>
-<button type="button" class="chip" data-a="hs">高校</button>
-<button type="button" class="chip" data-a="u20">大学20代</button>
+<button type="button" class="chip" data-a="s70">70代〜</button>
+<button type="button" class="chip" data-a="s60">60代</button>
+<button type="button" class="chip" data-a="w50">50代</button>
 </div>
 <div class="chips" id="ageChips">
 <button type="button" class="chip" data-a="w30">30〜40代</button>
-<button type="button" class="chip" data-a="w50">50代</button>
-<button type="button" class="chip" data-a="s60">60代</button>
-<button type="button" class="chip" data-a="s70">70代〜</button>
+<button type="button" class="chip" data-a="u20">大学20代</button>
+<button type="button" class="chip" data-a="hs">高校</button>
+<button type="button" class="chip" data-a="jh">中学</button>
 </div>
 </div>
 <div class="mapwrap" id="mapwrap">
@@ -362,28 +362,11 @@ if(gapAdd)notes+='<p class="note">朝晩の冷え込み：昼と朝晩で体感�
 else if(gapNote)notes+='<p class="note">朝晩の冷え込み：最低気温との差が大きい日です。出発が早い・帰りが遅い場合は1段階厚くしてください。</p>';
 document.getElementById("dNotes").innerHTML=notes;
 document.getElementById("dTrend").textContent=trendHits.length?("今季の流行メモ：今季（"+SEASON_NAME[season]+"）の要素は「"+trendHits.slice(0,3).join("」「")+"」です。流行単品は当季の商品から選定しています。"):TREND[band];
-alignGender();
 const hw=document.getElementById("hdrWx");
 const hwd=wxData[prefs.city];
 if(hw&&hwd&&WX[hwd.code]){const hf=WXIMG[WX[hwd.code][1]];if(hf){const hs="assets/wx/"+hf+".webp";if(hw.getAttribute("src")!==hs)hw.src=hs;hw.style.display="block";}}
 updateBadges();
 }
-function alignGender(){
-const g=document.getElementById("genderChips");
-const a50=document.querySelector('#ageChips .chip[data-a="w50"]');
-const a60=document.querySelector('#ageChips .chip[data-a="s60"]');
-const f=document.querySelector('#genderChips .chip[data-g="f"]');
-if(!g||!a50||!a60||!f)return;
-g.style.transform="";g.style.gap="";
-const c50=a50.getBoundingClientRect(),c60=a60.getBoundingClientRect(),cf=f.getBoundingClientRect();
-const pitch=(c60.left+c60.width/2)-(c50.left+c50.width/2);
-const gapPx=pitch-cf.width;
-if(gapPx>0)g.style.gap=gapPx+"px";
-const cf2=f.getBoundingClientRect();
-const dx=(c50.left+c50.width/2)-(cf2.left+cf2.width/2);
-g.style.transform="translateX("+dx+"px)";
-}
-window.addEventListener("resize",()=>alignGender());
 function fetchWx(){
 const lats=CITIES.map(c=>c.lat).join(","),lons=CITIES.map(c=>c.lon).join(",");
 const url="https://api.open-meteo.com/v1/forecast?latitude="+lats+"&longitude="+lons+"&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max&forecast_days=2&timezone=Asia%2FTokyo";
