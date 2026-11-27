@@ -153,9 +153,9 @@ footer a{color:#3c5a9e}
 <tr><td>30℃以上</td><td>盛夏</td><td>速乾・UV対策・帽子</td></tr>
 </table>
 <p style="margin-top:12px">単品は「当季の流行商品」から選んでいます。季節ごとに、大手アパレル各社の今季の提案と主要なファッションメディアの紹介記事の両方に共通して出てくる単品を集めた「今季の商品プール」を用意し、気温の区分に合うものを優先して組み合わせます（★印が今季の流行単品）。アイテムは商品名のみで表記し、メーカー名・ブランド名は付けていません。プールは季節ごとに更新します。</p>
-<p class="note">天気による補正：雨の日は降水確率に応じて折りたたみ傘と撥水の備えを足します。雪の日は傘ではなく、防寒小物と滑りにくい足元を優先します。晴れて暑い日はUV対策、風の強い日（最大風速8m/s以上）は防風素材の羽織をすすめます。昼と朝晩の体感差が大きい日は、脱ぎ着できる重ね着を1枚足します。</p>
+<p class="note">天気による補正：雨の日は降水確率に応じて折りたたみ傘と撥水の備えを足します。雪の日は傘ではなく、防寒小物と滑りにくい足元を優先します。晴れて暑い日はUV対策、風の強い日（気象庁が「やや強く」以上の風を予報した日）は防風素材の羽織をすすめます。昼と朝晩の体感差が大きい日は、脱ぎ着できる重ね着を1枚足します。</p>
 <p class="note">学生（中学生・高校生）は、平日は制服を前提に「制服の上・下に足す防寒と雨対策」、休日は私服コーデを出します。60代・70代以上は、軽さ・前開き・滑りにくい靴底など、着やすさの配慮を優先します。</p>
-<p class="note">天気データ：Open-Meteo（https://open-meteo.com）の予報を使用しています。写真はイメージです。実際のお出かけでは、体感や体調に合わせて調整してください。</p>
+<p class="note">天気データ：気象庁（https://www.jma.go.jp）の天気予報を使用しています。気象庁が値を発表していない項目（当日の最低気温など、発表時刻によっては出ない値）は表示しません。写真はイメージです。実際のお出かけでは、体感や体調に合わせて調整してください。</p>
 </section>
 </main>
 <footer>
@@ -166,14 +166,14 @@ footer a{color:#3c5a9e}
 <script>
 "use strict";
 const CITIES=[
-{id:"sapporo",name:"札幌",lat:43.06,lon:141.35,x:79,y:9,spot:"大通公園・テレビ塔",photo:"assets/sapporo.webp"},
-{id:"sendai",name:"仙台",lat:38.27,lon:140.87,x:73,y:27,spot:"定禅寺通・青葉城址",photo:"assets/sendai.webp"},
-{id:"tokyo",name:"東京",lat:35.68,lon:139.69,x:82,y:43,spot:"渋谷スクランブル交差点",photo:"assets/tokyo.webp"},
-{id:"nagoya",name:"名古屋",lat:35.18,lon:136.91,x:61,y:55,spot:"名古屋城",photo:"assets/nagoya.webp"},
-{id:"kyoto",name:"京都",lat:35.01,lon:135.77,x:43,y:42,spot:"八坂の塔・石畳の小路",photo:"assets/kyoto.webp"},
-{id:"osaka",name:"大阪",lat:34.69,lon:135.50,x:35,y:59,spot:"大阪城",photo:"assets/osaka.webp"},
-{id:"fukuoka",name:"福岡",lat:33.59,lon:130.40,x:13,y:65,spot:"中洲屋台・那珂川",photo:"assets/fukuoka.webp"},
-{id:"naha",name:"那覇",lat:26.21,lon:127.68,x:11,y:94,spot:"守礼門",photo:"assets/naha.webp"}
+{id:"sapporo",jma:"016000",area:"石狩地方",point:"札幌",name:"札幌",lat:43.06,lon:141.35,x:79,y:9,spot:"大通公園・テレビ塔",photo:"assets/sapporo.webp"},
+{id:"sendai",jma:"040000",area:"東部",point:"仙台",name:"仙台",lat:38.27,lon:140.87,x:73,y:27,spot:"定禅寺通・青葉城址",photo:"assets/sendai.webp"},
+{id:"tokyo",jma:"130000",area:"東京地方",point:"東京",name:"東京",lat:35.68,lon:139.69,x:82,y:43,spot:"渋谷スクランブル交差点",photo:"assets/tokyo.webp"},
+{id:"nagoya",jma:"230000",area:"西部",point:"名古屋",name:"名古屋",lat:35.18,lon:136.91,x:61,y:55,spot:"名古屋城",photo:"assets/nagoya.webp"},
+{id:"kyoto",jma:"260000",area:"南部",point:"京都",name:"京都",lat:35.01,lon:135.77,x:43,y:42,spot:"八坂の塔・石畳の小路",photo:"assets/kyoto.webp"},
+{id:"osaka",jma:"270000",area:"大阪府",point:"大阪",name:"大阪",lat:34.69,lon:135.50,x:35,y:59,spot:"大阪城",photo:"assets/osaka.webp"},
+{id:"fukuoka",jma:"400000",area:"福岡地方",point:"福岡",name:"福岡",lat:33.59,lon:130.40,x:13,y:65,spot:"中洲屋台・那珂川",photo:"assets/fukuoka.webp"},
+{id:"naha",jma:"471000",area:"本島中南部",point:"那覇",name:"那覇",lat:26.21,lon:127.68,x:11,y:94,spot:"守礼門",photo:"assets/naha.webp"}
 ];
 const PHOTOS={
 sapporo:{"f-jh":"assets/sapporo-f-jh.webp","f-hs":"assets/sapporo-f-hs.webp","f-u20":"assets/sapporo-f-young.webp","f-w30":"assets/sapporo.webp","f-w50":"assets/sapporo-f-w50.webp","f-s60":"assets/sapporo-f-s60.webp","f-s70":"assets/sapporo-f-senior.webp","m-jh":"assets/sapporo-m-jh.webp","m-hs":"assets/sapporo-m-hs.webp","m-u20":"assets/sapporo-m-young.webp","m-w30":"assets/sapporo-m-adult.webp","m-w50":"assets/sapporo-m-w50.webp","m-s60":"assets/sapporo-m-s60.webp","m-s70":"assets/sapporo-m-senior.webp"},
@@ -235,8 +235,14 @@ autumn:[["キルティングジャケット",1,3],["レザージャケット",2,
 winter:[["ダウンコート",0,1],["ボアベスト",1,2],["ニット帽",0,1],["タートルネックニット",0,2],["裏起毛パンツ",0,2],["ムートンブーツ",0,1],["カシミヤマフラー",0,1],["コーデュロイシャツ",1,2]]};
 const SEASON_NAME={spring:"春",summer:"夏",autumn:"秋",winter:"冬"};
 function seasonOf(d){const m=d.getMonth()+1;if(m>=3&&m<=5)return "spring";if(m>=6&&m<=8)return "summer";if(m>=9&&m<=11)return "autumn";return "winter";}
-function wxCat(code){if([71,73,75,77,85,86].includes(code))return "snow";if([95,96,99].includes(code))return "thunder";if([51,53,55,56,57,61,63,65,66,67,80,81,82].includes(code))return "rain";if(code===0||code===1)return "sun";return "cloud";}
-const WX={0:["☀️","晴れ"],1:["🌤️","晴れ時々くもり"],2:["🌤️","晴れ時々くもり"],3:["☁️","くもり"],45:["🌫️","霧"],48:["🌫️","霧"],51:["🌦️","霧雨"],53:["🌦️","霧雨"],55:["🌦️","霧雨"],56:["🌧️","雨"],57:["🌧️","雨"],61:["🌧️","雨"],63:["☔","雨"],65:["☔","雨"],66:["☔","雨"],67:["☔","雨"],71:["🌨️","雪"],73:["❄️","雪"],75:["❄️","雪"],77:["❄️","雪"],80:["🌦️","にわか雨"],81:["🌦️","にわか雨"],82:["🌧️","にわか雨"],85:["🌨️","雪"],86:["🌨️","雪"],95:["⛈️","雷雨"],96:["⛈️","雷雨"],99:["⛈️","雷雨"]};
+function catOf(label){if(label==="雪")return "snow";if(label==="雷雨")return "thunder";if(label==="雨"||label==="にわか雨"||label==="霧雨")return "rain";if(label==="晴れ"||label==="晴れ時々くもり")return "sun";return "cloud";}
+function jmaLabel(code,text){const t=text||"";const n=parseInt(code,10);let base;
+if(n>=400)base="雪";
+else if(n>=300){base="雨";if([303,304,309,314,315,316,317,318,333].indexOf(n)>=0)base="雪";if(base==="雨"&&t.indexOf("雷")>=0)base="雷雨";}
+else if(n>=200){base="くもり";if([201,210,211].indexOf(n)>=0)base="晴れ時々くもり";else if([202,203,212,213].indexOf(n)>=0)base="にわか雨";else if([204,205,207,215,217].indexOf(n)>=0)base="雪";else if([206,209,214,216].indexOf(n)>=0)base="雨";else if(n===218)base="雷雨";}
+else{base="晴れ";if([101,110,111].indexOf(n)>=0)base="晴れ時々くもり";else if([102,103,108,112,113,120,121,122].indexOf(n)>=0)base="にわか雨";else if([104,115,117,118,124].indexOf(n)>=0)base="雪";else if([114,126,127,128].indexOf(n)>=0)base="雨";else if([119,123,125].indexOf(n)>=0)base="雷雨";else if([130,131].indexOf(n)>=0)base="霧";}
+return base;}
+const LABELWX={"晴れ":"☀️","晴れ時々くもり":"🌤️","くもり":"☁️","霧":"🌫️","霧雨":"🌦️","雨":"☔","にわか雨":"🌦️","雪":"❄️","雷雨":"⛈️"};
 const WXIMG={"晴れ":"sunny","晴れ時々くもり":"suncloud","くもり":"cloudy","霧":"fog","霧雨":"drizzle","雨":"rain","にわか雨":"shower","雪":"snow","雷雨":"thunder"};
 const LSKEY="mlucky_fashion_prefs";
 let prefs={gender:"f",age:"u20",day:"weekday",city:"tokyo"};
@@ -266,8 +272,8 @@ CITIES.forEach(function(c){
 const el=document.getElementById("wxb-"+c.id); if(!el)return;
 const w=wxData[c.id];
 if(!w){el.textContent="";return;}
-const ic=(WX[w.code]||[""])[0];
-el.textContent=ic+" "+Math.round(w.tmin)+"〜"+Math.round(w.tmax)+"°";
+const ic=LABELWX[w.label]||"";
+el.textContent=(w.tmax==null)?ic:(ic+" "+(w.tmin==null?"〜":Math.round(w.tmin)+"〜")+Math.round(w.tmax)+"°");
 });
 }
 function buildMap(){
@@ -315,21 +321,23 @@ document.getElementById("dProxy").textContent=(selectedPref&&repName&&selectedPr
 const w=wxData[c.id];
 const wxEl=document.getElementById("dWx");
 const hasWx=!!w;
-const band=hasWx?bandOf(w.tmax):FALLBACK_BAND[(new Date()).getMonth()];
+const band=hasWx?bandOf(w.tmax!=null?w.tmax:(w.tmax2!=null?w.tmax2:15)):FALLBACK_BAND[(new Date()).getMonth()];
 if(!hasWx){wxEl.innerHTML='<p class="note">天気を読み込み中です…</p>';document.getElementById("dWxSide").textContent="";}
 else{
-const wtxt=WX[w.code]?WX[w.code][1]:"—";const wico=WX[w.code]?WX[w.code][0]:"🌡️";
-let html='<p class="wxline">今日：'+wico+' <b>'+wtxt+'</b>　最高 <b>'+Math.round(w.tmax)+'℃</b>／最低 <b>'+Math.round(w.tmin)+'℃</b></p>';
-document.getElementById("dWxSide").textContent="降水確率 "+(w.pop==null?"—":Math.round(w.pop)+"%")+(w.wind!=null?("　風速 "+Math.round(w.wind)+"m/s"):"");
-if(w.t2){const wx2=WX[w.code2]?WX[w.code2][1]:"—";const wi2=WX[w.code2]?WX[w.code2][0]:"🌡️";html+='<p class="wxline">明日：'+wi2+' <b>'+wx2+'</b>　最高 <b>'+Math.round(w.tmax2)+'℃</b>／最低 <b>'+Math.round(w.tmin2)+'℃</b></p>';}
+const wtxt=w.label;const wico=LABELWX[w.label]||"🌡️";
+let tseg="";if(w.tmax!=null)tseg+="　最高 <b>"+Math.round(w.tmax)+"℃</b>";if(w.tmin!=null)tseg+=(tseg?"／":"　")+"最低 <b>"+Math.round(w.tmin)+"℃</b>";
+let html='<p class="wxline">今日：'+wico+' <b>'+wtxt+'</b>'+tseg+'</p>';
+if(w.wind)html+='<p class="wxline" style="font-size:12.5px;color:#5b6478">風：'+w.wind+'</p>';
+document.getElementById("dWxSide").textContent=(w.pop==null?"":"降水確率 "+Math.round(w.pop)+"%");
+if(w.label2){const wi2=LABELWX[w.label2]||"🌡️";let tseg2="";if(w.tmax2!=null)tseg2+="　最高 <b>"+Math.round(w.tmax2)+"℃</b>";if(w.tmin2!=null)tseg2+=(tseg2?"／":"　")+"最低 <b>"+Math.round(w.tmin2)+"℃</b>";html+='<p class="wxline">明日：'+wi2+' <b>'+w.label2+'</b>'+tseg2+'</p>';}
 wxEl.innerHTML=html;
 }
-document.getElementById("dBand").textContent=BANDS[band].name+(hasWx?("（最高 "+Math.round(w.tmax)+"℃）"):"（季節の目安）");
+document.getElementById("dBand").textContent=BANDS[band].name+((hasWx&&w.tmax!=null)?("（最高 "+Math.round(w.tmax)+"℃）"):"（季節の目安）");
 let items, title;
 if(isStudent()&&autoDay()==="weekday"){items=STUDENT_WEEKDAY[band].slice();title=c.name+"の今日コーデ（制服＋防寒）";}
 else{items=ITEMS[prefs.gender][band].slice();title=c.name+"の今日のおすすめコーデ";}
 const studentWeekday=isStudent()&&autoDay()==="weekday";
-const cat=hasWx?wxCat(w.code):null;
+const cat=hasWx?catOf(w.label):null;
 const season=seasonOf(new Date());
 let trendHits=[];
 if(!studentWeekday){
@@ -349,7 +357,7 @@ rainy=true;if(!items.some(i=>i.includes("傘")))items.push("折りたたみ傘")
 if(hasWx&&cat==="snow"&&band<=2&&!items.some(i=>i.includes("手袋")))items.push("手袋");
 if(hasWx&&cat==="sun"&&band>=5&&!items.some(i=>i.includes("日傘")||i.includes("帽子")||i.includes("キャップ")))items.push(prefs.gender==="f"?"日傘":"キャップ");
 let gapNote=false,gapAdd=false;
-if(hasWx){const g=band-bandOf(w.tmin);if(g>=2)gapAdd=true;else if(g>=1||w.tmin<=w.tmax-8)gapNote=true;}
+if(hasWx&&w.tmin!=null&&w.tmax!=null){const g=band-bandOf(w.tmin);if(g>=2)gapAdd=true;else if(g>=1||w.tmin<=w.tmax-8)gapNote=true;}
 if(gapAdd&&!studentWeekday&&!items.some(i=>i.includes("カーディガン")))items.push("薄手カーディガン（脱ぎ着用）");
 document.getElementById("dTitle").textContent=title;
 document.getElementById("dItems").innerHTML=items.map(i=>"<li>"+i+"</li>").join("");
@@ -362,7 +370,7 @@ if(trendHits.length)notes+='<p class="note">★＝今季（'+SEASON_NAME[season]
 if(rainy)notes+='<p class="note">雨の備え：撥水素材の羽織と折りたたみ傘を足しています。'+(cat==="thunder"?"雷雨の日は長傘が安心です。":"")+'</p>';
 if(hasWx&&cat==="snow")notes+='<p class="note">雪の備え：足元が滑りやすい日です。滑りにくい靴底を選び、傘より帽子・フードがおすすめです。</p>';
 if(hasWx&&cat==="sun"&&band>=5)notes+='<p class="note">晴れて暑い日です。UV対策と水分補給を忘れずに。</p>';
-if(hasWx&&w.wind!=null&&w.wind>=8)notes+='<p class="note">風の強い日です。防風素材の羽織がおすすめです。</p>';
+if(hasWx&&w.wind&&w.wind.indexOf("強く")>=0)notes+='<p class="note">風の強い日です。防風素材の羽織がおすすめです。</p>';
 if(gapAdd)notes+='<p class="note">朝晩の冷え込み：昼と朝晩で体感が2段階ほど変わる日です。脱ぎ着できる重ね着を1枚足しています。</p>';
 else if(gapNote)notes+='<p class="note">朝晩の冷え込み：最低気温との差が大きい日です。出発が早い・帰りが遅い場合は1段階厚くしてください。</p>';
 document.getElementById("dNotes").innerHTML=notes;
@@ -370,7 +378,7 @@ document.getElementById("dTrend").textContent=trendHits.length?("今季の流行
 alignGender();
 const hw=document.getElementById("hdrWx");
 const hwd=wxData[prefs.city];
-if(hw&&hwd&&WX[hwd.code]){const hf=WXIMG[WX[hwd.code][1]];if(hf){const hs="assets/wx/"+hf+".webp?v=3";if(hw.getAttribute("src")!==hs)hw.src=hs;hw.style.display="block";}}
+if(hw&&hwd&&hwd.label){const hf=WXIMG[hwd.label];if(hf){const hs="assets/wx/"+hf+".webp?v=3";if(hw.getAttribute("src")!==hs)hw.src=hs;hw.style.display="block";}}
 updateBadges();
 }
 function alignGender(){
@@ -391,16 +399,32 @@ g.style.transform="translateX("+dx+"px)";
 window.addEventListener("resize",()=>alignGender());
 window.addEventListener("load",()=>alignGender());
 function fetchWx(){
-const lats=CITIES.map(c=>c.lat).join(","),lons=CITIES.map(c=>c.lon).join(",");
-const url="https://api.open-meteo.com/v1/forecast?latitude="+lats+"&longitude="+lons+"&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max&forecast_days=2&timezone=Asia%2FTokyo";
-fetch(url).then(r=>r.json()).then(j=>{
-const arr=Array.isArray(j)?j:[j];
-arr.forEach((d,i)=>{
-const c=CITIES[i];if(!c||!d.daily)return;
-wxData[c.id]={code:d.daily.weather_code[0],tmax:d.daily.temperature_2m_max[0],tmin:d.daily.temperature_2m_min[0],pop:d.daily.precipitation_probability_max?d.daily.precipitation_probability_max[0]:null,wind:d.daily.wind_speed_10m_max?d.daily.wind_speed_10m_max[0]:null,code2:d.daily.weather_code[1],tmax2:d.daily.temperature_2m_max[1],tmin2:d.daily.temperature_2m_min[1],t2:true};
-});
+CITIES.forEach(function(c){
+fetch("https://www.jma.go.jp/bosai/forecast/data/forecast/"+c.jma+".json").then(function(r){return r.json();}).then(function(j){
+const rep=j[0];const issued=new Date(rep.reportDatetime);
+const s0=rep.timeSeries[0],s1=rep.timeSeries[1],s2=rep.timeSeries[2];
+let A0=null,A1=null,A2=null;
+s0.areas.forEach(function(a){if(a.area.name===c.area)A0=a;});
+s1.areas.forEach(function(a){if(a.area.name===c.area)A1=a;});
+s2.areas.forEach(function(a){if(a.area.name===c.point)A2=a;});
+if(!A0)return;
+const dstr=function(ts){return ts.slice(0,10);};
+const today=dstr(s0.timeDefines[0]);const tmr=dstr(s0.timeDefines[1]);
+const tm={};
+if(A2){s2.timeDefines.forEach(function(td,i){const v=parseInt(A2.temps[i],10);if(!isNaN(v))tm[dstr(td)+"|"+td.slice(11,13)]=v;});}
+const tmax=(tm[today+"|09"]!=null)?tm[today+"|09"]:null;
+let tmin=(tm[today+"|00"]!=null)?tm[today+"|00"]:null;
+if(tmin!=null&&tmax!=null&&tmin===tmax&&issued.getHours()>=9)tmin=null;
+const tmax2=(tm[tmr+"|09"]!=null)?tm[tmr+"|09"]:null;
+const tmin2=(tm[tmr+"|00"]!=null)?tm[tmr+"|00"]:null;
+let pop=null;
+if(A1){const dp=today.split("-").map(Number);const yst=new Date(Date.UTC(dp[0],dp[1]-1,dp[2]-1)).toISOString().slice(0,10);
+s1.timeDefines.forEach(function(td,i){const sd=dstr(td);const hr=parseInt(td.slice(11,13),10);if(sd===today||(sd===yst&&hr===18)){const v=parseInt(A1.pops[i],10);if(!isNaN(v)&&(pop==null||v>pop))pop=v;}});}
+const wind=(A0.winds&&A0.winds[0])?A0.winds[0].replace(/\u3000/g," ").replace(/\s+/g," ").trim():"";
+wxData[c.id]={label:jmaLabel(A0.weatherCodes[0],A0.weathers?A0.weathers[0]:""),tmax:tmax,tmin:tmin,pop:pop,wind:wind,label2:A0.weatherCodes[1]?jmaLabel(A0.weatherCodes[1],A0.weathers?A0.weathers[1]:""):null,tmax2:tmax2,tmin2:tmin2};
 render();
-}).catch(()=>{wxFailed=true;render();});
+}).catch(function(){wxFailed=true;render();});
+});
 }
 document.querySelectorAll("#genderChips .chip").forEach(c=>c.addEventListener("click",()=>{prefs.gender=c.dataset.g;savePrefs();render();}));
 document.querySelectorAll("#ageChips .chip,#ageTop .chip").forEach(c=>c.addEventListener("click",()=>{prefs.age=c.dataset.a;savePrefs();render();}));
