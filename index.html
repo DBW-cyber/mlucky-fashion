@@ -33,7 +33,7 @@ label.lab{font-size:13px;font-weight:700;color:#5c6478;display:block;margin-top:
 .mapwrap{position:relative;width:100%;max-width:620px;margin:8px auto 0}
 #jmap{position:relative;line-height:0}
 .mapimg{width:100%;height:auto;display:block;border-radius:20px;box-shadow:0 12px 32px rgba(31,111,183,.28)}
-.mkbtn{position:absolute;transform:translate(-50%,-50%);width:40px;height:21px;background:transparent;border:0;cursor:pointer;padding:0;z-index:3;line-height:0}
+.mkbtn{position:absolute;transform:translate(-50%,-50%);width:27px;height:14px;background:transparent;border:0;cursor:pointer;padding:0;z-index:3;line-height:0}
 .tapring{display:none;position:absolute;inset:0;border-radius:999px;border:2.5px solid #141b31;background:rgba(20,27,49,.14);box-shadow:0 0 0 3px rgba(20,27,49,.22),0 0 14px rgba(20,27,49,.45)}
 .mkbtn.sel .tapring{display:block}
 .wxbadge{position:absolute;z-index:2;pointer-events:none;background:rgba(255,255,255,.85);border:1px solid rgba(120,140,170,.35);border-radius:999px;padding:0 4px;font-size:9.5px;line-height:1.55;color:#22304a;white-space:nowrap;box-shadow:0 1px 3px rgba(31,80,140,.18)}
@@ -43,7 +43,7 @@ label.lab{font-size:13px;font-weight:700;color:#5c6478;display:block;margin-top:
 .wxb-t{transform:translate(-30%,calc(-100% - 5px))}
 .wxb-b{transform:translate(-50%,9px)}
 .wxb-ru{transform:translate(9px,-112%)}
-.wxb-lt{transform:translate(-50%,calc(-100% - 4px))}
+.wxb-lt{transform:translate(-50%,calc(-100% - 13px))}
 .wxline{font-size:16.5px;margin:2px 0}
 .wxline b{color:#141b31}
 .big{font-size:21px;font-weight:800;color:#141b31}
@@ -255,7 +255,6 @@ const b=document.createElement("button");
 b.type="button"; b.className="mkbtn"; b.id="mapmk-"+c.id;
 b.style.left=p[0]+"%"; b.style.top=p[1]+"%";
 b.setAttribute("aria-label",c.name+"を選ぶ");
-if(c.id==="sapporo"){b.style.width="27px";b.style.height="14px";}
 b.innerHTML='<span class="tapring"></span>';
 b.onclick=function(){ pickCity(c.id); };
 wrap.appendChild(b);
