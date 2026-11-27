@@ -90,6 +90,8 @@ label.lab{font-size:13px;font-weight:700;color:#5c6478;display:block;margin-top:
 .photo{width:100%;border-radius:12px;display:block}
 ul.items{margin:8px 0 4px;padding-left:20px}
 ul.items li{margin:3px 0;font-size:16.5px}
+ul.items a.shop{color:inherit;text-decoration:underline;text-decoration-color:rgba(32,41,74,.32);text-underline-offset:3px}
+ul.items a.shop .arr{font-size:.75em;color:#8a93a8}
 .tag{display:inline-block;background:#eef1f7;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#3c4a68;margin-right:6px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .gcard{border:1px solid #e3ddcd;border-radius:12px;overflow:hidden;background:#fff;cursor:pointer;text-align:left;padding:0}
@@ -385,7 +387,9 @@ let gapNote=false,gapAdd=false;
 if(hasWx&&w.tmin!=null&&w.tmax!=null){const g=band-bandOf(w.tmin);if(g>=2)gapAdd=true;else if(g>=1||w.tmin<=w.tmax-8)gapNote=true;}
 if(gapAdd&&!studentWeekday&&!items.some(i=>i.includes("カーディガン")))items.push("薄手カーディガン（脱ぎ着用）");
 document.getElementById("dTitle").textContent=title;
-document.getElementById("dItems").innerHTML=items.map(i=>"<li>"+i+"</li>").join("");
+const AGE_WORD={jh:"中学生",hs:"高校生",u20:"20代",w30:"30代",w50:"50代",s60:"60代"};
+const shopQ=function(i){const base=i.replace(/ ★$/,"").replace(/（[^）]*）/g,"");return [base,prefs.gender==="f"?"レディース":"メンズ",AGE_WORD[prefs.age]||"",new Date().getFullYear()+"年",SEASON_NAME[season],c.name].filter(Boolean).join(" ");};
+document.getElementById("dItems").innerHTML=items.map(i=>'<li><a class="shop" target="_blank" rel="noopener" href="https://www.google.com/search?q='+encodeURIComponent(shopQ(i))+'">'+i+' <span class="arr">↗</span></a></li>').join("");
 let notes="";
 if(studentWeekday)notes+='<p class="note">平日は制服が前提です。制服の上・下に足す防寒と雨対策を出しています。</p>';
 if(isStudent()&&autoDay()==="holiday")notes+='<p class="note">今日は休日なので私服コーデです。大手各社の実際の商品から選べる、具体的な組み合わせにしています。</p>';
