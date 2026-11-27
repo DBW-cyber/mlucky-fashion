@@ -16,6 +16,9 @@ header{position:relative;background:#141b31;color:#fff;padding:16px 12px 14px;te
 header .brand{z-index:2}
 header h1{position:relative;z-index:2;text-shadow:0 1px 10px rgba(10,14,28,.5)}
 header p{position:relative;z-index:2;text-shadow:0 1px 6px rgba(10,14,28,.5)}
+.cityrow{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.cityrow h2{margin:0}
+.wxside{font-size:13px;font-weight:600;color:#5b6478;white-space:nowrap}
 header .brand{position:absolute;top:8px;right:10px;color:#e0bc5c;font-weight:300;letter-spacing:.34em;font-size:8.5px;font-family:Georgia,'Playfair Display','Times New Roman',serif;font-style:italic}
 header h1{margin:0;font-size:22px;letter-spacing:.06em;line-height:1.25}
 header p{margin:1px 0 0;color:#c8cede;font-size:12.5px}
@@ -120,7 +123,7 @@ footer a{color:#3c5a9e}
 </section>
 
 <section class="card" id="detail">
-<h2 id="dCity">大阪</h2>
+<div class="cityrow"><h2 id="dCity">大阪</h2><span class="wxside" id="dWxSide"></span></div>
 <div id="dWx"><p class="note">天気を読み込み中です…</p></div>
 <p class="note" id="dProxy"></p>
 <img class="photo" id="dPhoto" src="assets/osaka.webp" alt="おすすめコーデの全身写真">
@@ -313,11 +316,11 @@ const w=wxData[c.id];
 const wxEl=document.getElementById("dWx");
 const hasWx=!!w;
 const band=hasWx?bandOf(w.tmax):FALLBACK_BAND[(new Date()).getMonth()];
-if(!hasWx){wxEl.innerHTML='<p class="note">天気を読み込み中です…</p>';}
+if(!hasWx){wxEl.innerHTML='<p class="note">天気を読み込み中です…</p>';document.getElementById("dWxSide").textContent="";}
 else{
 const wtxt=WX[w.code]?WX[w.code][1]:"—";const wico=WX[w.code]?WX[w.code][0]:"🌡️";
-let html='<p class="wxline">今日：'+wico+' <b>'+wtxt+'</b>　最高 <b>'+Math.round(w.tmax)+'℃</b>／最低 <b>'+Math.round(w.tmin)+'℃</b>　降水確率 <b>'+(w.pop==null?"—":Math.round(w.pop)+"%")+'</b></p>';
-if(w.wind!=null&&w.wind>=8)html+='　最大風速 <b>'+Math.round(w.wind)+'m/s</b>';
+let html='<p class="wxline">今日：'+wico+' <b>'+wtxt+'</b>　最高 <b>'+Math.round(w.tmax)+'℃</b>／最低 <b>'+Math.round(w.tmin)+'℃</b></p>';
+document.getElementById("dWxSide").textContent="降水確率 "+(w.pop==null?"—":Math.round(w.pop)+"%")+(w.wind!=null?("　風速 "+Math.round(w.wind)+"m/s"):"");
 if(w.t2){const wx2=WX[w.code2]?WX[w.code2][1]:"—";const wi2=WX[w.code2]?WX[w.code2][0]:"🌡️";html+='<p class="wxline">明日：'+wi2+' <b>'+wx2+'</b>　最高 <b>'+Math.round(w.tmax2)+'℃</b>／最低 <b>'+Math.round(w.tmin2)+'℃</b></p>';}
 wxEl.innerHTML=html;
 }
