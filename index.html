@@ -56,7 +56,9 @@ label.lab{font-size:13px;font-weight:700;color:#5c6478;display:block;margin-top:
 #jmap{position:relative;line-height:0}
 #wxSrc{position:absolute;right:6px;bottom:2px;display:flex;align-items:center;gap:6px;font-size:11px;line-height:1.3;background:rgba(198,204,214,.25);color:#42506b;padding:2px 5px 2px 8px;border-radius:999px;z-index:6;white-space:nowrap}
 #mapNote{position:absolute;left:6px;top:2px;font-size:11px;line-height:1.3;background:transparent;color:#42506b;padding:2px 8px;pointer-events:none;z-index:6;white-space:nowrap}
-#wxRefresh{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.6);border:1px solid rgba(66,80,107,.4);box-shadow:0 1px 2px rgba(31,80,140,.25);cursor:pointer;padding:0;line-height:1;flex:none;transition:transform .1s,background .1s}
+#wxRefresh{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#f6f2e9;border:1px solid rgba(66,80,107,.4);box-shadow:0 1px 2px rgba(31,80,140,.25);cursor:pointer;padding:0;line-height:1;flex:none;transition:transform .1s,background .1s}
+#wxRefresh.fresh{background:radial-gradient(circle at 32% 28%,#c9ffd6,#3fd668 42%,#22b34c 72%,#14873a);border-color:rgba(16,94,42,.45);box-shadow:inset 0 -2px 3px rgba(10,70,30,.35),inset 0 2px 3px rgba(255,255,255,.55),0 1px 2px rgba(31,80,140,.25)}
+#wxRefresh.fresh svg{display:none}
 #wxRefresh:active{background:rgba(255,255,255,.9);transform:scale(.9)}
 #wxRefresh.spin{animation:wxs .8s linear infinite}
 @keyframes wxs{to{transform:rotate(360deg)}}
@@ -264,6 +266,9 @@ try{const raw=localStorage.getItem(LSKEY);if(raw){const p=JSON.parse(raw);if(p&&
 if(prefs.age==="s70")prefs.age="s60";
 function savePrefs(){try{localStorage.setItem(LSKEY,JSON.stringify(prefs));}catch(e){}}
 let wxData={};
+function latestEditionMs(){const j=new Date(new Date().toLocaleString("en-US",{timeZone:"Asia/Tokyo"}));let y=j.getFullYear(),m=j.getMonth(),d=j.getDate(),h=j.getHours(),eh=17;if(h>=17)eh=17;else if(h>=11)eh=11;else if(h>=5)eh=5;else{d-=1;eh=17;}return Date.UTC(y,m,d,eh-9,0,0);}
+function updateRefreshState(){const b=document.getElementById("wxRefresh");if(!b)return;const w=wxData[prefs.city];const fresh=!!(w&&w.issuedMs&&w.issuedMs>=latestEditionMs()-60000);b.classList.toggle("fresh",fresh);b.setAttribute("aria-label",fresh?"最新の天気データです":"天気データを更新");}
+setInterval(updateRefreshState,60000);
 let wxFailed=false;
 const FALLBACK_BAND=[1,1,2,3,4,5,6,6,5,4,2,1];
 function bandOf(tmax){for(let i=0;i<BANDS.length;i++){if(tmax<=BANDS[i].max)return i;}return BANDS.length-1;}
@@ -346,7 +351,7 @@ let tseg="";if(w.tmax!=null)tseg+="　最高 <b>"+Math.round(w.tmax)+"℃</b>";i
 let html='<p class="wxline">今日：'+wico+' <b>'+wtxt+'</b>'+tseg+'</p>';
 
 let side="";if(w.pop!=null)side="降水確率 "+Math.round(w.pop)+"%";if(w.wind)side+=(side?"　":"")+"風："+w.wind;document.getElementById("dWxSide").textContent=side;
-const se1=document.getElementById("wxSrc");const st1=document.getElementById("wxSrcTxt");if(st1)st1.textContent=w.issuedTxt?("気象庁 "+w.issuedTxt):"";if(se1)se1.style.display=w.issuedTxt?"":"none";
+const se1=document.getElementById("wxSrc");const st1=document.getElementById("wxSrcTxt");if(st1)st1.textContent=w.issuedTxt?("気象庁 "+w.issuedTxt):"";if(se1)se1.style.display=w.issuedTxt?"":"none";updateRefreshState();
 if(w.label2){const wi2=LABELWX[w.label2]||"🌡️";let tseg2="";if(w.tmax2!=null)tseg2+="　最高 <b>"+Math.round(w.tmax2)+"℃</b>";if(w.tmin2!=null)tseg2+=(tseg2?"／":"　")+"最低 <b>"+Math.round(w.tmin2)+"℃</b>";html+='<p class="wxline">明日：'+wi2+' <b>'+w.label2+'</b>'+tseg2+'</p>';}
 wxEl.innerHTML=html;
 }
@@ -443,7 +448,7 @@ let pop=null;
 if(A1){const dp=today.split("-").map(Number);const yst=new Date(Date.UTC(dp[0],dp[1]-1,dp[2]-1)).toISOString().slice(0,10);
 s1.timeDefines.forEach(function(td,i){const sd=dstr(td);const hr=parseInt(td.slice(11,13),10);if(sd===today||(sd===yst&&hr===18)){const v=parseInt(A1.pops[i],10);if(!isNaN(v)&&(pop==null||v>pop))pop=v;}});}
 const wind=(A0.winds&&A0.winds[0])?shortWind(A0.winds[0]):"";
-wxData[c.id]={issuedTxt:issued.getDate()+"日"+issued.getHours()+"時",label:jmaLabel(A0.weatherCodes[0],A0.weathers?A0.weathers[0]:""),tmax:tmax,tmin:tmin,pop:pop,wind:wind,label2:A0.weatherCodes[1]?jmaLabel(A0.weatherCodes[1],A0.weathers?A0.weathers[1]:""):null,tmax2:tmax2,tmin2:tmin2};
+wxData[c.id]={issuedMs:issued.getTime(),issuedTxt:issued.getDate()+"日"+issued.getHours()+"時",label:jmaLabel(A0.weatherCodes[0],A0.weathers?A0.weathers[0]:""),tmax:tmax,tmin:tmin,pop:pop,wind:wind,label2:A0.weatherCodes[1]?jmaLabel(A0.weatherCodes[1],A0.weathers?A0.weathers[1]:""):null,tmax2:tmax2,tmin2:tmin2};
 render();
 }).catch(function(){wxFailed=true;render();});
 });
