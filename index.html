@@ -17,6 +17,7 @@ header p{margin:1px 0 0;color:#c8cede;font-size:12.5px}
 main{max-width:680px;margin:0 auto;padding:10px 12px 8px}
 .card{background:#fff;border:1px solid #e3ddcd;border-radius:14px;padding:12px 14px;margin:0 0 12px;box-shadow:0 1px 3px rgba(30,40,70,.06)}
 .card h2{margin:0 0 6px;font-size:18px;color:#141b31}
+.card h2.mapguide{font-size:16px;line-height:1.4}
 .note{font-size:13.5px;color:#5c6478}
 .chips{display:flex;flex-wrap:wrap;gap:5px;margin:3px 0 2px}
 .chip{border:1px solid #ccd2e0;background:linear-gradient(180deg,#ffffff,#f2f4f9);color:#22304a;border-radius:999px;padding:2px 9px;font-size:12.5px;cursor:pointer;min-height:26px;box-shadow:0 1px 2px rgba(30,40,70,.07)}
@@ -33,7 +34,7 @@ label.lab{font-size:13px;font-weight:700;color:#5c6478;display:block;margin-top:
 .mapwrap{position:relative;width:100%;max-width:620px;margin:4px auto 0}
 #jmap{position:relative;line-height:0}
 .mapimg{width:100%;height:auto;display:block;border-radius:20px;box-shadow:0 12px 32px rgba(31,111,183,.28)}
-.mkbtn{position:absolute;transform:translate(-50%,-50%);width:80px;height:42px;background:transparent;border:0;cursor:pointer;padding:0;z-index:3;line-height:0}
+.mkbtn{position:absolute;transform:translate(-50%,-50%);width:40px;height:21px;background:transparent;border:0;cursor:pointer;padding:0;z-index:3;line-height:0}
 .tapring{display:none;position:absolute;inset:0;border-radius:999px;border:2.5px solid #e0bc5c;background:rgba(224,188,92,.22);box-shadow:0 0 0 3px rgba(224,188,92,.35),0 0 16px rgba(224,188,92,.9)}
 .mkbtn.sel .tapring{display:block}
 .wxbadge{position:absolute;z-index:2;pointer-events:none;background:rgba(255,255,255,.85);border:1px solid rgba(120,140,170,.35);border-radius:999px;padding:0 4px;font-size:9.5px;line-height:1.55;color:#22304a;white-space:nowrap;box-shadow:0 1px 3px rgba(31,80,140,.18)}
@@ -99,8 +100,7 @@ footer a{color:#3c5a9e}
 </section>
 
 <section class="card">
-<h2>地域を選ぶ</h2>
-<p class="note" style="margin:0 0 2px">都市名をタップして、地域を選んでください。</p>
+<h2 class="mapguide">都市名をタップして、地域を選んでください。</h2>
 <div class="mapwrap" id="mapwrap">
 <div id="jmap"><img class="mapimg" src="assets/japan-map-v2.webp" alt="日本地図"></div>
 </div>
