@@ -327,8 +327,8 @@ else{
 const wtxt=w.label;const wico=LABELWX[w.label]||"🌡️";
 let tseg="";if(w.tmax!=null)tseg+="　最高 <b>"+Math.round(w.tmax)+"℃</b>";if(w.tmin!=null)tseg+=(tseg?"／":"　")+"最低 <b>"+Math.round(w.tmin)+"℃</b>";
 let html='<p class="wxline">今日：'+wico+' <b>'+wtxt+'</b>'+tseg+'</p>';
-if(w.wind)html+='<p class="wxline" style="font-size:12.5px;color:#5b6478">風：'+w.wind+'</p>';
-document.getElementById("dWxSide").textContent=(w.pop==null?"":"降水確率 "+Math.round(w.pop)+"%");
+
+let side="";if(w.pop!=null)side="降水確率 "+Math.round(w.pop)+"%";if(w.wind)side+=(side?"　":"")+"風："+w.wind;document.getElementById("dWxSide").textContent=side;
 if(w.label2){const wi2=LABELWX[w.label2]||"🌡️";let tseg2="";if(w.tmax2!=null)tseg2+="　最高 <b>"+Math.round(w.tmax2)+"℃</b>";if(w.tmin2!=null)tseg2+=(tseg2?"／":"　")+"最低 <b>"+Math.round(w.tmin2)+"℃</b>";html+='<p class="wxline">明日：'+wi2+' <b>'+w.label2+'</b>'+tseg2+'</p>';}
 wxEl.innerHTML=html;
 }
