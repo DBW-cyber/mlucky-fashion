@@ -364,11 +364,29 @@ if(gapAdd)notes+='<p class="note">朝晩の冷え込み：昼と朝晩で体感�
 else if(gapNote)notes+='<p class="note">朝晩の冷え込み：最低気温との差が大きい日です。出発が早い・帰りが遅い場合は1段階厚くしてください。</p>';
 document.getElementById("dNotes").innerHTML=notes;
 document.getElementById("dTrend").textContent=trendHits.length?("今季の流行メモ：今季（"+SEASON_NAME[season]+"）の要素は「"+trendHits.slice(0,3).join("」「")+"」です。流行単品は当季の商品から選定しています。"):TREND[band];
+alignGender();
 const hw=document.getElementById("hdrWx");
 const hwd=wxData[prefs.city];
 if(hw&&hwd&&WX[hwd.code]){const hf=WXIMG[WX[hwd.code][1]];if(hf){const hs="assets/wx/"+hf+".webp";if(hw.getAttribute("src")!==hs)hw.src=hs;hw.style.display="block";}}
 updateBadges();
 }
+function alignGender(){
+const g=document.getElementById("genderChips");
+const au=document.querySelector('.chip[data-a="u20"]');
+const ah=document.querySelector('.chip[data-a="hs"]');
+const f=document.querySelector('#genderChips .chip[data-g="f"]');
+if(!g||!au||!ah||!f)return;
+g.style.transform="";g.style.gap="";
+const cu=au.getBoundingClientRect(),ch=ah.getBoundingClientRect(),cf=f.getBoundingClientRect();
+const pitch=(ch.left+ch.width/2)-(cu.left+cu.width/2);
+const gapPx=pitch-cf.width;
+g.style.gap=(gapPx>0?gapPx:0)+"px";
+const cf2=f.getBoundingClientRect();
+const dx=(cu.left+cu.width/2)-(cf2.left+cf2.width/2);
+g.style.transform="translateX("+dx+"px)";
+}
+window.addEventListener("resize",()=>alignGender());
+window.addEventListener("load",()=>alignGender());
 function fetchWx(){
 const lats=CITIES.map(c=>c.lat).join(","),lons=CITIES.map(c=>c.lon).join(",");
 const url="https://api.open-meteo.com/v1/forecast?latitude="+lats+"&longitude="+lons+"&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max&forecast_days=2&timezone=Asia%2FTokyo";
