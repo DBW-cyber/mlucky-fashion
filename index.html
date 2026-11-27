@@ -10,22 +10,22 @@
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Noto Sans JP",sans-serif;background:#f4f1e9;color:#22304a;font-size:17px;line-height:1.65;overflow-x:hidden}
-header{background:#141b31;color:#fff;padding:12px 16px 10px;text-align:center}
-header .brand{color:#e0bc5c;font-weight:700;letter-spacing:.14em;font-size:12px}
-header h1{margin:1px 0 2px;font-size:22px;letter-spacing:.06em}
-header p{margin:0;color:#c8cede;font-size:13px}
-main{max-width:680px;margin:0 auto;padding:14px 12px 8px}
-.card{background:#fff;border:1px solid #e3ddcd;border-radius:14px;padding:16px;margin:0 0 14px;box-shadow:0 1px 3px rgba(30,40,70,.06)}
-.card h2{margin:0 0 10px;font-size:20px;color:#141b31}
-.note{font-size:14px;color:#5c6478}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 2px}
-.chip{border:1.5px solid #c9cfdd;background:#fff;color:#22304a;border-radius:999px;padding:5px 11px;font-size:14.5px;cursor:pointer;min-height:36px}
-.chip.on{background:#141b31;color:#fff;border-color:#141b31}
+header{position:relative;background:#141b31;color:#fff;padding:7px 12px 6px;text-align:center}
+header .brand{position:absolute;top:7px;right:10px;color:#e0bc5c;font-weight:700;letter-spacing:.1em;font-size:9.5px}
+header h1{margin:0;font-size:22px;letter-spacing:.06em;line-height:1.25}
+header p{margin:1px 0 0;color:#c8cede;font-size:12.5px}
+main{max-width:680px;margin:0 auto;padding:10px 12px 8px}
+.card{background:#fff;border:1px solid #e3ddcd;border-radius:14px;padding:12px 14px;margin:0 0 12px;box-shadow:0 1px 3px rgba(30,40,70,.06)}
+.card h2{margin:0 0 6px;font-size:18px;color:#141b31}
+.note{font-size:13.5px;color:#5c6478}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin:3px 0 2px}
+.chip{border:1px solid #ccd2e0;background:linear-gradient(180deg,#ffffff,#f2f4f9);color:#22304a;border-radius:999px;padding:2px 9px;font-size:12.5px;cursor:pointer;min-height:26px;box-shadow:0 1px 2px rgba(30,40,70,.07)}
+.chip.on{background:#141b31;color:#fff;border-color:#141b31;box-shadow:0 2px 6px rgba(20,27,49,.25)}
 .chip.gold.on{background:#e0bc5c;color:#141b31;border-color:#e0bc5c;font-weight:700}
 label.lab{font-size:13px;font-weight:700;color:#5c6478;display:block;margin-top:7px}
 .mapwrap{position:relative;width:100%;max-width:620px;margin:4px auto 0}
-#jmap{position:relative;line-height:0}
-.mapimg{width:100%;height:auto;display:block;border-radius:20px;box-shadow:0 12px 32px rgba(31,111,183,.28)}
+#jmap{position:relative;line-height:0;aspect-ratio:1280/370}
+.mapimg{width:100%;height:100%;object-fit:fill;display:block;border-radius:20px;box-shadow:0 12px 32px rgba(31,111,183,.28)}
 .mkbtn{position:absolute;transform:translate(-50%,-50%);width:30px;height:30px;background:transparent;border:0;cursor:pointer;padding:0;z-index:3;line-height:0}
 .tapring{display:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;border:2.5px solid #e0bc5c;box-shadow:0 0 0 2.5px rgba(224,188,92,.35),0 0 13px rgba(224,188,92,.85)}
 .mkbtn.sel .tapring{display:block}
@@ -60,13 +60,11 @@ footer a{color:#3c5a9e}
 <main>
 <section class="card" id="prefs">
 <h2>わたしの設定</h2>
-<label class="lab">性別</label>
 <div class="chips" id="genderChips">
 <button type="button" class="chip" data-g="f">女性</button>
 <button type="button" class="chip" data-g="m">男性</button>
 </div>
-<label class="lab">年代</label>
-<div class="chips" id="ageChips">
+<div class="chips" id="ageChips" style="margin-top:7px">
 <button type="button" class="chip" data-a="jh">中学生</button>
 <button type="button" class="chip" data-a="hs">高校生</button>
 <button type="button" class="chip" data-a="u20">大学生・20代</button>
@@ -76,13 +74,12 @@ footer a{color:#3c5a9e}
 <button type="button" class="chip" data-a="s70">70代以上</button>
 </div>
 <div id="studentRow" class="hidden">
-<label class="lab">学生の日</label>
-<div class="chips" id="dayChips">
+<div class="chips" id="dayChips" style="margin-top:7px">
 <button type="button" class="chip gold" data-d="weekday">平日（制服）</button>
 <button type="button" class="chip gold" data-d="holiday">休日（私服）</button>
 </div>
 </div>
-<p class="note">設定はあなたの端末の中だけに保存されます。</p>
+<p class="note" style="margin:6px 0 0">設定はあなたの端末の中だけに保存されます。</p>
 </section>
 
 <section class="card">
