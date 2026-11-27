@@ -31,10 +31,10 @@ main{max-width:680px;margin:0 auto;padding:10px 12px 8px}
 .chip.gold.on{background:#e0bc5c;color:#141b31;border-color:#e0bc5c;font-weight:700}
 label.lab{font-size:13px;font-weight:700;color:#5c6478;display:block;margin-top:7px}
 .mapwrap{position:relative;width:100%;max-width:620px;margin:4px auto 0}
-#jmap{position:relative;line-height:0;aspect-ratio:1280/370}
-.mapimg{width:100%;height:100%;object-fit:fill;display:block;border-radius:20px;box-shadow:0 12px 32px rgba(31,111,183,.28)}
-.mkbtn{position:absolute;transform:translate(-50%,-50%);width:30px;height:30px;background:transparent;border:0;cursor:pointer;padding:0;z-index:3;line-height:0}
-.tapring{display:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;border:2.5px solid #e0bc5c;box-shadow:0 0 0 2.5px rgba(224,188,92,.35),0 0 13px rgba(224,188,92,.85)}
+#jmap{position:relative;line-height:0}
+.mapimg{width:100%;height:auto;display:block;border-radius:20px;box-shadow:0 12px 32px rgba(31,111,183,.28)}
+.mkbtn{position:absolute;transform:translate(-50%,-50%);width:80px;height:42px;background:transparent;border:0;cursor:pointer;padding:0;z-index:3;line-height:0}
+.tapring{display:none;position:absolute;inset:0;border-radius:999px;border:2.5px solid #e0bc5c;background:rgba(224,188,92,.22);box-shadow:0 0 0 3px rgba(224,188,92,.35),0 0 16px rgba(224,188,92,.9)}
 .mkbtn.sel .tapring{display:block}
 .wxline{font-size:16.5px;margin:2px 0}
 .wxline b{color:#141b31}
@@ -93,8 +93,9 @@ footer a{color:#3c5a9e}
 
 <section class="card">
 <h2>地域を選ぶ</h2>
+<p class="note" style="margin:0 0 2px">都市名をタップして、地域を選んでください。</p>
 <div class="mapwrap" id="mapwrap">
-<div id="jmap"><img class="mapimg" src="assets/japan-map-labeled.webp" alt="日本地図"></div>
+<div id="jmap"><img class="mapimg" src="assets/japan-map-v2.webp" alt="日本地図"></div>
 </div>
 </section>
 
@@ -232,7 +233,7 @@ document.getElementById("studentRow").classList.toggle("hidden",!isStudent());
 }
 const REPPREF={sapporo:"北海道",sendai:"宮城",tokyo:"東京",nagoya:"愛知",kyoto:"京都",osaka:"大阪",fukuoka:"福岡",naha:"沖縄"};
 let selectedPref=REPPREF[prefs.city]||"大阪";
-const MAPPOS={sapporo:[75.4,13.4],sendai:[73.2,37.4],tokyo:[66.0,56.3],nagoya:[51.9,60.9],kyoto:[45.6,53.9],osaka:[44.3,62.5],fukuoka:[17.5,63.4],naha:[18.4,81.1]};
+const MAPPOS={sapporo:[65.5,18.5],sendai:[82.2,43.8],tokyo:[75.7,60.9],nagoya:[58.5,76.1],kyoto:[50.8,44.9],osaka:[47.8,81.8],fukuoka:[18.8,68.2],naha:[8.2,83.2]};
 function buildMap(){
 const wrap=document.getElementById("jmap");
 CITIES.forEach(function(c){
