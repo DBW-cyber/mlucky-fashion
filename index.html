@@ -35,6 +35,9 @@ main{max-width:680px;margin:0 auto;padding:10px 12px 8px}
 
 #ageChips,#ageTop{flex-wrap:nowrap;gap:4px;gap:1.17cqw}
 #ageChips{flex:1;justify-content:space-between}
+#ageChips .chip.achip{flex:1 1 0;height:34px;height:9.9cqw;min-height:0;padding:3px 4px;display:flex;align-items:center;justify-content:center;line-height:0}
+.achip img{max-width:100%;max-height:100%;display:block}
+#ageChips .chip.on img{filter:invert(1)}
 .guideline{display:flex;flex-wrap:nowrap;gap:5px;gap:1.46cqw;justify-content:space-between;align-items:center}
 .guideline .chips{margin:0}
 .guideline .setupguide{margin:0}
@@ -103,13 +106,13 @@ footer a{color:#3c5a9e}
 </div>
 <div class="secondrow">
 <div class="chips" id="ageChips">
-<button type="button" class="chip" data-a="s70">70代〜</button>
-<button type="button" class="chip" data-a="s60">60代</button>
-<button type="button" class="chip" data-a="w50">50代</button>
-<button type="button" class="chip" data-a="w30">30〜40代</button>
-<button type="button" class="chip" data-a="u20">大学20代</button>
-<button type="button" class="chip" data-a="hs">高校</button>
-<button type="button" class="chip" data-a="jh">中学</button>
+<button type="button" class="chip achip" data-a="s70" aria-label="70代"><img src="assets/age-s70.webp" alt="70代"></button>
+<button type="button" class="chip achip" data-a="s60" aria-label="60代"><img src="assets/age-s60.webp" alt="60代"></button>
+<button type="button" class="chip achip" data-a="w50" aria-label="50代"><img src="assets/age-w50.webp" alt="50代"></button>
+<button type="button" class="chip achip" data-a="w30" aria-label="30~40代"><img src="assets/age-w30.webp" alt="30~40代"></button>
+<button type="button" class="chip achip" data-a="u20" aria-label="20代大学"><img src="assets/age-u20.webp" alt="20代大学"></button>
+<button type="button" class="chip achip" data-a="hs" aria-label="高校"><img src="assets/age-hs.webp" alt="高校"></button>
+<button type="button" class="chip achip" data-a="jh" aria-label="中学"><img src="assets/age-jh.webp" alt="中学"></button>
 </div>
 </div>
 <div class="mapwrap" id="mapwrap">
