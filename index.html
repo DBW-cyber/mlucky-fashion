@@ -370,7 +370,7 @@ document.getElementById("dTrend").textContent=trendHits.length?("今季の流行
 alignGender();
 const hw=document.getElementById("hdrWx");
 const hwd=wxData[prefs.city];
-if(hw&&hwd&&WX[hwd.code]){const hf=WXIMG[WX[hwd.code][1]];if(hf){const hs="assets/wx/"+hf+".webp";if(hw.getAttribute("src")!==hs)hw.src=hs;hw.style.display="block";}}
+if(hw&&hwd&&WX[hwd.code]){const hf=WXIMG[WX[hwd.code][1]];if(hf){const hs="assets/wx/"+hf+".webp?v=3";if(hw.getAttribute("src")!==hs)hw.src=hs;hw.style.display="block";}}
 updateBadges();
 }
 function alignGender(){
