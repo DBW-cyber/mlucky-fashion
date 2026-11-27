@@ -10,7 +10,12 @@
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Noto Sans JP",sans-serif;background:#f4f1e9;color:#22304a;font-size:17px;line-height:1.65;overflow-x:hidden}
-header{position:relative;background:#141b31;color:#fff;padding:7px 12px 6px;text-align:center}
+header{position:relative;background:#141b31;color:#fff;padding:16px 12px 14px;text-align:center;max-width:640px;width:calc(100% - 24px);margin:10px auto 0;border-radius:18px;overflow:hidden;box-shadow:0 2px 10px rgba(27,39,67,.10)}
+#hdrWx{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.hdroverlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,20,38,.38),rgba(16,20,38,.58));z-index:1}
+header .brand{z-index:2}
+header h1{position:relative;z-index:2;text-shadow:0 1px 10px rgba(10,14,28,.5)}
+header p{position:relative;z-index:2;text-shadow:0 1px 6px rgba(10,14,28,.5)}
 header .brand{position:absolute;top:8px;right:10px;color:#e0bc5c;font-weight:300;letter-spacing:.34em;font-size:8.5px;font-family:Georgia,'Playfair Display','Times New Roman',serif;font-style:italic}
 header h1{margin:0;font-size:22px;letter-spacing:.06em;line-height:1.25}
 header p{margin:1px 0 0;color:#c8cede;font-size:12.5px}
@@ -74,6 +79,8 @@ footer a{color:#3c5a9e}
 </head>
 <body>
 <header>
+<img id="hdrWx" alt="" style="display:none">
+<div class="hdroverlay"></div>
 <div class="brand">MLucky</div>
 <h1>ファッションVS天気</h1>
 <p>どんな天気にも負けない、今日のコーデを</p>
@@ -228,6 +235,7 @@ const SEASON_NAME={spring:"春",summer:"夏",autumn:"秋",winter:"冬"};
 function seasonOf(d){const m=d.getMonth()+1;if(m>=3&&m<=5)return "spring";if(m>=6&&m<=8)return "summer";if(m>=9&&m<=11)return "autumn";return "winter";}
 function wxCat(code){if([71,73,75,77,85,86].includes(code))return "snow";if([95,96,99].includes(code))return "thunder";if([51,53,55,56,57,61,63,65,66,67,80,81,82].includes(code))return "rain";if(code===0||code===1)return "sun";return "cloud";}
 const WX={0:["☀️","晴れ"],1:["🌤️","晴れ時々くもり"],2:["🌤️","晴れ時々くもり"],3:["☁️","くもり"],45:["🌫️","霧"],48:["🌫️","霧"],51:["🌦️","霧雨"],53:["🌦️","霧雨"],55:["🌦️","霧雨"],56:["🌧️","雨"],57:["🌧️","雨"],61:["🌧️","雨"],63:["☔","雨"],65:["☔","雨"],66:["☔","雨"],67:["☔","雨"],71:["🌨️","雪"],73:["❄️","雪"],75:["❄️","雪"],77:["❄️","雪"],80:["🌦️","にわか雨"],81:["🌦️","にわか雨"],82:["🌧️","にわか雨"],85:["🌨️","雪"],86:["🌨️","雪"],95:["⛈️","雷雨"],96:["⛈️","雷雨"],99:["⛈️","雷雨"]};
+const WXIMG={"晴れ":"sunny","晴れ時々くもり":"suncloud","くもり":"cloudy","霧":"fog","霧雨":"drizzle","雨":"rain","にわか雨":"shower","雪":"snow","雷雨":"thunder"};
 const LSKEY="mlucky_fashion_prefs";
 let prefs={gender:"f",age:"u20",day:"weekday",city:"tokyo"};
 try{const raw=localStorage.getItem(LSKEY);if(raw){const p=JSON.parse(raw);if(p&&typeof p==="object"){prefs=Object.assign(prefs,p);}}}catch(e){}
@@ -356,6 +364,9 @@ if(gapAdd)notes+='<p class="note">朝晩の冷え込み：昼と朝晩で体感�
 else if(gapNote)notes+='<p class="note">朝晩の冷え込み：最低気温との差が大きい日です。出発が早い・帰りが遅い場合は1段階厚くしてください。</p>';
 document.getElementById("dNotes").innerHTML=notes;
 document.getElementById("dTrend").textContent=trendHits.length?("今季の流行メモ：今季（"+SEASON_NAME[season]+"）の要素は「"+trendHits.slice(0,3).join("」「")+"」です。流行単品は当季の商品から選定しています。"):TREND[band];
+const hw=document.getElementById("hdrWx");
+const hwd=wxData[prefs.city];
+if(hw&&hwd&&WX[hwd.code]){const hf=WXIMG[WX[hwd.code][1]];if(hf){const hs="assets/wx/"+hf+".webp";if(hw.getAttribute("src")!==hs)hw.src=hs;hw.style.display="block";}}
 updateBadges();
 }
 function fetchWx(){
