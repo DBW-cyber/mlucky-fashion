@@ -1,6 +1,6 @@
 {
-  "name": "MLucky コーデ VS 天気",
-  "short_name": "コーデ VS 天気",
+  "name": "MLucky 今日のコーデ優勝",
+  "short_name": "コーデ優勝",
   "start_url": ".",
   "scope": ".",
   "display": "standalone",
