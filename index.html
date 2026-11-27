@@ -22,7 +22,9 @@ main{max-width:680px;margin:0 auto;padding:10px 12px 8px}
 .chip{border:1px solid #ccd2e0;background:linear-gradient(180deg,#ffffff,#f2f4f9);color:#22304a;border-radius:999px;padding:2px 9px;font-size:12.5px;cursor:pointer;min-height:26px;box-shadow:0 1px 2px rgba(30,40,70,.07)}
 .chip.on{background:#141b31;color:#fff;border-color:#141b31;box-shadow:0 2px 6px rgba(20,27,49,.25)}
 #prefs{padding:10px 12px}
-#prefs h2{font-size:16.5px;margin-bottom:4px}
+#prefs h2{font-size:16.5px;margin:0;white-space:nowrap}
+.prefsTop{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.prefsTop .chips{margin:0}
 #ageChips{flex-wrap:nowrap;gap:4px}
 #ageChips .chip{font-size:11px;padding:2px 6px;white-space:nowrap;min-height:24px}
 @media (max-width:360px){#ageChips .chip{font-size:10.5px;padding:2px 4px}}
@@ -64,19 +66,21 @@ footer a{color:#3c5a9e}
 </header>
 <main>
 <section class="card" id="prefs">
-<h2>わたしの設定</h2>
+<div class="prefsTop">
 <div class="chips" id="genderChips">
 <button type="button" class="chip" data-g="f">女性</button>
 <button type="button" class="chip" data-g="m">男性</button>
 </div>
+<h2>わたしの設定</h2>
+</div>
 <div class="chips" id="ageChips" style="margin-top:7px">
 <button type="button" class="chip" data-a="jh">中学</button>
 <button type="button" class="chip" data-a="hs">高校</button>
-<button type="button" class="chip" data-a="u20">大学・20代</button>
+<button type="button" class="chip" data-a="u20">大学20代</button>
 <button type="button" class="chip" data-a="w30">30〜40代</button>
 <button type="button" class="chip" data-a="w50">50代</button>
 <button type="button" class="chip" data-a="s60">60代</button>
-<button type="button" class="chip" data-a="s70">70代以上</button>
+<button type="button" class="chip" data-a="s70">70代〜</button>
 </div>
 <div id="studentRow" class="hidden">
 <div class="chips" id="dayChips" style="margin-top:7px">
