@@ -273,7 +273,9 @@ const el=document.getElementById("wxb-"+c.id); if(!el)return;
 const w=wxData[c.id];
 if(!w){el.textContent="";return;}
 const ic=LABELWX[w.label]||"";
-el.textContent=(w.tmax==null)?ic:(ic+" "+(w.tmin==null?"〜":Math.round(w.tmin)+"〜")+Math.round(w.tmax)+"°");
+if(w.tmax==null){el.textContent=ic;}
+else if(w.tmin==null){el.innerHTML=ic+" "+'<span style="font-size:88%">'+"〜"+Math.round(w.tmax)+"°</span>";}
+else{el.textContent=ic+" "+Math.round(w.tmin)+"〜"+Math.round(w.tmax)+"°";}
 });
 }
 function buildMap(){
@@ -326,7 +328,7 @@ if(!hasWx){wxEl.innerHTML='<p class="note">天気を読み込み中です…</p>
 else{
 const wtxt=w.label;const wico=LABELWX[w.label]||"🌡️";
 let tseg="";if(w.tmax!=null)tseg+="　最高 <b>"+Math.round(w.tmax)+"℃</b>";if(w.tmin!=null)tseg+=(tseg?"／":"　")+"最低 <b>"+Math.round(w.tmin)+"℃</b>";
-let html='<p class="wxline">今日：'+wico+' <b>'+wtxt+'</b>'+tseg+'</p>';
+let html='<p class="wxline">今日：'+wico+' <b>'+wtxt+'</b>'+(w.tmin==null&&w.tmax!=null?('<span style="font-size:12.5px">'+tseg+'</span>'):tseg)+'</p>';
 if(w.wind)html+='<p class="wxline" style="font-size:12.5px;color:#5b6478">風：'+w.wind+'</p>';
 document.getElementById("dWxSide").textContent=(w.pop==null?"":"降水確率 "+Math.round(w.pop)+"%");
 if(w.label2){const wi2=LABELWX[w.label2]||"🌡️";let tseg2="";if(w.tmax2!=null)tseg2+="　最高 <b>"+Math.round(w.tmax2)+"℃</b>";if(w.tmin2!=null)tseg2+=(tseg2?"／":"　")+"最低 <b>"+Math.round(w.tmin2)+"℃</b>";html+='<p class="wxline">明日：'+wi2+' <b>'+w.label2+'</b>'+tseg2+'</p>';}
