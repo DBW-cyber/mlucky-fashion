@@ -1,0 +1,102 @@
+{
+ "generatedAt": "2026-11-27T17:07:02+09:00",
+ "date": "2026-11-27",
+ "cities": {
+  "sapporo": {
+   "issuedMs": 1795766400000,
+   "issuedTxt": "27日17時",
+   "label": "くもり",
+   "label2": "雪",
+   "tmax": null,
+   "tmin": null,
+   "tmax2": 14,
+   "tmin2": 9,
+   "pop": 20,
+   "wind": "南の風 後 南東の風"
+  },
+  "sendai": {
+   "issuedMs": 1795766400000,
+   "issuedTxt": "27日17時",
+   "label": "晴れ",
+   "label2": "にわか雨",
+   "tmax": null,
+   "tmin": null,
+   "tmax2": 15,
+   "tmin2": 9,
+   "pop": 0,
+   "wind": "南の風 後 西の風"
+  },
+  "tokyo": {
+   "issuedMs": 1795766400000,
+   "issuedTxt": "27日17時",
+   "label": "晴れ時々くもり",
+   "label2": "雨",
+   "tmax": null,
+   "tmin": null,
+   "tmax2": 20,
+   "tmin2": 10,
+   "pop": 20,
+   "wind": "南の風"
+  },
+  "nagoya": {
+   "issuedMs": 1795766400000,
+   "issuedTxt": "27日17時",
+   "label": "雨",
+   "label2": "雷雨",
+   "tmax": null,
+   "tmin": null,
+   "tmax2": 18,
+   "tmin2": 11,
+   "pop": 80,
+   "wind": "南の風 後 北の風"
+  },
+  "kyoto": {
+   "issuedMs": 1795766400000,
+   "issuedTxt": "27日17時",
+   "label": "雨",
+   "label2": "雷雨",
+   "tmax": null,
+   "tmin": null,
+   "tmax2": 20,
+   "tmin2": 13,
+   "pop": 50,
+   "wind": "南東の風 後 北東の風"
+  },
+  "osaka": {
+   "issuedMs": 1795766400000,
+   "issuedTxt": "27日17時",
+   "label": "雨",
+   "label2": "雷雨",
+   "tmax": null,
+   "tmin": null,
+   "tmax2": 19,
+   "tmin2": 13,
+   "pop": 50,
+   "wind": "南西の風 後 北東の風"
+  },
+  "fukuoka": {
+   "issuedMs": 1795766400000,
+   "issuedTxt": "27日17時",
+   "label": "雨",
+   "label2": "にわか雨",
+   "tmax": null,
+   "tmin": null,
+   "tmax2": 17,
+   "tmin2": 14,
+   "pop": 50,
+   "wind": "南の風 後 南東の風"
+  },
+  "naha": {
+   "issuedMs": 1795766400000,
+   "issuedTxt": "27日17時",
+   "label": "くもり",
+   "label2": "にわか雨",
+   "tmax": null,
+   "tmin": null,
+   "tmax2": 23,
+   "tmin2": 21,
+   "pop": 20,
+   "wind": "北西の風"
+  }
+ }
+}
