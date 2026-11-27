@@ -398,6 +398,10 @@ g.style.transform="translateX("+dx+"px)";
 }
 window.addEventListener("resize",()=>alignGender());
 window.addEventListener("load",()=>alignGender());
+function shortWind(t){if(!t)return "";const toks=t.replace(/　/g," ").split(/\s+/).filter(Boolean);let cut=toks.length;for(let i=0;i<toks.length;i++){if(toks[i]==="では"){cut=i;break;}}
+let main=toks.slice(0,cut);
+while(main.length&&!/風|強く|弱く/.test(main[main.length-1]))main.pop();
+return main.join(" ");}
 function fetchWx(){
 CITIES.forEach(function(c){
 fetch("https://www.jma.go.jp/bosai/forecast/data/forecast/"+c.jma+".json").then(function(r){return r.json();}).then(function(j){
@@ -420,7 +424,7 @@ const tmin2=(tm[tmr+"|00"]!=null)?tm[tmr+"|00"]:null;
 let pop=null;
 if(A1){const dp=today.split("-").map(Number);const yst=new Date(Date.UTC(dp[0],dp[1]-1,dp[2]-1)).toISOString().slice(0,10);
 s1.timeDefines.forEach(function(td,i){const sd=dstr(td);const hr=parseInt(td.slice(11,13),10);if(sd===today||(sd===yst&&hr===18)){const v=parseInt(A1.pops[i],10);if(!isNaN(v)&&(pop==null||v>pop))pop=v;}});}
-const wind=(A0.winds&&A0.winds[0])?A0.winds[0].replace(/\u3000/g," ").replace(/\s+/g," ").trim():"";
+const wind=(A0.winds&&A0.winds[0])?shortWind(A0.winds[0]):"";
 wxData[c.id]={label:jmaLabel(A0.weatherCodes[0],A0.weathers?A0.weathers[0]:""),tmax:tmax,tmin:tmin,pop:pop,wind:wind,label2:A0.weatherCodes[1]?jmaLabel(A0.weatherCodes[1],A0.weathers?A0.weathers[1]:""):null,tmax2:tmax2,tmin2:tmin2};
 render();
 }).catch(function(){wxFailed=true;render();});
