@@ -373,12 +373,12 @@ const band=hasWx?bandOf(w.tmax!=null?w.tmax:(w.tmax2!=null?w.tmax2:15)):FALLBACK
 if(!hasWx){wxEl.innerHTML='<p class="note">天気を読み込み中です…</p>';document.getElementById("dWxSide").textContent="";const se0=document.getElementById("wxSrc");if(se0)se0.style.display="none";}
 else{
 const wtxt=w.label;const wico=LABELWX[w.label]||"🌡️";
-let tseg="";if(w.tmax!=null)tseg+="　最高 <b>"+Math.round(w.tmax)+"℃</b>";if(w.tmin!=null)tseg+=(tseg?"／":"　")+"最低 <b>"+Math.round(w.tmin)+"℃</b>";
+let tseg="";if(w.tmax!=null)tseg+="　<b>"+Math.round(w.tmax)+"℃</b>";if(w.tmin!=null)tseg+=(tseg?"／":"　")+"<b>"+Math.round(w.tmin)+"℃</b>";
 let html='<p class="wxline">今日：'+wico+' <b>'+wtxt+'</b>'+tseg+'</p>';
 
-let side="";if(w.pop!=null)side="降水確率 "+Math.round(w.pop)+"%";if(w.wind)side+=(side?"　":"")+"風："+w.wind;document.getElementById("dWxSide").textContent=side;
+let side="";if(w.pop!=null)side="降水確率 "+Math.round(w.pop)+"%";if(w.wind)side+=(side?"　":"")+"風："+w.wind.replace(/の風/g,"");document.getElementById("dWxSide").textContent=side;
 const se1=document.getElementById("wxSrc");const st1=document.getElementById("wxSrcTxt");if(st1)st1.textContent=w.issuedTxt?("気象庁 "+w.issuedTxt):"";if(se1)se1.style.display=w.issuedTxt?"":"none";updateRefreshState();
-if(w.label2){const wi2=LABELWX[w.label2]||"🌡️";let tseg2="";if(w.tmax2!=null)tseg2+="　最高 <b>"+Math.round(w.tmax2)+"℃</b>";if(w.tmin2!=null)tseg2+=(tseg2?"／":"　")+"最低 <b>"+Math.round(w.tmin2)+"℃</b>";html+='<p class="wxline">明日：'+wi2+' <b>'+w.label2+'</b>'+tseg2+'</p>';}
+if(w.label2){const wi2=LABELWX[w.label2]||"🌡️";let tseg2="";if(w.tmax2!=null)tseg2+="　<b>"+Math.round(w.tmax2)+"℃</b>";if(w.tmin2!=null)tseg2+=(tseg2?"／":"　")+"<b>"+Math.round(w.tmin2)+"℃</b>";html+='<p class="wxline">明日：'+wi2+' <b>'+w.label2+'</b>'+tseg2+'</p>';}
 wxEl.innerHTML=html;
 }
 document.getElementById("dBand").textContent=BANDS[band].name+((hasWx&&w.tmax!=null)?("（最高 "+Math.round(w.tmax)+"℃）"):"（季節の目安）");
@@ -452,7 +452,7 @@ window.addEventListener("load",()=>alignGender());
 function shortWind(t){if(!t)return "";const toks=t.replace(/　/g," ").split(/\s+/).filter(Boolean);let cut=toks.length;for(let i=0;i<toks.length;i++){if(toks[i]==="では"){cut=i;break;}}
 let main=toks.slice(0,cut);
 while(main.length&&!/風|強く|弱く/.test(main[main.length-1]))main.pop();
-return main.join(" ");}
+return main.join(" ").replace(/の風/g,"");}
 function loadWx(){
 fetch("wxdata.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("wxdata");return r.json();}).then(function(d){
 if(!d||!d.cities)throw new Error("wxdata");
