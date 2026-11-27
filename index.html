@@ -38,7 +38,8 @@ main{max-width:680px;margin:0 auto;padding:6px 12px 8px}
 #ageChips .chip.achip{flex:1 1 0;height:34px;height:9.9cqw;min-height:0;padding:3px 4px;display:flex;align-items:center;justify-content:center;line-height:0}
 .achip img{max-width:100%;max-height:100%;display:block}
 #ageChips .chip.on img{filter:invert(1)}
-.guideline{display:flex;flex-wrap:nowrap;gap:5px;gap:1.46cqw;justify-content:space-between;align-items:center}
+.guideline{display:flex;flex-wrap:nowrap;gap:5px;gap:1.46cqw;justify-content:space-between;align-items:center;position:relative}
+.tapicon{position:absolute;right:7.143%;top:50%;transform:translate(50%,-50%);height:30px;height:8.8cqw;width:auto;pointer-events:none}
 .guideline .chips{margin:0}
 .guideline .setupguide{margin:0}
 .secondrow{display:flex;flex-wrap:nowrap;gap:5px;gap:1.46cqw;justify-content:space-between;align-items:center;margin-top:5px;margin-top:1.46cqw}
@@ -112,6 +113,7 @@ footer a{color:#3c5a9e}
 <main>
 <section class="card" id="prefs">
 <div class="guideline">
+<img class="tapicon" src="assets/tap-icon.webp" alt="">
 <div class="chips" id="genderChips">
 <button type="button" class="chip gchip" data-g="f" aria-label="女性"><img src="assets/gender-f.webp" alt="女性"></button>
 <button type="button" class="chip gchip" data-g="m" aria-label="男性"><img src="assets/gender-m.webp" alt="男性"></button>
