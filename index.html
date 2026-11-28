@@ -181,7 +181,7 @@ footer a{color:#3c5a9e}
 <p class="note" id="dProxy"></p>
 <span class="phwrap dph"><img class="photo" id="dPhoto" src="assets/osaka.webp" alt="おすすめコーデの全身写真"><span class="aitag">AI生成画像</span><span class="phnote">写真はイメージです。体感や体調で調整してください。</span></span>
 <p class="big" id="dTitle" style="margin:12px 0 2px"></p>
-<p style="margin:0"><span class="tag" id="dBand"></span><span class="note" id="dSpot"></span></p>
+<p style="margin:0"><span class="tag" id="dBand"></span></p>
 <ul class="items" id="dItems"></ul>
 <div id="dNotes"></div>
 <p class="note" id="dTrend"></p>
@@ -378,7 +378,6 @@ const c=CITIES.find(v=>v.id===prefs.city)||CITIES[5];
 document.getElementById("dCity").textContent=c.name;
 document.getElementById("dPhoto").src=photoFor(c);
 CITIES.forEach(cc=>{const im=document.getElementById("gimg-"+cc.id);if(im)im.src=photoFor(cc);});
-document.getElementById("dSpot").textContent=c.spot;
 const repName=REPPREF[c.id];
 document.getElementById("dProxy").textContent=(selectedPref&&repName&&selectedPref!==repName)?("（"+selectedPref+"の周辺は"+c.name+"の予報をもとに表示しています）"):"";
 const w=wxData[c.id];
