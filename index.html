@@ -242,7 +242,10 @@ osaka:{"f-jh":"assets/osaka-f-jh.webp","f-hs":"assets/osaka-f-hs.webp","f-u20":"
 fukuoka:{"f-jh":"assets/fukuoka-f-jh.webp","f-hs":"assets/fukuoka-f-hs.webp","f-u20":"assets/fukuoka-f-young.webp","f-w30":"assets/fukuoka-f-adult.webp","f-w50":"assets/fukuoka-f-w50.webp","f-s60":"assets/fukuoka-f-s60.webp","f-s70":"assets/fukuoka-f-senior.webp","m-jh":"assets/fukuoka-m-jh.webp","m-hs":"assets/fukuoka-m-hs.webp","m-u20":"assets/fukuoka.webp","m-w30":"assets/fukuoka-m-adult.webp","m-w50":"assets/fukuoka-m-w50.webp","m-s60":"assets/fukuoka-m-s60.webp","m-s70":"assets/fukuoka-m-senior.webp"},
 naha:{"f-jh":"assets/naha-f-jh.webp","f-hs":"assets/naha-f-hs.webp","f-u20":"assets/naha-f-young.webp","f-w30":"assets/naha.webp","f-w50":"assets/naha-f-w50.webp","f-s60":"assets/naha-f-s60.webp","f-s70":"assets/naha-f-senior.webp","m-jh":"assets/naha-m-jh.webp","m-hs":"assets/naha-m-hs.webp","m-u20":"assets/naha-m-young.webp","m-w30":"assets/naha-m-adult.webp","m-w50":"assets/naha-m-w50.webp","m-s60":"assets/naha-m-s60.webp","m-s70":"assets/naha-m-senior.webp"}};
 const BANDPREF={jh:["jh","u20","w30"],hs:["hs","u20","w30"],u20:["u20","w30"],w30:["w30"],w50:["w50","w30","s60"],s60:["s60","s70","w50"],s70:["s70","s60"]};
-function photoFor(c){const m=PHOTOS[c.id]||{};const order=BANDPREF[prefs.age]||["w30"];for(const b of order){const p=m[prefs.gender+"-"+b];if(p)return p;}return c.photo;}
+function bandFor(c){const m=PHOTOS[c.id]||{};const order=BANDPREF[prefs.age]||["w30"];for(const b of order){if(m[prefs.gender+"-"+b])return b;}return "w30";}
+function photoFor(c){const m=PHOTOS[c.id]||{};return m[prefs.gender+"-"+bandFor(c)]||c.photo;}
+const CAPS={"f-u20":"きれいめカジュアル","f-w30":"大人のきれいめカジュアル","f-w50":"上品で落ち着いた大人の装い","f-s60":"ゆったり上品な装い","f-s70":"ゆったり上品な装い","f-hs":"制服の学生コーデ","f-jh":"制服の学生コーデ","m-u20":"爽やかカジュアル","m-w30":"ビジネスカジュアル","m-w50":"落ち着いた大人のカジュアル","m-s60":"ゆったり落ち着いた装い","m-s70":"ゆったり落ち着いた装い","m-hs":"学生らしいきれいめコーデ","m-jh":"制服の学生コーデ"};
+function captionFor(c){return CAPS[prefs.gender+"-"+bandFor(c)]||"きれいめカジュアル";}
 const BANDS=[
 {name:"極寒",icon:"🧣",max:4},
 {name:"防寒",icon:"🧥",max:9},
@@ -363,7 +366,7 @@ const GALORDER=["tokyo","osaka","nagoya","sapporo","fukuoka","kyoto","sendai","n
 GALORDER.map(id=>CITIES.find(c=>c.id===id)).filter(Boolean).forEach(c=>{
 const b=document.createElement("button");
 b.type="button";b.className="gcard";
-b.innerHTML='<span class="phwrap"><img id="gimg-'+c.id+'" src="'+c.photo+'" alt="'+c.name+'のコーデ写真"><span class="aitag">AI生成画像</span></span><div class="gt"><div class="gn">'+c.name+'</div><div class="gs">'+c.spot+'</div></div>';
+b.innerHTML='<span class="phwrap"><img id="gimg-'+c.id+'" src="'+c.photo+'" alt="'+c.name+'のコーデ写真"><span class="aitag">AI生成画像</span></span><div class="gt"><div class="gn">'+c.name+'</div><div class="gs" id="gcap-'+c.id+'">'+captionFor(c)+'</div></div>';
 b.addEventListener("click",()=>{prefs.city=c.id;selectedPref=REPPREF[c.id];savePrefs();render();document.getElementById("detail").scrollIntoView({behavior:"smooth",block:"start"});});
 g.appendChild(b);
 });
@@ -379,7 +382,7 @@ markChips();updateMap();
 const c=CITIES.find(v=>v.id===prefs.city)||CITIES[5];
 document.getElementById("dCity").textContent=c.name;
 document.getElementById("dPhoto").src=photoFor(c);
-CITIES.forEach(cc=>{const im=document.getElementById("gimg-"+cc.id);if(im)im.src=photoFor(cc);});
+CITIES.forEach(cc=>{const im=document.getElementById("gimg-"+cc.id);if(im)im.src=photoFor(cc);const cp=document.getElementById("gcap-"+cc.id);if(cp)cp.textContent=captionFor(cc);});
 const repName=REPPREF[c.id];
 document.getElementById("dProxy").textContent=(selectedPref&&repName&&selectedPref!==repName)?("（"+selectedPref+"の周辺は"+c.name+"の予報をもとに表示しています）"):"";
 const w=wxData[c.id];
