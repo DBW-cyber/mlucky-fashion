@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-28T09:54:59+09:00",
+ "generatedAt": "2026-11-28T10:21:27+09:00",
  "date": "2026-11-28",
  "cities": {
   "sapporo": {
@@ -12,7 +12,8 @@
    "tmax2": 2,
    "tmin2": 0,
    "pop": 30,
-   "wind": "南 後 北西"
+   "wind": "南 後 北西",
+   "tsrc": "jma"
   },
   "sendai": {
    "issuedMs": 1795809600000,
@@ -24,7 +25,8 @@
    "tmax2": 9,
    "tmin2": 6,
    "pop": 80,
-   "wind": "西 後 やや強く"
+   "wind": "西 後 やや強く",
+   "tsrc": "jma"
   },
   "tokyo": {
    "issuedMs": 1795809600000,
@@ -36,7 +38,8 @@
    "tmax2": 15,
    "tmin2": 9,
    "pop": 60,
-   "wind": "南"
+   "wind": "南",
+   "tsrc": "jma"
   },
   "nagoya": {
    "issuedMs": 1795809600000,
@@ -48,7 +51,8 @@
    "tmax2": 13,
    "tmin2": 6,
    "pop": 30,
-   "wind": "西 後 やや強く"
+   "wind": "西 後 やや強く",
+   "tsrc": "jma"
   },
   "kyoto": {
    "issuedMs": 1795809600000,
@@ -60,7 +64,8 @@
    "tmax2": 12,
    "tmin2": 7,
    "pop": 50,
-   "wind": "南西 後 西"
+   "wind": "南西 後 西",
+   "tsrc": "jma"
   },
   "osaka": {
    "issuedMs": 1795809600000,
@@ -72,7 +77,8 @@
    "tmax2": 14,
    "tmin2": 9,
    "pop": 70,
-   "wind": "北東 後 西 やや強く"
+   "wind": "北東 後 西 やや強く",
+   "tsrc": "jma"
   },
   "fukuoka": {
    "issuedMs": 1795809600000,
@@ -84,7 +90,8 @@
    "tmax2": 13,
    "tmin2": 9,
    "pop": 50,
-   "wind": "西 後 やや強く"
+   "wind": "西 後 やや強く",
+   "tsrc": "jma"
   },
   "naha": {
    "issuedMs": 1795809600000,
@@ -96,7 +103,8 @@
    "tmax2": 21,
    "tmin2": 17,
    "pop": 20,
-   "wind": "北西 やや強く 後 北 強く"
+   "wind": "北西 やや強く 後 北 強く",
+   "tsrc": "jma"
   }
  }
 }
