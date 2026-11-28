@@ -322,7 +322,7 @@ const el=document.getElementById("wxb-"+c.id); if(!el)return;
 const w=wxData[c.id];
 if(!w){el.textContent="";return;}
 const ic=LABELWX[w.label]||"";
-el.innerHTML=(w.tmax==null)?ic:(ic+" "+(w.tmin==null?"〜":"<span class=\"tn\">"+Math.round(w.tmin)+"</span>〜")+"<span class=\"tx\">"+Math.round(w.tmax)+"</span>°");
+el.innerHTML=(w.tmax==null)?ic:(ic+" "+"<span class=\"tx\">"+Math.round(w.tmax)+"</span>"+(w.tmin==null?"":"／<span class=\"tn\">"+Math.round(w.tmin)+"</span>")+"°");
 });
 }
 const MKBG={sapporo:"#a4d0f2",sendai:"#9ecbef",tokyo:"#97c7ed",nagoya:"#92c4ea",kyoto:"#a9d1f1",osaka:"#9dc9ec",fukuoka:"#b2d8f6",naha:"#aad0f1"};
@@ -384,7 +384,7 @@ const se1=document.getElementById("wxSrc");const st1=document.getElementById("wx
 if(w.label2){const wi2=LABELWX[w.label2]||"🌡️";let tseg2="";if(w.tmax2!=null)tseg2+="　<b class=\"tx\">"+Math.round(w.tmax2)+"℃</b>";if(w.tmin2!=null)tseg2+=(tseg2?"／":"　")+"<b class=\"tn\">"+Math.round(w.tmin2)+"℃</b>";html+='<p class="wxline">明日：'+wi2+' <b>'+w.label2+'</b>'+tseg2+'</p>';}
 wxEl.innerHTML=html;
 }
-document.getElementById("dBand").textContent=BANDS[band].name+((hasWx&&w.tmax!=null)?("（最高 "+Math.round(w.tmax)+"℃）"):"（季節の目安）");
+document.getElementById("dBand").innerHTML=BANDS[band].name+((hasWx&&w.tmax!=null)?("（最高 <span class=\"tx\">"+Math.round(w.tmax)+"℃</span>）"):"（季節の目安）");
 let items, title;
 if(isStudent()&&autoDay()==="weekday"){items=STUDENT_WEEKDAY[band].slice();title=c.name+"の今日コーデ（制服＋防寒）";}
 else{items=ITEMS[prefs.gender][band].slice();title=c.name+"の今日のおすすめコーデ";}
