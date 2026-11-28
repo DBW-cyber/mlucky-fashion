@@ -2,3 +2,5 @@ User-agent: *
 Allow: /
 
 Sitemap: https://dbw-cyber.github.io/mlucky-fashion/sitemap.xml
+# MLucky 今日のコーデ優勝
+# updated 2026-11-28
