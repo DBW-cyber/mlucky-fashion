@@ -126,7 +126,7 @@ ul.items{margin:8px 0 4px;padding-left:20px}
 ul.items li{margin:3px 0;font-size:16.5px}
 ul.items a.shop{color:inherit;text-decoration:underline;text-decoration-color:rgba(32,41,74,.32);text-underline-offset:3px}
 ul.items a.shop .arr{font-size:.75em;color:#8a93a8}
-ul.items .tr{font-size:.72em;color:#9a7b1e}
+ul.items .tr{font-size:.72em;color:#7a5c00}
 .tag{display:inline-block;background:#eef1f7;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#3c4a68;margin-right:6px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .gcard{border:1px solid #e3ddcd;border-radius:12px;overflow:hidden;background:#fff;cursor:pointer;text-align:left;padding:0;display:flex;flex-direction:column}
@@ -306,6 +306,7 @@ summer:[["リネンシャツ",5,6],["アロハシャツ",6,6],["ポロシャツ"
 autumn:[["キルティングジャケット",1,3],["レザージャケット",2,3],["ニットベスト",2,3],["チェックシャツ",2,3],["コーデュロイパンツ",1,3],["スウェードブーツ",1,3],["ロングスカート",2,3,"f"],["タートルネックニット",1,2]],
 winter:[["ロングダウンコート",0,1],["テディコート",1,2],["スウェードジャケット",2,2],["レザージャケット",1,2],["赤いニット",0,2],["チェックスカート",1,2,"f"],["ニット帽",0,1],["カシミヤマフラー",0,1]]};
 const SEASON_NAME={spring:"春",summer:"夏",autumn:"秋",winter:"冬"};
+const TREND_META={spring:{from:"2027-03-01",to:"2027-05-31",checked:"2026-11-28",src:"大手アパレルの公式提案と主要メディアの共通要素"},summer:{from:"2027-06-01",to:"2027-08-31",checked:"2026-11-28",src:"大手アパレルの公式提案と主要メディアの共通要素"},autumn:{from:"2026-09-01",to:"2026-11-30",checked:"2026-11-28",src:"大手アパレルの公式提案と主要メディアの共通要素"},winter:{from:"2026-12-01",to:"2027-02-28",checked:"2026-11-28",src:"大手アパレルの公式提案と主要メディアの共通要素"}};
 function seasonOf(d){const m=d.getMonth()+1;if(m>=3&&m<=5)return "spring";if(m>=6&&m<=8)return "summer";if(m>=9&&m<=11)return "autumn";return "winter";}
 function catOf(label){if(label==="雪")return "snow";if(label==="雷雨")return "thunder";if(label==="雨"||label==="にわか雨"||label==="霧雨")return "rain";if(label==="晴れ"||label==="晴れ時々くもり")return "sun";return "cloud";}
 function jmaLabel(code,text){const t=text||"";const n=parseInt(code,10);let base;
@@ -421,7 +422,7 @@ const cat=hasWx?catOf(w.label):null;
 const season=seasonOf(new Date());
 let trendHits=[];
 if(!studentWeekday){
-const poolItems=TREND_POOL[season].filter(p=>band>=p[1]&&band<=p[2]&&(!p[3]||p[3]===prefs.gender));
+const _tm=TREND_META[season];const _now=new Date();const poolItems=(_tm&&_now>=new Date(_tm.from+"T00:00:00")&&_now<=new Date(_tm.to+"T23:59:59"))?TREND_POOL[season].filter(p=>band>=p[1]&&band<=p[2]&&(!p[3]||p[3]===prefs.gender)):[];
 let appended=0;
 poolItems.forEach(p=>{
 const nm=p[0];
@@ -448,11 +449,11 @@ if(studentWeekday)notes+='<p class="note">平日は制服が前提です。制�
 if(isStudent()&&autoDay()==="holiday")notes+='<p class="note">今日は休日なので私服コーデです。大手各社の実際の商品から選べる、具体的な組み合わせにしています。</p>';
 if(isSenior())notes+='<p class="note">シニアの配慮：軽くて前開きの羽織、滑りにくい靴底、体温調節しやすい重ね着を優先しています。</p>';
 if(!hasWx&&wxFailed)notes+='<p class="note">天気データを取得できなかったため、季節の目安で表示しています。通信環境のよい場所で開き直すと、実況に合わせて更新されます。</p>';
-if(trendHits.length)notes+='<p class="note">「今季流行」と記した単品は、大手各社の今季提案と主要メディア共通の要素から選んでいます。</p>';
-if(trendHits.length>=2)notes+='<p class="note">今季の組み合わせ：「'+trendHits[0]+'」＋「'+trendHits[1]+'」が今季の公式です。素材のコントラストを付けると、今季らしくなります。</p>';
+if(trendHits.length)notes+='<p class="note">「今季流行」と記した単品は、'+TREND_META[season].src+'から選んでいます（'+TREND_META[season].checked.slice(0,4)+'年'+parseInt(TREND_META[season].checked.slice(5,7),10)+'月確認）。</p>';
+if(trendHits.length>=2)notes+='<p class="note">今日の合わせ方：「'+trendHits[0]+'」と「'+trendHits[1]+'」を組み合わせた、今季らしい装いです。</p>';
 const SILH={0:"ロング丈で縦のラインを意識すると、厚着でも重く見えません。",1:"アウターは短め〜ミドル丈、ボトムはすっきりさせるとバランスが取れます。薄手の重ね着で調整すると、暖冬でも着膨れしません。",2:"上下どちらかにゆとりを持たせる（上はコンパクト／下はワイド、など）と、今季のバランスになります。",3:"軽いアウターに引き締め色のボトムを合わせると、だらしなく見えません。"};
 if(hasWx&&!studentWeekday&&SILH[band])notes+='<p class="note">シルエットの目安：'+SILH[band]+'</p>';
-if(rainy)notes+='<p class="note">雨の備え：撥水素材の羽織と折りたたみ傘を足しています。'+(cat==="thunder"?"雷雨の日は長傘が安心です。":"")+'</p>';
+if(rainy)notes+='<p class="note">雨の備え：撥水素材の羽織と折りたたみ傘を足しています。'+(cat==="thunder"?"雷の兆候があるときは、傘よりもまず安全な建物への避難を優先してください。":"")+'</p>';
 if(hasWx&&cat==="snow")notes+='<p class="note">雪の備え：足元が滑りやすい日です。滑りにくい靴底を選び、傘より帽子・フードがおすすめです。</p>';
 if(hasWx&&cat==="sun"&&band>=5)notes+='<p class="note">晴れて暑い日です。UV対策と水分補給を忘れずに。</p>';
 if(hasWx&&w.wind&&w.wind.indexOf("強く")>=0)notes+='<p class="note">風の強い日です。防風素材の羽織がおすすめです。</p>';
