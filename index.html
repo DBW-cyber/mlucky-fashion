@@ -385,7 +385,7 @@ const wtxt=w.label;const wico=LABELWX[w.label]||"🌡️";
 let tseg="";if(w.tmax!=null)tseg+="　<b class=\"tx\">"+Math.round(w.tmax)+"<span class=\"sym\">℃</span></b>";if(w.tmin!=null)tseg+="<span class=\"hsp\"></span><b class=\"tn\">"+Math.round(w.tmin)+"<span class=\"sym\">℃</span></b>";if(w.pop!=null)tseg+="<span class=\"hsp\"></span><span class=\"tp\">"+UMB+Math.round(w.pop)+"<span class=\"sym\">%</span></span>";
 let html='<p class="wxline">今日：'+wico+' <b><span class="sym">'+wtxt+'</span></b>'+tseg+'</p>';
 
-let side="";if(w.wind)side="風："+w.wind.split("　").join("<span class=\"hsp\"></span>");document.getElementById("dWxSide").innerHTML=side;
+let side="";if(w.wind){const tk=w.wind.split("　");side="風："+tk[0];for(let i=1;i<tk.length;i++){side+=(tk[i]==="では"?"":"<span class=\"hsp\"></span>")+tk[i];}}document.getElementById("dWxSide").innerHTML=side;
 const se1=document.getElementById("wxSrc");const st1=document.getElementById("wxSrcTxt");if(st1)st1.textContent=(w.tsrc==="om")?("Open-Meteo "+(w.omTxt||"")+"（代替）"):(w.tsrc==="mix")?("気象庁 "+(w.issuedTxt||"")+"（一部代替）"):(w.issuedTxt?("気象庁 "+w.issuedTxt):"");if(se1)se1.style.display=(w.issuedTxt||w.tsrc==="om")?"":"none";updateRefreshState();
 if(w.label2){const wi2=LABELWX[w.label2]||"🌡️";let tseg2="";if(w.tmax2!=null)tseg2+="　<b class=\"tx\">"+Math.round(w.tmax2)+"<span class=\"sym\">℃</span></b>";if(w.tmin2!=null)tseg2+="<span class=\"hsp\"></span><b class=\"tn\">"+Math.round(w.tmin2)+"<span class=\"sym\">℃</span></b>";if(w.pop2!=null)tseg2+="<span class=\"hsp\"></span><span class=\"tp\">"+UMB+Math.round(w.pop2)+"<span class=\"sym\">%</span></span>";html+='<p class="wxline">明日：'+wi2+' <b><span class="sym">'+w.label2+'</span></b>'+tseg2+'</p>';}
 wxEl.innerHTML=html;
