@@ -418,7 +418,7 @@ if(studentWeekday)notes+='<p class="note">平日は制服が前提です。制�
 if(isStudent()&&autoDay()==="holiday")notes+='<p class="note">今日は休日なので私服コーデです。大手各社の実際の商品から選べる、具体的な組み合わせにしています。</p>';
 if(isSenior())notes+='<p class="note">シニアの配慮：軽くて前開きの羽織、滑りにくい靴底、体温調節しやすい重ね着を優先しています。</p>';
 if(!hasWx&&wxFailed)notes+='<p class="note">天気データを取得できなかったため、季節の目安で表示しています。通信環境のよい場所で開き直すと、実況に合わせて更新されます。</p>';
-if(trendHits.length)notes+='<p class="note">★＝今季（'+SEASON_NAME[season]+'）の流行単品です。大手各社の今季提案と主要メディア共通の要素から選んでいます（商品名のみ、メーカー名は載せていません）。</p>';
+if(trendHits.length)notes+='<p class="note">★＝今季（'+SEASON_NAME[season]+'）の流行単品です。大手各社の今季提案と主要メディア共通の要素から選んでいます。</p>';
 if(trendHits.length>=2)notes+='<p class="note">今季の組み合わせ：「'+trendHits[0]+'」＋「'+trendHits[1]+'」が今季の公式です。素材のコントラストを付けると、今季らしくなります。</p>';
 const SILH={0:"ロング丈で縦のラインを意識すると、厚着でも重く見えません。",1:"アウターは短め〜ミドル丈、ボトムはすっきりさせるとバランスが取れます。薄手の重ね着で調整すると、暖冬でも着膨れしません。",2:"上下どちらかにゆとりを持たせる（上はコンパクト／下はワイド、など）と、今季のバランスになります。",3:"軽いアウターに引き締め色のボトムを合わせると、だらしなく見えません。"};
 if(hasWx&&!studentWeekday&&SILH[band])notes+='<p class="note">シルエットの目安：'+SILH[band]+'</p>';
