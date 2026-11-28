@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>MLucky Today's Winning Outfit | An outfit that won't lose to the weather</title>
+<meta name="description" content="Pick your city on the US map to see its weather and a recommended outfit with a full-body photo and product names. Your settings are saved only on this device.">
+<link rel="canonical" href="https://dbw-cyber.github.io/mlucky-fashion/us/">
+<link rel="manifest" href="manifest.json">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PR83154RCY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-PR83154RCY');
+</script>
+<meta name="theme-color" content="#141b31">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Outfit Winner">
+<meta property="og:type" content="website">
+<meta property="og:title" content="MLucky Today's Winning Outfit | An outfit that won't lose to the weather">
+<meta property="og:description" content="Pick your city on the US map to see its weather and a recommended outfit with a full-body photo and product names.">
+<meta property="og:url" content="https://dbw-cyber.github.io/mlucky-fashion/us/">
+<meta property="og:image" content="https://dbw-cyber.github.io/mlucky-fashion/assets/tokyo.webp">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{color-scheme:light}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Noto Sans JP",sans-serif;background:#f4f1e9;color:#22304a;font-size:17px;line-height:1.65;overflow-x:hidden}
+header{position:relative;background:#141b31;color:#fff;padding:16px 12px 14px;text-align:center;max-width:640px;width:calc(100% - 24px);margin:10px auto 0;border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(27,39,67,.10)}
+#hdrWx{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.hdroverlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,27,49,.22),rgba(20,27,49,.55) 35%,rgba(20,27,49,.55) 65%,rgba(20,27,49,.22)),linear-gradient(180deg,rgba(16,20,38,.30),rgba(16,20,38,.50));z-index:1}
+header .brand{z-index:2}
+header h1{position:relative;z-index:2;text-shadow:0 1px 10px rgba(10,14,28,.5)}
+header p{position:relative;z-index:2;text-shadow:0 1px 6px rgba(10,14,28,.5)}
+.cityrow{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;line-height:1.3}
+.cityrow h2{margin:0}
+.wxside{font-size:13px;font-weight:600;color:#5b6478;white-space:nowrap}
+header .brand{position:absolute;top:8px;right:10px;color:#f6f2e9;font-weight:300;letter-spacing:.34em;font-size:8.5px;font-family:Georgia,'Playfair Display','Times New Roman',serif;font-style:italic}
+header h1{margin:0;font-size:22px;letter-spacing:.06em;line-height:1.25}
+header p{margin:1px 0 0;color:#c8cede;font-size:12.5px}
+main{max-width:680px;margin:0 auto;padding:6px 12px 8px}
+.card{background:#fff;border:1px solid #e3ddcd;border-radius:14px;padding:12px 14px;margin:0 0 6px;box-shadow:0 1px 3px rgba(30,40,70,.06)}
+.card h2{margin:0 0 6px;font-size:18px;color:#141b31}
+.card h2.mapguide{font-size:16px;line-height:1.4;margin-top:12px}
+.setupguide{margin:0 0 8px;margin:0 0 2.34cqw;font-size:13.5px;font-weight:400;color:#5c6478}
+.note{font-size:13.5px;color:#5c6478}
+.chips{display:flex;flex-wrap:wrap;gap:5px;gap:1.46cqw;margin:3px 0 2px;margin:.88cqw 0 .58cqw}
+.chip{border:1px solid #ccd2e0;background:linear-gradient(180deg,#ffffff,#f2f4f9);color:#22304a;border-radius:999px;padding:2px 9px;padding:.58cqw 2.63cqw;font-size:12.5px;font-size:3.65cqw;cursor:pointer;min-height:26px;min-height:7.6cqw;box-shadow:0 1px 2px rgba(30,40,70,.07)}
+.chip.on{background:#141b31;color:#fff;border-color:#141b31;box-shadow:0 2px 6px rgba(20,27,49,.25)}
+#prefs{padding:10px 12px;container-type:inline-size}
+
+#ageChips,#ageTop{flex-wrap:nowrap;gap:4px;gap:1.17cqw}
+#ageChips{flex:1;justify-content:space-between}
+#ageChips .chip.achip{flex:1 1 0;height:34px;height:9.9cqw;min-height:0;padding:3px 4px;display:flex;align-items:center;justify-content:center;line-height:0}
+.achip img{max-width:100%;max-height:100%;display:block}
+.achip span{font-size:2.9cqw;line-height:1.15;text-align:center;white-space:normal;font-weight:600}
+#ageChips .chip.on img{filter:invert(1)}
+.guideline{display:flex;flex-wrap:nowrap;gap:5px;gap:1.46cqw;justify-content:space-between;align-items:center;position:relative}
+.tapicon{position:absolute;right:8.333%;top:50%;transform:translate(50%,-50%);height:30px;height:8.8cqw;width:auto;pointer-events:none}
+.guideline .chips{margin:0}
+.guideline .setupguide{margin:0}
+.secondrow{display:flex;flex-wrap:nowrap;gap:5px;gap:1.46cqw;justify-content:space-between;align-items:center;margin-top:5px;margin-top:1.46cqw}
+.secondrow .chips{margin:0}
+#genderChips{flex-wrap:nowrap}
+#genderChips .chip.gchip{width:calc((100cqw - 7.02cqw)/7);height:34px;height:9.9cqw;padding:3px 4px;display:flex;align-items:center;justify-content:center;line-height:0}
+.gchip img{max-width:100%;max-height:100%;display:block}
+#genderChips .chip.on img{filter:invert(1)}
+#ageChips .chip,#ageTop .chip,#genderChips .chip{font-size:11px;font-size:3.22cqw;padding:2px 6px;padding:.58cqw 1.75cqw;white-space:nowrap;min-height:24px;min-height:7.02cqw}
+@media (max-width:360px){#ageChips .chip,#ageTop .chip,#genderChips .chip{font-size:10.5px;padding:2px 4px}}
+.chip.gold.on{background:#e0bc5c;color:#141b31;border-color:#e0bc5c;font-weight:700}
+label.lab{font-size:13px;font-weight:700;color:#5c6478;display:block;margin-top:7px}
+.mapwrap{position:relative;width:100%;max-width:620px;margin:8px auto 0;container-type:inline-size}
+#jmap{position:relative;line-height:0}
+#wxSrc{position:absolute;right:6px;bottom:2px;display:flex;align-items:center;gap:6px;font-size:10px;line-height:1.3;background:rgba(198,204,214,.25);color:#42506b;padding:2px 5px 2px 8px;border-radius:999px;z-index:6;white-space:nowrap}
+#mapNote{position:absolute;left:6px;top:2px;font-size:11px;line-height:1.3;background:transparent;color:#42506b;padding:2px 8px;pointer-events:none;z-index:6;white-space:nowrap}
+#wxSrcTxt{display:inline-flex;align-items:center;height:20px;line-height:1}
+#wxRefresh{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#f6f2e9;border:1px solid rgba(66,80,107,.4);box-shadow:0 1px 2px rgba(31,80,140,.25);cursor:pointer;padding:0;line-height:1;flex:none;transition:transform .1s,background .1s}
+#wxRefresh.fresh{background:radial-gradient(circle at 32% 28%,#c9ffd6,#3fd668 42%,#22b34c 72%,#14873a);border-color:rgba(16,94,42,.45);box-shadow:inset 0 -2px 3px rgba(10,70,30,.35),inset 0 2px 3px rgba(255,255,255,.55),0 1px 2px rgba(31,80,140,.25)}
+#wxRefresh.fresh svg{display:none}
+#wxRefresh:not(.fresh):active{background:#ffffff;transform:scale(.9)}
+#wxRefresh.fresh{cursor:default}
+#wxRefresh.fresh:active{transform:none}
+#wxRefresh.spin{animation:wxs .8s linear infinite}
+@keyframes wxs{to{transform:rotate(360deg)}}
+.mapimg{width:100%;height:auto;display:block;border-radius:14px;box-shadow:0 12px 32px rgba(31,111,183,.28)}
+.mkbtn{position:absolute;transform:translate(-50%,-50%);width:auto;height:16px;height:4.5cqw;margin-top:1px;background:transparent;border:0;cursor:pointer;padding:0 5px;padding:0 1.5cqw;z-index:3;line-height:0}
+.mkname{position:relative;display:block;font-size:7px;font-size:2cqw;font-weight:700;color:#20294a;letter-spacing:.02em;line-height:4.5cqw;padding:0;white-space:nowrap;pointer-events:none}
+.tapring{display:none;position:absolute;inset:0;border-radius:999px;border:2.5px solid #141b31;border-width:.72cqw;background:transparent;box-shadow:0 0 0 3px rgba(20,27,49,.22),0 0 14px rgba(20,27,49,.45);box-shadow:0 0 0 .87cqw rgba(20,27,49,.22),0 0 4cqw rgba(20,27,49,.45)}
+.mkbtn.sel .tapring{display:block}
+.wxbadge{position:absolute;z-index:2;pointer-events:none;background:rgba(255,255,255,.85);border:1px solid rgba(120,140,170,.35);border-radius:999px;padding:0 4px;padding:0 1.16cqw;font-size:9.5px;font-size:2.75cqw;line-height:1.55;color:#22304a;white-space:nowrap;box-shadow:0 1px 3px rgba(31,80,140,.18)}
+.wxbadge:empty{display:none}
+.tx{color:#d92d20}.tn{color:#1c6dd0}.tp{color:#1d4f91;font-size:.88em}
+.sym{font-size:.75em}
+.hsp{display:inline-block;width:.5em}
+.umb{width:1em;height:1em;vertical-align:-.12em;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.wxb-r{transform:translate(9px,-50%)}
+.wxb-l{transform:translate(calc(-100% - 9px),-50%)}
+.wxb-t{transform:translate(-30%,calc(-100% - 5px))}
+.wxb-b{transform:translate(-50%,9px)}
+.wxb-ru{transform:translate(9px,-112%)}
+.wxb-lt{transform:translate(-50%,calc(-100% - 8px));transform:translate(-50%,calc(-100% - 2.3cqw))}
+.wxb-lb{transform:translate(-50%,9px);transform:translate(-50%,2.7cqw)}
+.wxb-lr{transform:translate(22px,-50%);transform:translate(calc(4.5cqw + 8px),-50%)}
+.wxb-lr2{transform:translate(15px,-50%);transform:translate(calc(3cqw + 4px),-50%)}
+.wxb-ll{transform:translate(calc(-100% - 22px),-50%);transform:translate(calc(-100% - 3cqw - 8px),-50%)}
+.wxline{font-size:16.5px;margin:2px 0;line-height:1.3}
+.wxline b{color:#141b31}
+.wxline b.tx{color:#d92d20}
+.wxline b.tn{color:#1c6dd0}
+.big{font-size:21px;font-weight:800;color:#141b31}
+.photo{width:100%;border-radius:12px;display:block}
+.phwrap{position:relative;display:block}
+.phnote{position:absolute;right:6px;top:2px;font-size:9px;line-height:1.3;color:#42506b;background:none;padding:1px 6px;border-radius:999px;white-space:nowrap;pointer-events:none}
+.dph .aitag{left:6px;right:auto;top:2px;font-size:9px;background:none}
+.aitag{position:absolute;right:6px;bottom:6px;font-size:10px;line-height:1.3;color:#42506b;background:rgba(198,204,214,.25);padding:2px 6px;border-radius:999px;pointer-events:none}
+ul.items{margin:8px 0 4px;padding-left:20px}
+ul.items li{margin:3px 0;font-size:16.5px}
+ul.items a.shop{color:inherit;text-decoration:underline;text-decoration-color:rgba(32,41,74,.32);text-underline-offset:3px}
+ul.items a.shop .arr{font-size:.75em;color:#8a93a8}
+ul.items .tr{font-size:.72em;color:#9a7b1e}
+.tag{display:inline-block;background:#eef1f7;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#3c4a68;margin-right:6px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.gcard{border:1px solid #e3ddcd;border-radius:12px;overflow:hidden;background:#fff;cursor:pointer;text-align:left;padding:0;display:flex;flex-direction:column}
+.gcard .phwrap{aspect-ratio:3/4;overflow:hidden;flex:none}
+.gcard .phwrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.gcard .gt{padding:8px 10px 10px}
+.gcard .gn{font-weight:800;color:#141b31;font-size:16.5px}
+.gcard .gs{font-size:13.5px;color:#5c6478}
+table{width:100%;border-collapse:collapse;font-size:15.5px}
+th,td{border-bottom:1px solid #e7e2d2;padding:6px 4px;text-align:left}
+th{color:#141b31}
+footer{max-width:680px;margin:0 auto;padding:6px 12px 30px;font-size:14px;color:#5c6478}
+footer a{color:#3c5a9e}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap}
+.hidden{display:none}
+.chip:focus-visible,.mkbtn:focus-visible{outline:2px solid #3c5a9e;outline-offset:2px}
+.rgnrow{display:flex;align-items:center;justify-content:center;gap:8px;margin:2px 0 10px;flex-wrap:wrap}
+.rgnlab{font-size:11px;color:#5a6a86;font-weight:600}
+.rgnbtn{border:1px solid #c8d2e2;background:#fff;color:#20294a;border-radius:999px;padding:5px 14px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit}
+.rgnbtn.on{background:#20294a;color:#fff;border-color:#20294a}
+</style>
+</head>
+<body>
+<header>
+<img id="hdrWx" alt="" style="display:none">
+<div class="hdroverlay"></div>
+<div class="brand">MLucky</div>
+<h1>Today's Winning Outfit</h1>
+<p>An outfit that won't lose to the weather, every day</p>
+</header>
+<main>
+<section class="card" id="prefs">
+<div class="rgnrow"><span class="rgnlab">Region &amp; language</span><button type="button" class="rgnbtn" id="rgnJP">Japan</button><button type="button" class="rgnbtn on">United States</button></div>
+<div class="guideline">
+<img class="tapicon" src="../assets/tap-icon.webp" alt="">
+<div class="chips" id="genderChips">
+<button type="button" class="chip gchip" data-g="f" aria-label="Women"><img src="../assets/gender-f.webp" alt="Women"></button>
+<button type="button" class="chip gchip" data-g="m" aria-label="Men"><img src="../assets/gender-m.webp" alt="Men"></button>
+</div>
+</div>
+<div class="secondrow">
+<div class="chips" id="ageChips">
+<button type="button" class="chip achip" data-a="s60" aria-label="60s"><span>60s</span></button>
+<button type="button" class="chip achip" data-a="w50" aria-label="50s"><span>50s</span></button>
+<button type="button" class="chip achip" data-a="w30" aria-label="30s–40s"><span>30s–40s</span></button>
+<button type="button" class="chip achip" data-a="u20" aria-label="20s College"><span>20s College</span></button>
+<button type="button" class="chip achip" data-a="hs" aria-label="High School"><span>High School</span></button>
+<button type="button" class="chip achip" data-a="jh" aria-label="Middle School"><span>Middle School</span></button>
+</div>
+</div>
+<div class="mapwrap" id="mapwrap">
+<div id="jmap"><img class="mapimg" src="assets/usa-map.webp" alt="Map of the United States"><div id="mapNote">* Illustrative map</div><div id="wxSrc" style="display:none"><span id="wxSrcTxt"></span><button id="wxRefresh" type="button" aria-label="Refresh weather data"><svg viewBox="0 0 24 24" width="13" height="13" fill="#42506b" aria-hidden="true"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg></button></div></div>
+</div>
+<p class="note" style="margin:8px 0 0;text-align:center">Your settings are saved only on this device.</p>
+</section>
+
+<section class="card" id="detail">
+<div class="cityrow"><h2 id="dCity">New York</h2><span class="wxside" id="dWxSide"></span></div>
+<div id="dWx"><p class="note">Loading weather…</p></div>
+<p class="note" id="dProxy"></p>
+<span class="phwrap dph"><img class="photo" id="dPhoto" src="../assets/tokyo.webp" alt="Recommended outfit, full-body photo"><span class="aitag">AI-generated image</span><span class="phnote">Photo is illustrative. Adjust to how you feel today.</span></span>
+<p class="big" id="dTitle" style="margin:12px 0 2px"></p>
+<p style="margin:0"><span class="tag" id="dBand"></span></p>
+<ul class="items" id="dItems"></ul>
+<div id="dNotes"></div>
+<p class="note" id="dTrend"></p>
+</section>
+
+<section class="card">
+<h2>Outfit gallery by city</h2>
+<p class="note" style="margin-top:0">Signature outfits for the eight cities. Tap a card and the map and details above switch to that city.</p>
+<div class="grid" id="gallery"></div>
+</section>
+
+<section class="card">
+<h2>How outfits are chosen</h2>
+<p>An outfit begins with the day's high. We choose the weight of the outer layer from seven steps. But the cold of morning and evening is a different thing from the warmth of midday, so we look at the low as well. On a day that cools down, dressing one step warmer carries you through without strain.</p>
+<table>
+<tr><th>High</th><th>Band</th><th>Outerwear guide</th></tr>
+<tr><td>39°F or below</td><td>Deep cold</td><td>Long down coat + extra-warm base layer</td></tr>
+<tr><td>40–48°F</td><td>Cold weather</td><td>Down coat + knit + scarf</td></tr>
+<tr><td>50–57°F</td><td>Heavy layer</td><td>Padded coat + knit</td></tr>
+<tr><td>59–66°F</td><td>Mild seasons</td><td>Trench coat or jacket</td></tr>
+<tr><td>68–75°F</td><td>Light layer</td><td>Shirt jacket or cardigan</td></tr>
+<tr><td>77–84°F</td><td>Light clothing</td><td>Short sleeves + a layer for air conditioning</td></tr>
+<tr><td>86°F or above</td><td>High summer</td><td>Quick-dry fabrics, UV care, a hat</td></tr>
+</table>
+<p style="margin-top:12px">The pieces paired with each outfit are gathered from the season's trends. At the start of each season, we quietly compare the seasonal proposals of major apparel brands with the coverage of leading fashion media, and collect only what appears in both. That collection is the season's item pool. From it, we prefer the pieces that suit the day's temperature band. (Items marked "Trending" in small type are this season's trending pieces.) Items are listed by product name only; no maker or brand names are attached.</p>
+<p class="note">Small corrections are made for the weather. On rainy days, a folding umbrella and water-repellent pieces are added according to the chance of rain. On snowy days, warm accessories and shoes that do not slip come before an umbrella. On hot, sunny days, UV care is added; on days with strong wind, a windproof outer layer is suggested. When the feel of the day changes greatly between midday and morning or evening, please add one layer you can take off and put on.</p>
+<p class="note">For students (middle school and high school), school days show practical layers over everyday school clothes, with add-ons for cold and rain; days off show regular outfits. For readers in their 60s and beyond, we put comfort first: light weight, front openings that are easy to manage, and soles that do not slip.</p>
+<p class="note">Weather data comes from Open-Meteo (https://open-meteo.com), a public weather service, and is refreshed several times a day for each city.</p>
+<p class="note">Map: "Blank Map of United States With Borders of States" via Wikimedia Commons, CC BY-SA 4.0, cropped to the mainland.</p>
+</section>
+</main>
+<footer>
+<p>Sister sites: <a href="https://dbw-cyber.github.io/mlucky-uranai/">MLucky Fortune | Daily 12-sign ranking</a> · <a href="https://dbw-cyber.github.io/mlucky-fashion/">MLucky Japan | Today's Winning Outfit (Japanese)</a></p>
+<p><a href="about.html">About / Advertising</a> | <a href="privacy.html">Privacy Policy</a></p>
+<p>© 2026 MLucky</p>
+</footer>
+<script>
+"use strict";
+const CITIES=[
+{id:"seattle",name:"Seattle",lat:47.61,lon:-122.33,tz:"America/Los_Angeles",photo:"../assets/sapporo.webp"},
+{id:"losangeles",name:"Los Angeles",lat:34.05,lon:-118.24,tz:"America/Los_Angeles",photo:"../assets/osaka.webp"},
+{id:"phoenix",name:"Phoenix",lat:33.45,lon:-112.07,tz:"America/Phoenix",photo:"../assets/naha.webp"},
+{id:"denver",name:"Denver",lat:39.74,lon:-104.99,tz:"America/Denver",photo:"../assets/sendai.webp"},
+{id:"chicago",name:"Chicago",lat:41.88,lon:-87.63,tz:"America/Chicago",photo:"../assets/nagoya.webp"},
+{id:"houston",name:"Houston",lat:29.76,lon:-95.37,tz:"America/Chicago",photo:"../assets/fukuoka.webp"},
+{id:"newyork",name:"New York",lat:40.71,lon:-74.01,tz:"America/New_York",photo:"../assets/tokyo.webp"},
+{id:"miami",name:"Miami",lat:25.76,lon:-80.19,tz:"America/New_York",photo:"../assets/kyoto.webp"}
+];
+const PHOTOS={
+seattle:{"f-jh":"../assets/sapporo-f-jh.webp","f-hs":"../assets/sapporo-f-hs.webp","f-u20":"../assets/sapporo-f-young.webp","f-w30":"../assets/sapporo.webp","f-w50":"../assets/sapporo-f-w50.webp","f-s60":"../assets/sapporo-f-s60.webp","f-s70":"../assets/sapporo-f-senior.webp","m-jh":"../assets/sapporo-m-jh.webp","m-hs":"../assets/sapporo-m-hs.webp","m-u20":"../assets/sapporo-m-young.webp","m-w30":"../assets/sapporo-m-adult.webp","m-w50":"../assets/sapporo-m-w50.webp","m-s60":"../assets/sapporo-m-s60.webp","m-s70":"../assets/sapporo-m-senior.webp"},
+denver:{"f-jh":"../assets/sendai-f-jh.webp","f-hs":"../assets/sendai-f-hs.webp","f-u20":"../assets/sendai-f-young.webp","f-w30":"../assets/sendai-f-adult.webp","f-w50":"../assets/sendai-f-w50.webp","f-s60":"../assets/sendai-f-s60.webp","f-s70":"../assets/sendai-f-senior.webp","m-jh":"../assets/sendai-m-jh.webp","m-hs":"../assets/sendai-m-hs.webp","m-u20":"../assets/sendai-m-young.webp","m-w30":"../assets/sendai.webp","m-w50":"../assets/sendai-m-w50.webp","m-s60":"../assets/sendai-m-s60.webp","m-s70":"../assets/sendai-m-senior.webp"},
+newyork:{"f-jh":"../assets/tokyo-f-jh.webp","f-hs":"../assets/tokyo-f-hs.webp","f-u20":"../assets/tokyo.webp","f-w30":"../assets/tokyo-f-adult.webp","f-w50":"../assets/tokyo-f-w50.webp","f-s60":"../assets/tokyo-f-s60.webp","f-s70":"../assets/tokyo-f-senior.webp","m-jh":"../assets/tokyo-m-jh.webp","m-hs":"../assets/tokyo-m-hs.webp","m-u20":"../assets/tokyo-m-young.webp","m-w30":"../assets/tokyo-m-adult.webp","m-w50":"../assets/tokyo-m-w50.webp","m-s60":"../assets/tokyo-m-s60.webp","m-s70":"../assets/tokyo-m-senior.webp"},
+chicago:{"f-jh":"../assets/nagoya-f-jh.webp","f-hs":"../assets/nagoya-f-hs.webp","f-u20":"../assets/nagoya-f-young.webp","f-w30":"../assets/nagoya-f-adult.webp","f-w50":"../assets/nagoya-f-w50.webp","f-s60":"../assets/nagoya-f-s60.webp","f-s70":"../assets/nagoya-f-senior.webp","m-jh":"../assets/nagoya-m-jh.webp","m-hs":"../assets/nagoya-m-hs.webp","m-u20":"../assets/nagoya-m-young.webp","m-w30":"../assets/nagoya-m-adult.webp","m-w50":"../assets/nagoya-m-w50.webp","m-s60":"../assets/nagoya-m-s60.webp","m-s70":"../assets/nagoya.webp"},
+miami:{"f-jh":"../assets/kyoto-f-jh.webp","f-hs":"../assets/kyoto-f-hs.webp","f-u20":"../assets/kyoto-f-young.webp","f-w30":"../assets/kyoto-f-adult.webp","f-w50":"../assets/kyoto-f-w50.webp","f-s60":"../assets/kyoto-f-s60.webp","f-s70":"../assets/kyoto.webp","m-jh":"../assets/kyoto-m-jh.webp","m-hs":"../assets/kyoto-m-hs.webp","m-u20":"../assets/kyoto-m-young.webp","m-w30":"../assets/kyoto-m-adult.webp","m-w50":"../assets/kyoto-m-w50.webp","m-s60":"../assets/kyoto-m-s60.webp","m-s70":"../assets/kyoto-m-senior.webp"},
+losangeles:{"f-jh":"../assets/osaka-f-jh.webp","f-hs":"../assets/osaka-f-hs.webp","f-u20":"../assets/osaka-f-young.webp","f-w30":"../assets/osaka.webp","f-w50":"../assets/osaka-f-w50.webp","f-s60":"../assets/osaka-f-s60.webp","f-s70":"../assets/osaka-f-senior.webp","m-jh":"../assets/osaka-m-jh.webp","m-hs":"../assets/osaka-m-hs.webp","m-u20":"../assets/osaka-m-young.webp","m-w30":"../assets/osaka-m-adult.webp","m-w50":"../assets/osaka-m-w50.webp","m-s60":"../assets/osaka-m-s60.webp","m-s70":"../assets/osaka-m-senior.webp"},
+houston:{"f-jh":"../assets/fukuoka-f-jh.webp","f-hs":"../assets/fukuoka-f-hs.webp","f-u20":"../assets/fukuoka-f-young.webp","f-w30":"../assets/fukuoka-f-adult.webp","f-w50":"../assets/fukuoka-f-w50.webp","f-s60":"../assets/fukuoka-f-s60.webp","f-s70":"../assets/fukuoka-f-senior.webp","m-jh":"../assets/fukuoka-m-jh.webp","m-hs":"../assets/fukuoka-m-hs.webp","m-u20":"../assets/fukuoka.webp","m-w30":"../assets/fukuoka-m-adult.webp","m-w50":"../assets/fukuoka-m-w50.webp","m-s60":"../assets/fukuoka-m-s60.webp","m-s70":"../assets/fukuoka-m-senior.webp"},
+phoenix:{"f-jh":"../assets/naha-f-jh.webp","f-hs":"../assets/naha-f-hs.webp","f-u20":"../assets/naha-f-young.webp","f-w30":"../assets/naha.webp","f-w50":"../assets/naha-f-w50.webp","f-s60":"../assets/naha-f-s60.webp","f-s70":"../assets/naha-f-senior.webp","m-jh":"../assets/naha-m-jh.webp","m-hs":"../assets/naha-m-hs.webp","m-u20":"../assets/naha-m-young.webp","m-w30":"../assets/naha-m-adult.webp","m-w50":"../assets/naha-m-w50.webp","m-s60":"../assets/naha-m-s60.webp","m-s70":"../assets/naha-m-senior.webp"}};
+const BANDPREF={jh:["jh","u20","w30"],hs:["hs","u20","w30"],u20:["u20","w30"],w30:["w30"],w50:["w50","w30","s60"],s60:["s60","s70","w50"],s70:["s70","s60"]};
+function bandFor(c){const m=PHOTOS[c.id]||{};const order=BANDPREF[prefs.age]||["w30"];for(const b of order){if(m[prefs.gender+"-"+b])return b;}return "w30";}
+function photoFor(c){const m=PHOTOS[c.id]||{};return m[prefs.gender+"-"+bandFor(c)]||c.photo;}
+const CAPS={"f-u20":"Neat casual","f-w30":"Polished grown-up casual","f-w50":"Elegant, relaxed grown-up style","f-s60":"Easy, elegant style","f-s70":"Easy, elegant style","f-hs":"School-day outfit","f-jh":"School-day outfit","m-u20":"Fresh casual","m-w30":"Business casual","m-w50":"Calm grown-up casual","m-s60":"Easy, relaxed style","m-s70":"Easy, relaxed style","m-hs":"Neat student style","m-jh":"School-day outfit"};
+function captionFor(c){return CAPS[prefs.gender+"-"+bandFor(c)]||"Neat casual";}
+const BANDS=[
+{name:"Deep cold",icon:"🧣",max:4},
+{name:"Cold weather",icon:"🧥",max:9},
+{name:"Heavy layer",icon:"🧥",max:14},
+{name:"Mild seasons",icon:"🧥",max:19},
+{name:"Light layer",icon:"👚",max:24},
+{name:"Light clothing",icon:"👕",max:29},
+{name:"High summer",icon:"👕",max:99}
+];
+const ITEMS={
+f:[
+["Long down coat","Extra-warm turtleneck knit","Fleece-lined pleated skirt","Insulated boots","Knit hat and gloves"],
+["Short down coat","Turtleneck sweater","Corduroy wide-leg pants","Ankle boots","Oversized scarf"],
+["Quilted padded coat","Crew-neck knit","Brushed tight skirt","Loafers","Plaid scarf"],
+["Trench coat","Lightweight knit pullover","Tapered pants","Sneakers","Silk scarf"],
+["Linen-blend shirt jacket","Long-sleeve tee","Flare skirt","Ballet flats","Straw bag"],
+["Short-sleeve blouse","Summer knit cardigan (for air conditioning)","Cropped wide pants","Sandals","Parasol"],
+["Sleeveless dress","UV-cut hoodie","Linen pants","Sport sandals","Hat and parasol"]],
+m:[
+["Long down coat","Extra-warm high-neck base layer","Fleece-lined easy pants","Insulated boots","Knit hat and gloves"],
+["Short down jacket","Crew-neck sweater","Wool-blend slacks","Leather sneakers","Scarf"],
+["Balmacaan coat","Knit cardigan","Chino pants","Loafers","Check shirt"],
+["Tailored jacket","Oxford shirt","Slacks","Leather sneakers","Light cardigan"],
+["Open-collar shirt","Plain T-shirt","Ankle pants","Sneakers","Light outer layer"],
+["Linen shirt","Polo shirt","Chino shorts","Sneakers","Cap"],
+["Quick-dry T-shirt","Dry shorts","Sport sandals","Cap","Cooling towel"]]};
+const STUDENT_WEEKDAY=[
+["Long down coat over school clothes","Extra-warm crew-neck base layer","Thermal tights and thick socks","Gloves and scarf","Waterproof boots"],
+["Down coat over school clothes","Insulating base layer","Fleece-lined tights","Scarf","Ankle boots"],
+["Quilted jacket over school clothes","Light thermal base layer","Cardigan","Loafers","Folding umbrella"],
+["School outfit with a vest","Thin cardigan","Socks","Loafers","Hand towel"],
+["School outfit (light layer for warm spells)","Breathable base layer","Thin cardigan","Sneakers","Hand towel"],
+["Summer school outfit","Breathable quick-dry base layer","Sun hat for the commute","Hand towel","Water bottle"],
+["Summer school outfit","Cooling base layer","Hat for the commute","Hand towel","Water bottle"]];
+const TREND=[
+"Season trend memo: the shared elements are one-tone outfits in thick fabrics, with careful coverage at the neck and wrists.",
+"Season trend memo: the shared element is a bright knit set against dark accent tones.",
+"Season trend memo: the shared elements are textured fabrics such as quilting and plaid.",
+"Season trend memo: the shared elements are beige-to-brown one-tone dressing and relaxed silhouettes.",
+"Season trend memo: the shared element is light layering, with a shirt worn as an outer layer.",
+"Season trend memo: the shared elements are cool natural fabrics like linen, in white and off-white.",
+"Season trend memo: the shared elements are functional fabrics with UV protection and quick drying, and the use of hats."];
+const TREND_POOL={
+spring:[["Trench coat",3,4],["Spring coat",2,3],["Denim jacket",3,4],["Striped long-sleeve tee",3,5],["Sheer shirt",4,5],["Pleated skirt",3,4,"f"],["Wide-leg pants",3,5],["Loafers",2,4]],
+summer:[["Linen shirt",5,6],["Hawaiian shirt",6,6],["Polo shirt",5,6],["Shorts",5,6],["Summer dress",5,6,"f"],["Basket bag",5,6,"f"],["UV-cut hoodie",4,6],["Sport sandals",5,6]],
+autumn:[["Quilted jacket",1,3],["Leather jacket",2,3],["Knit vest",2,3],["Check shirt",2,3],["Corduroy pants",1,3],["Suede boots",1,3],["Long skirt",2,3,"f"],["Turtleneck knit",1,2]],
+winter:[["Long down coat",0,1],["Teddy coat",1,2],["Suede jacket",2,2],["Leather jacket",1,2],["Red knit sweater",0,2],["Plaid skirt",1,2,"f"],["Knit hat",0,1],["Cashmere scarf",0,1]]};
+const SEASON_NAME={spring:"Spring",summer:"Summer",autumn:"Fall",winter:"Winter"};
+function seasonOf(d){const m=d.getMonth()+1;if(m>=3&&m<=5)return "spring";if(m>=6&&m<=8)return "summer";if(m>=9&&m<=11)return "autumn";return "winter";}
+function catOf(label){if(label==="Snow")return "snow";if(label==="Thunderstorm")return "thunder";if(label==="Rain"||label==="Showers"||label==="Drizzle")return "rain";if(label==="Clear"||label==="Mostly clear"||label==="Partly cloudy")return "sun";return "cloud";}
+
+const UMB='<svg class="umb" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 1 9 9H3a9 9 0 0 1 9-9z"/><path d="M12 12v6.5a2.8 2.8 0 0 0 5.6 0"/></svg>';
+const LABELWX={"Clear":"\u2600\uFE0F","Mostly clear":"\uD83C\uDF24\uFE0F","Partly cloudy":"\u26C5","Cloudy":"\u2601\uFE0F","Fog":"\uD83C\uDF2B\uFE0F","Drizzle":"\uD83C\uDF26\uFE0F","Rain":"\u2614","Showers":"\uD83C\uDF27\uFE0F","Snow":"\u2744\uFE0F","Thunderstorm":"\u26C8\uFE0F"};
+const WXIMG={"Clear":"sunny","Mostly clear":"sunny","Partly cloudy":"sunny","Cloudy":"cloudy","Fog":"cloudy","Drizzle":"rain","Rain":"rain","Showers":"rain","Snow":"snow","Thunderstorm":"rain"};
+const LSKEY="mlucky_fashion_us_prefs";
+let prefs={gender:"f",age:"u20",day:"weekday",city:"newyork"};
+try{const raw=localStorage.getItem(LSKEY);if(raw){const p=JSON.parse(raw);if(p&&typeof p==="object"){prefs=Object.assign(prefs,p);}}}catch(e){}
+if(prefs.age==="s70")prefs.age="s60";
+function savePrefs(){try{localStorage.setItem(LSKEY,JSON.stringify(prefs));}catch(e){}}
+let wxData={};
+function latestEditionMs(){return Date.now()-6*3600*1000;}
+function updateRefreshState(){const b=document.getElementById("wxRefresh");if(!b)return;const w=wxData[prefs.city];const fresh=!!(w&&w.issuedMs&&w.issuedMs>=latestEditionMs()-60000);b.classList.toggle("fresh",fresh);b.setAttribute("aria-label",fresh?"Weather data is up to date":"Refresh weather data");}
+setInterval(updateRefreshState,60000);
+let wxFailed=false;
+const FALLBACK_BAND=[1,1,2,3,4,5,6,6,5,4,2,1];
+function bandOf(tmax){for(let i=0;i<BANDS.length;i++){if(tmax<=BANDS[i].max)return i;}return BANDS.length-1;}
+const HOLIDAYS=new Set(["2026-01-01","2026-01-19","2026-02-16","2026-05-25","2026-06-19","2026-07-03","2026-09-07","2026-10-12","2026-11-11","2026-11-26","2026-12-25","2027-01-01","2027-01-18","2027-02-15","2027-05-31","2027-06-18","2027-07-05","2027-09-06","2027-10-11","2027-11-11","2027-11-25","2027-12-24"]);
+function autoDay(){const d=new Date();const p=n=>String(n).padStart(2,"0");const key=d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate());const wd=d.getDay();return (wd===0||wd===6||HOLIDAYS.has(key))?"holiday":"weekday";}
+function isStudent(){return prefs.age==="jh"||prefs.age==="hs";}
+function isSenior(){return prefs.age==="s60"||prefs.age==="s70";}
+function markChips(){
+document.querySelectorAll("#genderChips .chip").forEach(c=>c.classList.toggle("on",c.dataset.g===prefs.gender));
+document.querySelectorAll("#ageChips .chip,#ageTop .chip").forEach(c=>c.classList.toggle("on",c.dataset.a===prefs.age));
+
+}
+const REPPREF={seattle:"Seattle",losangeles:"Los Angeles",phoenix:"Phoenix",denver:"Denver",chicago:"Chicago",houston:"Houston",newyork:"New York",miami:"Miami"};
+let selectedPref=REPPREF[prefs.city]||"New York";
+const MAPPOS={seattle:[5.5,9.5],losangeles:[10.5,57],phoenix:[19.5,63],denver:[30,40],chicago:[65.5,31.5],houston:[48.5,76],newyork:[91.5,30],miami:[85,91]};
+const DOTPOS={seattle:[5.5,9.5],losangeles:[10.5,57],phoenix:[19.5,63],denver:[30,40],chicago:[65.5,31.5],houston:[48.5,76],newyork:[91.5,30],miami:[85,91]};
+const WXSIDE={seattle:"lr",losangeles:"lr",phoenix:"lb",denver:"lt",chicago:"lt",houston:"lb",newyork:"lt",miami:"lr"};
+const WXPOS={seattle:[5.5,9.5],losangeles:[10.5,57],phoenix:[19.5,63],denver:[30,40],chicago:[65.5,31.5],houston:[48.5,76],newyork:[91.5,30],miami:[85,91]};
+function F(c){return Math.round(c*9/5+32);}
+function updateBadges(){
+CITIES.forEach(function(c){
+const el=document.getElementById("wxb-"+c.id); if(!el)return;
+const w=wxData[c.id];
+if(!w){el.textContent="";return;}
+const ic=LABELWX[w.label]||"";
+let bt=ic;if(w.tmax!=null){bt+=" <span class=\"tx\">"+F(w.tmax)+"</span>";if(w.tmin!=null)bt+=" <span class=\"tn\">"+F(w.tmin)+"</span>";}if(w.pop!=null)bt+=" <span class=\"tp\">"+Math.round(w.pop)+"<span class=\"sym\">%</span></span>";el.innerHTML=bt;
+});
+}
+const MKBG={seattle:"#a4d0f2",denver:"#9ecbef",newyork:"#97c7ed",chicago:"#92c4ea",miami:"#a9d1f1",losangeles:"#9dc9ec",houston:"#b2d8f6",phoenix:"#aad0f1"};
+function buildMap(){
+const wrap=document.getElementById("jmap");
+CITIES.forEach(function(c){
+const p=MAPPOS[c.id]; if(!p) return;
+const b=document.createElement("button");
+b.type="button"; b.className="mkbtn"; b.id="mapmk-"+c.id;
+b.style.left=p[0]+"%"; b.style.top=p[1]+"%";
+b.setAttribute("aria-label","Select "+c.name);
+if(MKBG[c.id]){b.style.background=MKBG[c.id];b.style.borderRadius="999px";}
+b.innerHTML='<span class="tapring"></span><span class="mkname">'+c.name+'</span>';
+b.onclick=function(){ pickCity(c.id); };
+wrap.appendChild(b);
+const dp=WXPOS[c.id]||DOTPOS[c.id];
+if(dp){const s=document.createElement("span");s.className="wxbadge wxb-"+WXSIDE[c.id];s.id="wxb-"+c.id;s.style.left=dp[0]+"%";s.style.top=dp[1]+"%";wrap.appendChild(s);}
+});
+}
+function pickCity(id){prefs.city=id;selectedPref=REPPREF[id];savePrefs();render();}
+function buildGallery(){
+const g=document.getElementById("gallery");
+const GALORDER=["newyork","losangeles","chicago","houston","phoenix","seattle","denver","miami"];
+GALORDER.map(id=>CITIES.find(c=>c.id===id)).filter(Boolean).forEach(c=>{
+const b=document.createElement("button");
+b.type="button";b.className="gcard";
+b.innerHTML='<span class="phwrap"><img id="gimg-'+c.id+'" src="'+c.photo+'" alt="'+c.name+' outfit photo"></span><div class="gt"><div class="gn">'+c.name+'</div><div class="gs" id="gcap-'+c.id+'">'+captionFor(c)+'</div></div>';
+b.addEventListener("click",()=>{prefs.city=c.id;selectedPref=REPPREF[c.id];savePrefs();render();document.getElementById("detail").scrollIntoView({behavior:"smooth",block:"start"});});
+g.appendChild(b);
+});
+}
+function updateMap(){
+CITIES.forEach(function(c){
+const mk=document.getElementById("mapmk-"+c.id);
+if(mk) mk.classList.toggle("sel",prefs.city===c.id);
+});
+}
+function render(){
+markChips();updateMap();
+const c=CITIES.find(v=>v.id===prefs.city)||CITIES[5];
+document.getElementById("dCity").textContent=c.name;
+document.getElementById("dPhoto").src=photoFor(c);
+CITIES.forEach(cc=>{const im=document.getElementById("gimg-"+cc.id);if(im)im.src=photoFor(cc);const cp=document.getElementById("gcap-"+cc.id);if(cp)cp.textContent=captionFor(cc);});
+const repName=REPPREF[c.id];
+document.getElementById("dProxy").textContent=(selectedPref&&repName&&selectedPref!==repName)?("Areas around "+selectedPref+" are shown using the forecast for "+c.name+"."):"";
+const w=wxData[c.id];
+const wxEl=document.getElementById("dWx");
+const hasWx=!!w;
+const band=hasWx?bandOf(w.tmax!=null?w.tmax:(w.tmax2!=null?w.tmax2:15)):FALLBACK_BAND[(new Date()).getMonth()];
+if(!hasWx){wxEl.innerHTML='<p class="note">Loading weather…</p>';document.getElementById("dWxSide").textContent="";const se0=document.getElementById("wxSrc");if(se0)se0.style.display="none";}
+else{
+const wtxt=w.label;const wico=LABELWX[w.label]||"🌡️";
+let tseg="";if(w.tmax!=null)tseg+="　<b class=\"tx\">"+F(w.tmax)+"<span class=\"sym\">°F</span></b>";if(w.tmin!=null)tseg+="<span class=\"hsp\"></span><b class=\"tn\">"+F(w.tmin)+"<span class=\"sym\">°F</span></b>";if(w.pop!=null)tseg+="<span class=\"hsp\"></span><span class=\"tp\">"+UMB+Math.round(w.pop)+"<span class=\"sym\">%</span></span>";
+let html='<p class="wxline">Today: '+wico+' <b><span class="sym">'+wtxt+'</span></b>'+tseg+'</p>';
+
+let side="";if(w.wind){side="Wind: "+w.wind;}document.getElementById("dWxSide").innerHTML=side;
+const se1=document.getElementById("wxSrc");const st1=document.getElementById("wxSrcTxt");if(st1)st1.textContent="Open-Meteo "+(w.issuedTxt||"");if(se1)se1.style.display=w.issuedTxt?"":"none";updateRefreshState();
+if(w.label2){const wi2=LABELWX[w.label2]||"🌡️";let tseg2="";if(w.tmax2!=null)tseg2+="　<b class=\"tx\">"+F(w.tmax2)+"<span class=\"sym\">°F</span></b>";if(w.tmin2!=null)tseg2+="<span class=\"hsp\"></span><b class=\"tn\">"+F(w.tmin2)+"<span class=\"sym\">°F</span></b>";if(w.pop2!=null)tseg2+="<span class=\"hsp\"></span><span class=\"tp\">"+UMB+Math.round(w.pop2)+"<span class=\"sym\">%</span></span>";html+='<p class="wxline">Tomorrow: '+wi2+' <b><span class="sym">'+w.label2+'</span></b>'+tseg2+'</p>';}
+wxEl.innerHTML=html;
+}
+document.getElementById("dBand").innerHTML=BANDS[band].name+((hasWx&&w.tmax!=null)?(" (high <span class=\"tx\">"+F(w.tmax)+"<span class=\"sym\">°F</span></span>)"):" (seasonal guide)");
+let items, title;
+if(isStudent()&&autoDay()==="weekday"){items=STUDENT_WEEKDAY[band].slice();title=c.name+": today's school-day outfit";}
+else{items=ITEMS[prefs.gender][band].slice();title=c.name+": today's recommended outfit";}
+const studentWeekday=isStudent()&&autoDay()==="weekday";
+const cat=hasWx?catOf(w.label):null;
+const season=seasonOf(new Date());
+let trendHits=[];
+if(!studentWeekday){
+const poolItems=TREND_POOL[season].filter(p=>band>=p[1]&&band<=p[2]&&(!p[3]||p[3]===prefs.gender));
+let appended=0;
+poolItems.forEach(p=>{
+const nm=p[0];
+const idx=items.findIndex(it=>it.includes(nm)||nm.includes(it));
+if(idx>=0){if(!items[idx].includes("★"))items[idx]=items[idx]+" ★";trendHits.push(nm);}
+else if(appended<2){items.push(nm+" ★");trendHits.push(nm);appended++;}
+});
+}
+let rainy=false;
+if(hasWx&&((cat==="rain"||cat==="thunder")&&(w.pop==null||w.pop>=30)||(cat!=="snow"&&w.pop!=null&&w.pop>=50))){
+rainy=true;if(!items.some(i=>/umbrella/i.test(i)))items.push("Folding umbrella");
+}
+if(hasWx&&cat==="snow"&&band<=2&&!items.some(i=>/gloves/i.test(i)))items.push("Gloves");
+if(hasWx&&cat==="sun"&&band>=5&&!items.some(i=>/parasol|hat|cap/i.test(i)))items.push(prefs.gender==="f"?"Parasol":"Cap");
+let gapNote=false,gapAdd=false;
+if(hasWx&&w.tmin!=null&&w.tmax!=null){const g=band-bandOf(w.tmin);if(g>=2)gapAdd=true;else if(g>=1||w.tmin<=w.tmax-8)gapNote=true;}
+if(gapAdd&&!studentWeekday&&!items.some(i=>/cardigan/i.test(i)))items.push("Light cardigan (easy to layer)");
+document.getElementById("dTitle").textContent=title;
+const AGE_WORD={jh:"middle school",hs:"high school",u20:"20s",w30:"30s",w50:"50s",s60:"60s"};
+const shopQ=function(i){const base=i.replace(/ \u2605$/,"").replace(/\uFF08[^\uFF09]*\uFF09/g,"").replace(/\([^)]*\)/g,"");return [base,prefs.gender==="f"?"women's":"men's",AGE_WORD[prefs.age]||"",new Date().getFullYear(),SEASON_NAME[season],c.name].filter(Boolean).join(" ");};
+document.getElementById("dItems").innerHTML=items.map(i=>'<li><a class="shop" target="_blank" rel="noopener" href="https://www.google.com/search?tbm=shop&hl=en&gl=us&q='+encodeURIComponent(shopQ(i))+'">'+i.replace(/ ★$/,' <span class="tr">Trending</span>')+' <svg class="arr" width="13" height="13" viewBox="0 0 24 24" style="vertical-align:-1px" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M16.3 16.3L21 21"/></svg></a></li>').join("");
+let notes="";
+if(studentWeekday)notes+='<p class="note">School day: practical layers over everyday school clothes, with add-ons for cold and rain.</p>';
+if(isStudent()&&autoDay()==="holiday")notes+='<p class="note">Today is a day off, so this is an everyday outfit rather than the school-day set.</p>';
+if(isSenior())notes+='<p class="note">Senior-friendly picks: lightweight, front-opening layers, non-slip soles, and layers that adjust easily.</p>';
+if(!hasWx&&wxFailed)notes+='<p class="note">Weather data could not be loaded, so a seasonal guide is shown. Reopen the page with a better connection to update it.</p>';
+if(trendHits.length)notes+='<p class="note">Items marked Trending are chosen from elements shared by major brands\' seasonal proposals and leading fashion media.</p>';
+if(trendHits.length>=2)notes+='<p class="note">This season\'s pairing: '+trendHits[0]+' + '+trendHits[1]+' is the formula of the season. A contrast of textures makes it feel current.</p>';
+const SILH={0:"Silhouette guide: a long, straight line keeps heavy layers from looking bulky.",1:"Silhouette guide: shorter-to-mid outerwear with a clean bottom balances the look. Light layers adjust the warmth without puffiness, even in a mild winter.",2:"Silhouette guide: give one side room \u2014 compact on top and wide below, or the reverse \u2014 for this season\'s balance.",3:"Silhouette guide: a light outer layer with a deep-toned bottom keeps the look tidy."};
+if(hasWx&&!studentWeekday&&SILH[band])notes+='<p class="note">'+SILH[band]+'</p>';
+if(rainy)notes+='<p class="note">Rain gear: a water-repellent layer and a folding umbrella are added.'+(cat==="thunder"?" On thunderstorm days, a full-size umbrella is safer.":"")+'</p>';
+if(hasWx&&cat==="snow")notes+='<p class="note">Snow day: footing can be slippery. Choose non-slip soles; a hat or hood serves better than an umbrella.</p>';
+if(hasWx&&cat==="sun"&&band>=5)notes+='<p class="note">A hot, sunny day. Don\'t forget UV protection and water.</p>';
+if(hasWx&&w.wind&&w.wind.indexOf("strong")>=0)notes+='<p class="note">A windy day. A windproof outer layer is recommended.</p>';
+if(gapAdd)notes+='<p class="note">Cold mornings and evenings: the feel changes by about two steps between midday and the ends of the day. An easy layer has been added.</p>';
+else if(gapNote)notes+='<p class="note">Cold mornings and evenings: a large gap from the day\'s low. If you leave early or return late, dress one step warmer.</p>';
+document.getElementById("dNotes").innerHTML=notes;
+document.getElementById("dTrend").textContent=trendHits.length?("Trending now ("+SEASON_NAME[season]+"): "+trendHits.slice(0,3).join(", ")+". Trending pieces are picked from this season\'s products."):TREND[band];
+alignGender();
+const hw=document.getElementById("hdrWx");
+const hwd=wxData[prefs.city];
+if(hw&&hwd&&hwd.label){let hf=WXIMG[hwd.label];if(hwd.wind&&hwd.wind.indexOf("strong")>=0&&["Clear","Mostly clear","Partly cloudy","Cloudy","Fog"].indexOf(hwd.label)>=0)hf="wind";if(hf){const hs="../assets/wx/"+hf+".webp?v=4";if(hw.getAttribute("src")!==hs)hw.src=hs;hw.style.display="block";}}
+updateBadges();
+}
+function alignGender(){
+const g=document.getElementById("genderChips");
+const au=document.querySelector('.chip[data-a="w30"]');
+const ah=document.querySelector('.chip[data-a="u20"]');
+const f=document.querySelector('#genderChips .chip[data-g="f"]');
+if(!g||!au||!ah||!f)return;
+g.style.transform="";g.style.gap="";
+const cu=au.getBoundingClientRect(),ch=ah.getBoundingClientRect(),cf=f.getBoundingClientRect();
+const pitch=(ch.left+ch.width/2)-(cu.left+cu.width/2);
+const gapPx=pitch-cf.width;
+g.style.gap=(gapPx>0?gapPx:0)+"px";
+const cf2=f.getBoundingClientRect();
+const dx=(cu.left+cu.width/2)-(cf2.left+cf2.width/2);
+g.style.transform="translateX("+dx+"px)";
+}
+window.addEventListener("resize",()=>alignGender());
+window.addEventListener("load",()=>alignGender());
+function loadWx(){
+fetch("wxdata-us.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("wxdata");return r.json();}).then(function(d){
+if(!d||!d.cities)throw new Error("wxdata");
+let n=0;CITIES.forEach(function(c){if(d.cities[c.id]){wxData[c.id]=d.cities[c.id];n++;}});
+if(!n)throw new Error("wxdata");
+render();
+}).catch(function(){fetchWxOM();});
+}
+const WMO_L={0:"Clear",1:"Mostly clear",2:"Partly cloudy",3:"Cloudy",45:"Fog",48:"Fog",51:"Drizzle",53:"Drizzle",55:"Drizzle",56:"Drizzle",57:"Drizzle",61:"Rain",63:"Rain",65:"Rain",66:"Rain",67:"Rain",71:"Snow",73:"Snow",75:"Snow",77:"Snow",80:"Showers",81:"Showers",82:"Showers",85:"Snow",86:"Snow",95:"Thunderstorm",96:"Thunderstorm",99:"Thunderstorm"};
+const DIRS8=["N","NE","E","SE","S","SW","W","NW"];
+function windTextUS(deg,kmh){if(deg==null||kmh==null)return "";const mph=Math.round(kmh*0.621371);const d=DIRS8[Math.floor(((deg%360)+22.5)/45)%8];const st=mph>=18?"strong":(mph>=10?"moderate":"light");return d+" wind, "+st+" ("+mph+" mph)";}
+function fetchWxOM(){
+CITIES.forEach(function(c){
+fetch("https://api.open-meteo.com/v1/forecast?latitude="+c.lat+"&longitude="+c.lon+"&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max,wind_direction_10m_dominant&timezone="+encodeURIComponent(c.tz)+"&forecast_days=3",{cache:"no-store",signal:(window.AbortSignal&&AbortSignal.timeout)?AbortSignal.timeout(8000):undefined}).then(function(r){return r.json();}).then(function(j){
+const d=j.daily;if(!d)return;
+const gi=function(k,i){const v=(d[k]||[])[i];return v==null?null:v;};
+const ri=function(k,i){const v=gi(k,i);return v==null?null:Math.round(v);};
+wxData[c.id]={issuedMs:Date.now(),issuedTxt:new Date().toLocaleString("en-US",{timeZone:c.tz,month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}),label:WMO_L[gi("weather_code",0)]||"Cloudy",label2:WMO_L[gi("weather_code",1)]||null,tmax:ri("temperature_2m_max",0),tmin:ri("temperature_2m_min",0),tmax2:ri("temperature_2m_max",1),tmin2:ri("temperature_2m_min",1),pop:ri("precipitation_probability_max",0),pop2:ri("precipitation_probability_max",1),wind:windTextUS(gi("wind_direction_10m_dominant",0),gi("wind_speed_10m_max",0)),tsrc:"om"};
+render();
+}).catch(function(){if(!Object.keys(wxData).length)wxFailed=true;render();});
+});
+}
+document.querySelectorAll("#genderChips .chip").forEach(c=>c.addEventListener("click",()=>{prefs.gender=c.dataset.g;savePrefs();render();}));
+document.querySelectorAll("#ageChips .chip,#ageTop .chip").forEach(c=>c.addEventListener("click",()=>{prefs.age=c.dataset.a;savePrefs();render();}));
+
+buildMap();buildGallery();render();loadWx();
+const wxRbtn=document.getElementById("wxRefresh");
+function wxRefreshState(){if(!wxRbtn)return false;const last=+localStorage.getItem("mlucky_fashion_us_last_refresh")||0;const ok=Date.now()-last>=3600000;wxRbtn.style.opacity=ok?"1":".35";wxRbtn.style.pointerEvents=ok?"auto":"none";return ok;}
+if(wxRbtn){wxRbtn.addEventListener("click",function(){if(wxRbtn.classList.contains("fresh"))return;if(!wxRefreshState())return;localStorage.setItem("mlucky_fashion_us_last_refresh",String(Date.now()));wxRefreshState();wxRbtn.classList.add("spin");fetchWxOM();setTimeout(function(){wxRbtn.classList.remove("spin");},1600);});wxRefreshState();}
+</script>
+<script>document.getElementById('rgnJP').addEventListener('click',function(){try{localStorage.setItem('mlucky_fashion_region','jp');}catch(e){}location.href='../';});</script>
+</body>
+</html>
