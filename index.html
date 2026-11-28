@@ -481,7 +481,7 @@ const tm={};
 if(A2){s2.timeDefines.forEach(function(td,i){const v=parseInt(A2.temps[i],10);if(!isNaN(v))tm[dstr(td)+"|"+td.slice(11,13)]=v;});}
 const tmax=(tm[today+"|09"]!=null)?tm[today+"|09"]:null;
 let tmin=(tm[today+"|00"]!=null)?tm[today+"|00"]:null;
-if(tmin!=null&&tmax!=null&&tmin===tmax&&issued.getHours()>=9)tmin=null;
+if(tmin!=null&&tmax!=null&&tmin===tmax)tmin=null;
 let fTmax=tmax,fTmin=tmin;
 try{
 let wc=null;try{wc=JSON.parse(localStorage.getItem("mlucky_fashion_wxcache")||"null");}catch(e){}
