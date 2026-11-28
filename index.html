@@ -479,9 +479,10 @@ const dstr=function(ts){return ts.slice(0,10);};
 const today=dstr(s0.timeDefines[0]);const tmr=dstr(s0.timeDefines[1]);
 const tm={};
 if(A2){s2.timeDefines.forEach(function(td,i){const v=parseInt(A2.temps[i],10);if(!isNaN(v))tm[dstr(td)+"|"+td.slice(11,13)]=v;});}
-const tmax=(tm[today+"|09"]!=null)?tm[today+"|09"]:null;
+let tmax=(tm[today+"|09"]!=null)?tm[today+"|09"]:null;
 let tmin=(tm[today+"|00"]!=null)?tm[today+"|00"]:null;
 if(tmin!=null&&tmax!=null&&tmin===tmax)tmin=null;
+if(tmin!=null&&tmax!=null&&tmin>tmax){const _x=tmin;tmin=tmax;tmax=_x;}
 let fTmax=tmax,fTmin=tmin;
 try{
 let wc=null;try{wc=JSON.parse(localStorage.getItem("mlucky_fashion_wxcache")||"null");}catch(e){}
@@ -494,8 +495,9 @@ if(tmin!=null)cc.tmin=tmin;
 wc.cities[c.id]=cc;
 try{localStorage.setItem("mlucky_fashion_wxcache",JSON.stringify(wc));}catch(e){}
 }catch(e){}
-const tmax2=(tm[tmr+"|09"]!=null)?tm[tmr+"|09"]:null;
-const tmin2=(tm[tmr+"|00"]!=null)?tm[tmr+"|00"]:null;
+let tmax2=(tm[tmr+"|09"]!=null)?tm[tmr+"|09"]:null;
+let tmin2=(tm[tmr+"|00"]!=null)?tm[tmr+"|00"]:null;
+if(tmin2!=null&&tmax2!=null&&tmin2>tmax2){const _y=tmin2;tmin2=tmax2;tmax2=_y;}
 let pop=null;
 if(A1){const dp=today.split("-").map(Number);const yst=new Date(Date.UTC(dp[0],dp[1]-1,dp[2]-1)).toISOString().slice(0,10);
 s1.timeDefines.forEach(function(td,i){const sd=dstr(td);const hr=parseInt(td.slice(11,13),10);if(sd===today||(sd===yst&&hr===18)){const v=parseInt(A1.pops[i],10);if(!isNaN(v)&&(pop==null||v>pop))pop=v;}});}
