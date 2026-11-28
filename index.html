@@ -2,6 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<script>try{if(localStorage.getItem('mlucky_fashion_region')==='us'){location.replace('us/');}}catch(e){}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>MLucky 今日のコーデ優勝｜天気に負けない、今日のコーデ</title>
 <meta name="description" content="日本地図から地域を選ぶと、その土地の天気と、景色入りのおすすめコーデ（全身写真・商品名つき）が分かります。性別・年代の設定内容はこの端末内にのみ保存されます。">
@@ -142,6 +143,10 @@ footer a{color:#3c5a9e}
 .btnrow{display:flex;gap:8px;flex-wrap:wrap}
 .hidden{display:none}
 .chip:focus-visible,.mkbtn:focus-visible{outline:2px solid #3c5a9e;outline-offset:2px}
+.rgnrow{display:flex;align-items:center;justify-content:center;gap:8px;margin:2px 0 10px;flex-wrap:wrap}
+.rgnlab{font-size:11px;color:#5a6a86;font-weight:600}
+.rgnbtn{border:1px solid #c8d2e2;background:#fff;color:#20294a;border-radius:999px;padding:5px 14px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit}
+.rgnbtn.on{background:#20294a;color:#fff;border-color:#20294a}
 </style>
 </head>
 <body>
@@ -154,6 +159,7 @@ footer a{color:#3c5a9e}
 </header>
 <main>
 <section class="card" id="prefs">
+<div class="rgnrow"><span class="rgnlab">地域・言語</span><button type="button" class="rgnbtn on">日本</button><button type="button" class="rgnbtn" id="rgnUS">United States</button></div>
 <div class="guideline">
 <img class="tapicon" src="assets/tap-icon.webp" alt="">
 <div class="chips" id="genderChips">
@@ -538,5 +544,6 @@ const wxRbtn=document.getElementById("wxRefresh");
 function wxRefreshState(){if(!wxRbtn)return false;const last=+localStorage.getItem("mlucky_fashion_last_refresh")||0;const ok=Date.now()-last>=3600000;wxRbtn.style.opacity=ok?"1":".35";wxRbtn.style.pointerEvents=ok?"auto":"none";return ok;}
 if(wxRbtn){wxRbtn.addEventListener("click",function(){if(wxRbtn.classList.contains("fresh"))return;if(!wxRefreshState())return;localStorage.setItem("mlucky_fashion_last_refresh",String(Date.now()));wxRefreshState();wxRbtn.classList.add("spin");fetchWx();setTimeout(function(){wxRbtn.classList.remove("spin");},1600);});wxRefreshState();}
 </script>
+<script>document.getElementById('rgnUS').addEventListener('click',function(){try{localStorage.setItem('mlucky_fashion_region','us');}catch(e){}location.href='us/';});</script>
 </body>
 </html>
