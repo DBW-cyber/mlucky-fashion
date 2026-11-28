@@ -322,7 +322,7 @@ const el=document.getElementById("wxb-"+c.id); if(!el)return;
 const w=wxData[c.id];
 if(!w){el.textContent="";return;}
 const ic=LABELWX[w.label]||"";
-let bt=ic;if(w.tmax!=null){bt+=" <span class=\"tx\">"+Math.round(w.tmax)+"</span>";if(w.tmin!=null)bt+=" <span class=\"tn\">"+Math.round(w.tmin)+"</span>";bt+="°";}if(w.pop!=null)bt+=" <span class=\"tp\">"+Math.round(w.pop)+"%</span>";el.innerHTML=bt;
+let bt=ic;if(w.tmax!=null){bt+=" <span class=\"tx\">"+Math.round(w.tmax)+"</span>";if(w.tmin!=null)bt+=" <span class=\"tn\">"+Math.round(w.tmin)+"</span>";}if(w.pop!=null)bt+=" <span class=\"tp\">"+Math.round(w.pop)+"%</span>";el.innerHTML=bt;
 });
 }
 const MKBG={sapporo:"#a4d0f2",sendai:"#9ecbef",tokyo:"#97c7ed",nagoya:"#92c4ea",kyoto:"#a9d1f1",osaka:"#9dc9ec",fukuoka:"#b2d8f6",naha:"#aad0f1"};
