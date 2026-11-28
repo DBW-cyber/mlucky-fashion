@@ -98,6 +98,7 @@ label.lab{font-size:13px;font-weight:700;color:#5c6478;display:block;margin-top:
 .wxbadge:empty{display:none}
 .tx{color:#d92d20}.tn{color:#1c6dd0}.tp{color:#1d4f91;font-size:.88em}
 .sym{font-size:.75em}
+.hsp{display:inline-block;width:.5em}
 .umb{width:1em;height:1em;vertical-align:-.12em;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .wxb-r{transform:translate(9px,-50%)}
 .wxb-l{transform:translate(calc(-100% - 9px),-50%)}
@@ -381,12 +382,12 @@ const band=hasWx?bandOf(w.tmax!=null?w.tmax:(w.tmax2!=null?w.tmax2:15)):FALLBACK
 if(!hasWx){wxEl.innerHTML='<p class="note">天気を読み込み中です…</p>';document.getElementById("dWxSide").textContent="";const se0=document.getElementById("wxSrc");if(se0)se0.style.display="none";}
 else{
 const wtxt=w.label;const wico=LABELWX[w.label]||"🌡️";
-let tseg="";if(w.tmax!=null)tseg+="　<b class=\"tx\">"+Math.round(w.tmax)+"<span class=\"sym\">℃</span></b>";if(w.tmin!=null)tseg+="　<b class=\"tn\">"+Math.round(w.tmin)+"<span class=\"sym\">℃</span></b>";if(w.pop!=null)tseg+="　<span class=\"tp\">"+UMB+Math.round(w.pop)+"<span class=\"sym\">%</span></span>";
+let tseg="";if(w.tmax!=null)tseg+="　<b class=\"tx\">"+Math.round(w.tmax)+"<span class=\"sym\">℃</span></b>";if(w.tmin!=null)tseg+="<span class=\"hsp\"></span><b class=\"tn\">"+Math.round(w.tmin)+"<span class=\"sym\">℃</span></b>";if(w.pop!=null)tseg+="<span class=\"hsp\"></span><span class=\"tp\">"+UMB+Math.round(w.pop)+"<span class=\"sym\">%</span></span>";
 let html='<p class="wxline">今日：'+wico+' <b><span class="sym">'+wtxt+'</span></b>'+tseg+'</p>';
 
 let side="";if(w.wind)side="風："+w.wind;document.getElementById("dWxSide").textContent=side;
 const se1=document.getElementById("wxSrc");const st1=document.getElementById("wxSrcTxt");if(st1)st1.textContent=(w.tsrc==="om")?("Open-Meteo "+(w.omTxt||"")+"（代替）"):(w.tsrc==="mix")?("気象庁 "+(w.issuedTxt||"")+"（一部代替）"):(w.issuedTxt?("気象庁 "+w.issuedTxt):"");if(se1)se1.style.display=(w.issuedTxt||w.tsrc==="om")?"":"none";updateRefreshState();
-if(w.label2){const wi2=LABELWX[w.label2]||"🌡️";let tseg2="";if(w.tmax2!=null)tseg2+="　<b class=\"tx\">"+Math.round(w.tmax2)+"<span class=\"sym\">℃</span></b>";if(w.tmin2!=null)tseg2+="　<b class=\"tn\">"+Math.round(w.tmin2)+"<span class=\"sym\">℃</span></b>";if(w.pop2!=null)tseg2+="　<span class=\"tp\">"+UMB+Math.round(w.pop2)+"<span class=\"sym\">%</span></span>";html+='<p class="wxline">明日：'+wi2+' <b><span class="sym">'+w.label2+'</span></b>'+tseg2+'</p>';}
+if(w.label2){const wi2=LABELWX[w.label2]||"🌡️";let tseg2="";if(w.tmax2!=null)tseg2+="　<b class=\"tx\">"+Math.round(w.tmax2)+"<span class=\"sym\">℃</span></b>";if(w.tmin2!=null)tseg2+="<span class=\"hsp\"></span><b class=\"tn\">"+Math.round(w.tmin2)+"<span class=\"sym\">℃</span></b>";if(w.pop2!=null)tseg2+="<span class=\"hsp\"></span><span class=\"tp\">"+UMB+Math.round(w.pop2)+"<span class=\"sym\">%</span></span>";html+='<p class="wxline">明日：'+wi2+' <b><span class="sym">'+w.label2+'</span></b>'+tseg2+'</p>';}
 wxEl.innerHTML=html;
 }
 document.getElementById("dBand").innerHTML=BANDS[band].name+((hasWx&&w.tmax!=null)?("（最高 <span class=\"tx\">"+Math.round(w.tmax)+"<span class=\"sym\">℃</span></span>）"):"（季節の目安）");
