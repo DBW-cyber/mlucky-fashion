@@ -196,6 +196,7 @@ footer a{color:#3c5a9e}
 <tr><td>30℃以上</td><td>盛夏</td><td>速乾・UV対策・帽子</td></tr>
 </table>
 <p style="margin-top:12px">単品は「当季の流行商品」から選んでいます。季節ごとに、大手アパレル各社の今季の提案と主要なファッションメディアの紹介記事の両方に共通して出てくる単品を集めた「今季の商品プール」を用意し、気温の区分に合うものを優先して組み合わせます（★印が今季の流行単品）。アイテムは商品名のみで表記し、メーカー名・ブランド名は付けていません。</p>
+<p class="note">天気データは気象庁の予報を主に使い、値が取得できない・不整合な場合は Open-Meteo の値で代替します（出典表示で明示します）。</p>
 <p class="note">天気による補正：雨の日は降水確率に応じて折りたたみ傘と撥水の備えを足します。雪の日は傘ではなく、防寒小物と滑りにくい足元を優先します。晴れて暑い日はUV対策、風の強い日（気象庁が「やや強く」以上の風を予報した日）は防風素材の羽織をすすめます。昼と朝晩の体感差が大きい日は、脱ぎ着できる重ね着を1枚足します。</p>
 <p class="note">学生（中学生・高校生）は、平日は制服を前提に「制服の上・下に足す防寒と雨対策」、休日は私服コーデを出します。60代・70代以上は、軽さ・前開き・滑りにくい靴底など、着やすさの配慮を優先します。</p>
 <p class="note">天気データ：気象庁（https://www.jma.go.jp）の天気予報を使用しています。当日の気温は、その日の発表の中で気象庁が発表した値を表示します（夕方の発表に当日の気温が含まれない場合は、その日の早い時間の発表の値を引き継いで表示します）。写真はイメージです。実際のお出かけでは、体感や体調に合わせて調整してください。</p>
@@ -378,7 +379,7 @@ let tseg="";if(w.tmax!=null)tseg+="　<b>"+Math.round(w.tmax)+"℃</b>";if(w.tmi
 let html='<p class="wxline">今日：'+wico+' <b>'+wtxt+'</b>'+tseg+'</p>';
 
 let side="";if(w.pop!=null)side="降水確率 "+Math.round(w.pop)+"%";if(w.wind)side+=(side?"　":"")+"風："+w.wind.replace(/の風/g,"");document.getElementById("dWxSide").textContent=side;
-const se1=document.getElementById("wxSrc");const st1=document.getElementById("wxSrcTxt");if(st1)st1.textContent=w.issuedTxt?("気象庁 "+w.issuedTxt):"";if(se1)se1.style.display=w.issuedTxt?"":"none";updateRefreshState();
+const se1=document.getElementById("wxSrc");const st1=document.getElementById("wxSrcTxt");if(st1)st1.textContent=(w.tsrc==="om")?("Open-Meteo "+(w.omTxt||"")+"（代替）"):(w.issuedTxt?("気象庁 "+w.issuedTxt):"");if(se1)se1.style.display=(w.issuedTxt||w.tsrc==="om")?"":"none";updateRefreshState();
 if(w.label2){const wi2=LABELWX[w.label2]||"🌡️";let tseg2="";if(w.tmax2!=null)tseg2+="　<b>"+Math.round(w.tmax2)+"℃</b>";if(w.tmin2!=null)tseg2+=(tseg2?"／":"　")+"<b>"+Math.round(w.tmin2)+"℃</b>";html+='<p class="wxline">明日：'+wi2+' <b>'+w.label2+'</b>'+tseg2+'</p>';}
 wxEl.innerHTML=html;
 }
@@ -502,8 +503,13 @@ let pop=null;
 if(A1){const dp=today.split("-").map(Number);const yst=new Date(Date.UTC(dp[0],dp[1]-1,dp[2]-1)).toISOString().slice(0,10);
 s1.timeDefines.forEach(function(td,i){const sd=dstr(td);const hr=parseInt(td.slice(11,13),10);if(sd===today||(sd===yst&&hr===18)){const v=parseInt(A1.pops[i],10);if(!isNaN(v)&&(pop==null||v>pop))pop=v;}});}
 const wind=(A0.winds&&A0.winds[0])?shortWind(A0.winds[0]):"";
-wxData[c.id]={issuedMs:issued.getTime(),issuedTxt:issued.getDate()+"日"+issued.getHours()+"時",label:jmaLabel(A0.weatherCodes[0],A0.weathers?A0.weathers[0]:""),tmax:fTmax,tmin:fTmin,pop:pop,wind:wind,label2:A0.weatherCodes[1]?jmaLabel(A0.weatherCodes[1],A0.weathers?A0.weathers[1]:""):null,tmax2:tmax2,tmin2:tmin2};
-render();
+const entry={issuedMs:issued.getTime(),issuedTxt:issued.getDate()+"日"+issued.getHours()+"時",label:jmaLabel(A0.weatherCodes[0],A0.weathers?A0.weathers[0]:""),tmax:fTmax,tmin:fTmin,pop:pop,wind:wind,label2:A0.weatherCodes[1]?jmaLabel(A0.weatherCodes[1],A0.weathers?A0.weathers[1]:""):null,tmax2:tmax2,tmin2:tmin2};
+if((fTmax==null||fTmin==null)&&c.lat!=null){
+fetch("https://api.open-meteo.com/v1/forecast?latitude="+c.lat+"&longitude="+c.lon+"&daily=temperature_2m_max,temperature_2m_min&timezone=Asia%2FTokyo&forecast_days=3",{cache:"no-store"}).then(function(r){return r.json();}).then(function(o){
+try{const di=o.daily.time.indexOf(today);if(di>=0){if(entry.tmax==null)entry.tmax=Math.round(o.daily.temperature_2m_max[di]);if(entry.tmin==null)entry.tmin=Math.round(o.daily.temperature_2m_min[di]);entry.tsrc="om";const nd=new Date();entry.omTxt=nd.getDate()+"日"+nd.getHours()+"時";}}catch(e){}
+wxData[c.id]=entry;render();
+}).catch(function(){wxData[c.id]=entry;render();});
+}else{wxData[c.id]=entry;render();}
 }).catch(function(){if(!Object.keys(wxData).length)wxFailed=true;render();});
 });
 }
