@@ -202,7 +202,7 @@ footer a{color:#3c5a9e}
 <tr><td>30℃以上</td><td>盛夏</td><td>速乾・UV対策・帽子</td></tr>
 </table>
 <p style="margin-top:12px">単品は「当季の流行商品」から選んでいます。季節ごとに、大手アパレル各社の今季の提案と主要なファッションメディアの紹介記事の両方に共通して出てくる単品を集めた「今季の商品プール」を用意し、気温の区分に合うものを優先して組み合わせます（★印が今季の流行単品）。アイテムは商品名のみで表記し、メーカー名・ブランド名は付けていません。</p>
-<p class="note">天気データは気象庁の予報を主に使い、値が取得できない・不整合な場合は Open-Meteo の値で代替します（出典表示で明示します）。</p>
+<p class="note">天気データは気象庁の予報を主に使い、値が取得できない・不整合な場合は Open-Meteo の値で代替します。</p>
 <p class="note">天気による補正：雨の日は降水確率に応じて折りたたみ傘と撥水の備えを足します。雪の日は傘ではなく、防寒小物と滑りにくい足元を優先します。晴れて暑い日はUV対策、風の強い日（気象庁が「やや強く」以上の風を予報した日）は防風素材の羽織をすすめます。昼と朝晩の体感差が大きい日は、脱ぎ着できる重ね着を1枚足します。</p>
 <p class="note">学生（中学生・高校生）は、平日は制服を前提に「制服の上・下に足す防寒と雨対策」、休日は私服コーデを出します。60代・70代以上は、軽さ・前開き・滑りにくい靴底など、着やすさの配慮を優先します。</p>
 <p class="note">天気データ：気象庁（https://www.jma.go.jp）の天気予報を使用しています。当日の気温は、その日の発表の中で気象庁が発表した値を表示します（夕方の発表に当日の気温が含まれない場合は、その日の早い時間の発表の値を引き継いで表示します）。写真はイメージです。実際のお出かけでは、体感や体調に合わせて調整してください。</p>
@@ -346,7 +346,7 @@ b.innerHTML='<span class="tapring"></span><span class="mkname">'+c.name+'</span>
 b.onclick=function(){ pickCity(c.id); };
 wrap.appendChild(b);
 const dp=WXPOS[c.id]||DOTPOS[c.id];
-if(dp){const s=document.createElement("span");s.className="wxbadge wxb-"+WXSIDE[c.id];s.id="wxb-"+c.id;s.style.left=dp[0]+"%";s.style.top=dp[1]+"%";wrap.appendChild(s);}
+if(dp){const s=document.createElement("span");s.className="wxbadge wxb-"+WXSIDE[c.id];s.id="wxb-"+c.id;s.style.left=dp[0]+"%";s.style.top=dp[1]+"%";if(c.id==="naha")s.style.marginLeft="8px";wrap.appendChild(s);}
 });
 }
 function pickCity(id){prefs.city=id;selectedPref=REPPREF[id];savePrefs();render();}
@@ -386,7 +386,7 @@ let tseg="";if(w.tmax!=null)tseg+="　<b class=\"tx\">"+Math.round(w.tmax)+"<spa
 let html='<p class="wxline">今日：'+wico+' <b><span class="sym">'+wtxt+'</span></b>'+tseg+'</p>';
 
 let side="";if(w.wind){const tk=w.wind.split("　");side="風："+tk[0];for(let i=1;i<tk.length;i++){side+=(tk[i]==="では"?"":"<span class=\"hsp\"></span>")+tk[i];}}document.getElementById("dWxSide").innerHTML=side;
-const se1=document.getElementById("wxSrc");const st1=document.getElementById("wxSrcTxt");if(st1)st1.textContent=(w.tsrc==="om")?("Open-Meteo "+(w.omTxt||"")+"（代替）"):(w.tsrc==="mix")?("気象庁 "+(w.issuedTxt||"")+"（一部代替）"):(w.issuedTxt?("気象庁 "+w.issuedTxt):"");if(se1)se1.style.display=(w.issuedTxt||w.tsrc==="om")?"":"none";updateRefreshState();
+const se1=document.getElementById("wxSrc");const st1=document.getElementById("wxSrcTxt");if(st1)st1.textContent=(w.tsrc==="om")?("Open-Meteo "+(w.omTxt||"")):(w.tsrc==="mix")?("気象庁 "+(w.issuedTxt||"")):(w.issuedTxt?("気象庁 "+w.issuedTxt):"");if(se1)se1.style.display=(w.issuedTxt||w.tsrc==="om")?"":"none";updateRefreshState();
 if(w.label2){const wi2=LABELWX[w.label2]||"🌡️";let tseg2="";if(w.tmax2!=null)tseg2+="　<b class=\"tx\">"+Math.round(w.tmax2)+"<span class=\"sym\">℃</span></b>";if(w.tmin2!=null)tseg2+="<span class=\"hsp\"></span><b class=\"tn\">"+Math.round(w.tmin2)+"<span class=\"sym\">℃</span></b>";if(w.pop2!=null)tseg2+="<span class=\"hsp\"></span><span class=\"tp\">"+UMB+Math.round(w.pop2)+"<span class=\"sym\">%</span></span>";html+='<p class="wxline">明日：'+wi2+' <b><span class="sym">'+w.label2+'</span></b>'+tseg2+'</p>';}
 wxEl.innerHTML=html;
 }
