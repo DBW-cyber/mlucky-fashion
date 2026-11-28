@@ -340,10 +340,10 @@ document.querySelectorAll("#ageChips .chip,#ageTop .chip").forEach(c=>c.classLis
 }
 const REPPREF={sapporo:"北海道",sendai:"宮城",tokyo:"東京",nagoya:"愛知",kyoto:"京都",osaka:"大阪",fukuoka:"福岡",naha:"沖縄"};
 let selectedPref=REPPREF[prefs.city]||"大阪";
-const MAPPOS={sapporo:[17.3,18.1],sendai:[82.7,30.8],tokyo:[80.0,50.0],nagoya:[62.8,54.3],kyoto:[56.5,53.1],osaka:[54.2,54.2],fukuoka:[26.5,65.0],naha:[42.2,85.0]};
-const DOTPOS={sapporo:[17.3,18.1],sendai:[82.7,30.8],tokyo:[80.0,50.0],nagoya:[62.8,54.3],kyoto:[56.5,53.1],osaka:[54.2,54.2],fukuoka:[26.5,65.0],naha:[42.2,85.0]};
+const MAPPOS={sapporo:[17.3,18.1],sendai:[82.7,30.8],tokyo:[80.0,50.0],nagoya:[62.8,54.3],kyoto:[56.5,53.1],osaka:[54.2,54.2],fukuoka:[28.1,65.5],naha:[42.2,85.0]};
+const DOTPOS={sapporo:[17.3,18.1],sendai:[82.7,30.8],tokyo:[80.0,50.0],nagoya:[62.8,54.3],kyoto:[56.5,53.1],osaka:[54.2,54.2],fukuoka:[28.1,65.5],naha:[42.2,85.0]};
 const WXSIDE={sapporo:"lt",sendai:"lt",tokyo:"lr2",nagoya:"lr",kyoto:"lt",osaka:"lb",fukuoka:"lt",naha:"lb"};
-const WXPOS={sapporo:[17.3,18.1],sendai:[82.7,30.8],tokyo:[80.0,50.0],nagoya:[62.8,54.3],kyoto:[56.5,53.1],osaka:[54.2,54.2],fukuoka:[26.5,65.0],naha:[42.2,85.0]};
+const WXPOS={sapporo:[17.3,18.1],sendai:[82.7,30.8],tokyo:[80.0,50.0],nagoya:[62.8,54.3],kyoto:[56.5,53.1],osaka:[54.2,54.2],fukuoka:[28.1,65.5],naha:[42.2,85.0]};
 function updateBadges(){
 CITIES.forEach(function(c){
 const el=document.getElementById("wxb-"+c.id); if(!el)return;
