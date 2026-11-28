@@ -93,10 +93,10 @@ label.lab{font-size:13px;font-weight:700;color:#5c6478;display:block;margin-top:
 #mapmk-nagoya{width:36px;width:10.2cqw;height:16px;height:4.5cqw;margin-top:1px}
 #mapmk-kyoto{margin-top:0}
 
-.mkname{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:7px;font-size:2cqw;font-weight:900;color:#20294a;letter-spacing:.05em;line-height:1.3;padding:0 2px;border-radius:2px;white-space:nowrap;pointer-events:none}
+.mkname{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:7px;font-size:2cqw;font-weight:900;color:#ffffff;letter-spacing:.05em;line-height:1.3;padding:0 2px;border-radius:2px;white-space:nowrap;pointer-events:none}
 .tapring{display:none;position:absolute;inset:0;border-radius:999px;border:2.5px solid #141b31;border-width:.72cqw;background:transparent;box-shadow:0 0 0 3px rgba(20,27,49,.22),0 0 14px rgba(20,27,49,.45);box-shadow:0 0 0 .87cqw rgba(20,27,49,.22),0 0 4cqw rgba(20,27,49,.45)}
 .mkbtn.sel .tapring{display:block}
-.wxbadge{position:absolute;z-index:2;pointer-events:none;background:rgba(211,211,211,.8);border:1px solid rgba(120,140,170,.35);border-radius:999px;padding:0 4px;padding:0 1.16cqw;font-size:9.5px;font-size:2.75cqw;line-height:1.55;color:#22304a;white-space:nowrap;box-shadow:0 1px 3px rgba(31,80,140,.18)}
+.wxbadge{position:absolute;z-index:2;pointer-events:none;background:rgba(255,255,255,.8);border:1px solid rgba(120,140,170,.35);border-radius:999px;padding:0 4px;padding:0 1.16cqw;font-size:9.5px;font-size:2.75cqw;line-height:1.55;color:#22304a;white-space:nowrap;box-shadow:0 1px 3px rgba(31,80,140,.18)}
 .wxbadge:empty{display:none}
 .tx{color:#d92d20}.tn{color:#1c6dd0}.tp{color:#1d4f91;font-size:.88em}
 .sym{font-size:.75em}
@@ -363,7 +363,7 @@ b.type="button"; b.className="mkbtn"; b.id="mapmk-"+c.id;
 b.style.left=p[0]+"%"; b.style.top=p[1]+"%";
 b.setAttribute("aria-label",c.name+"を選ぶ");
 
-if(MKBG[c.id]){b.style.background="rgba(211,211,211,.8)";b.style.borderRadius="999px";}
+if(MKBG[c.id]){b.style.background="rgba(32,41,74,.8)";b.style.borderRadius="999px";}
 b.innerHTML='<span class="tapring"></span><span class="mkname">'+c.name+'</span>';
 b.onclick=function(){ pickCity(c.id); };
 wrap.appendChild(b);
