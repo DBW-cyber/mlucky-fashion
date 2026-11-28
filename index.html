@@ -128,6 +128,7 @@ footer{max-width:680px;margin:0 auto;padding:6px 12px 30px;font-size:14px;color:
 footer a{color:#3c5a9e}
 .btnrow{display:flex;gap:8px;flex-wrap:wrap}
 .hidden{display:none}
+.chip:focus-visible,.mkbtn:focus-visible{outline:2px solid #3c5a9e;outline-offset:2px}
 </style>
 </head>
 <body>
@@ -240,7 +241,7 @@ const BANDS=[
 const ITEMS={
 f:[
 ["ロングダウンコート","極暖タートルネックニット","裏起毛プリーツスカート","防寒ブーツ","ニット帽と手袋"],
-["ダウンコート","タートルネックセーター","コーデュロイワイドパンツ","ショートブーツ","大判ストール"],
+["ショートダウンコート","タートルネックセーター","コーデュロイワイドパンツ","ショートブーツ","大判ストール"],
 ["中綿キルティングコート","クルーネックニット","起毛タイトスカート","ローファー","チェックマフラー"],
 ["トレンチコート","薄手ニットプルオーバー","テーパードパンツ","スニーカー","シルクスカーフ"],
 ["リネン混シャツジャケット","カットソープルオーバー","フレアスカート","バレエシューズ","ストローバッグ"],
@@ -248,7 +249,7 @@ f:[
 ["ノースリーブワンピース","UVカットパーカー","リネンパンツ","スポーツサンダル","帽子と日傘"]],
 m:[
 ["ロングダウンコート","極暖ハイネックインナー","裏起毛イージーパンツ","防寒ブーツ","ニット帽と手袋"],
-["ダウンジャケット","クルーネックセーター","ウール混スラックス","レザースニーカー","マフラー"],
+["ショートダウンジャケット","クルーネックセーター","ウール混スラックス","レザースニーカー","マフラー"],
 ["ステンカラーコート","ニットカーディガン","チノパンツ","ローファー","チェックシャツ"],
 ["テーラードジャケット","オックスフォードシャツ","スラックス","レザースニーカー","薄手カーディガン"],
 ["オープンカラーシャツ","無地Tシャツ","アンクルパンツ","スニーカー","ライトアウター"],
@@ -418,6 +419,9 @@ if(isStudent()&&autoDay()==="holiday")notes+='<p class="note">今日は休日な
 if(isSenior())notes+='<p class="note">シニアの配慮：軽くて前開きの羽織、滑りにくい靴底、体温調節しやすい重ね着を優先しています。</p>';
 if(!hasWx&&wxFailed)notes+='<p class="note">天気データを取得できなかったため、季節の目安で表示しています。通信環境のよい場所で開き直すと、実況に合わせて更新されます。</p>';
 if(trendHits.length)notes+='<p class="note">★＝今季（'+SEASON_NAME[season]+'）の流行単品です。大手各社の今季提案と主要メディア共通の要素から選んでいます（商品名のみ、メーカー名は載せていません）。</p>';
+if(trendHits.length>=2)notes+='<p class="note">今季の組み合わせ：「'+trendHits[0]+'」＋「'+trendHits[1]+'」が今季の公式です。素材のコントラストを付けると、今季らしくなります。</p>';
+const SILH={0:"ロング丈で縦のラインを意識すると、厚着でも重く見えません。",1:"アウターは短め〜ミドル丈、ボトムはすっきりさせるとバランスが取れます。薄手の重ね着で調整すると、暖冬でも着膨れしません。",2:"上下どちらかにゆとりを持たせる（上はコンパクト／下はワイド、など）と、今季のバランスになります。",3:"軽いアウターに引き締め色のボトムを合わせると、だらしなく見えません。"};
+if(hasWx&&!studentWeekday&&SILH[band])notes+='<p class="note">シルエットの目安：'+SILH[band]+'</p>';
 if(rainy)notes+='<p class="note">雨の備え：撥水素材の羽織と折りたたみ傘を足しています。'+(cat==="thunder"?"雷雨の日は長傘が安心です。":"")+'</p>';
 if(hasWx&&cat==="snow")notes+='<p class="note">雪の備え：足元が滑りやすい日です。滑りにくい靴底を選び、傘より帽子・フードがおすすめです。</p>';
 if(hasWx&&cat==="sun"&&band>=5)notes+='<p class="note">晴れて暑い日です。UV対策と水分補給を忘れずに。</p>';
@@ -463,7 +467,7 @@ render();
 }
 function fetchWx(){
 CITIES.forEach(function(c){
-fetch("https://www.jma.go.jp/bosai/forecast/data/forecast/"+c.jma+".json",{cache:"no-store"}).then(function(r){return r.json();}).then(function(j){
+fetch("https://www.jma.go.jp/bosai/forecast/data/forecast/"+c.jma+".json",{cache:"no-store",signal:(window.AbortSignal&&AbortSignal.timeout)?AbortSignal.timeout(8000):undefined}).then(function(r){return r.json();}).then(function(j){
 const rep=j[0];const issued=new Date(rep.reportDatetime);
 const s0=rep.timeSeries[0],s1=rep.timeSeries[1],s2=rep.timeSeries[2];
 let A0=null,A1=null,A2=null;
@@ -498,7 +502,7 @@ s1.timeDefines.forEach(function(td,i){const sd=dstr(td);const hr=parseInt(td.sli
 const wind=(A0.winds&&A0.winds[0])?shortWind(A0.winds[0]):"";
 wxData[c.id]={issuedMs:issued.getTime(),issuedTxt:issued.getDate()+"日"+issued.getHours()+"時",label:jmaLabel(A0.weatherCodes[0],A0.weathers?A0.weathers[0]:""),tmax:fTmax,tmin:fTmin,pop:pop,wind:wind,label2:A0.weatherCodes[1]?jmaLabel(A0.weatherCodes[1],A0.weathers?A0.weathers[1]:""):null,tmax2:tmax2,tmin2:tmin2};
 render();
-}).catch(function(){wxFailed=true;render();});
+}).catch(function(){if(!Object.keys(wxData).length)wxFailed=true;render();});
 });
 }
 document.querySelectorAll("#genderChips .chip").forEach(c=>c.addEventListener("click",()=>{prefs.gender=c.dataset.g;savePrefs();render();}));
