@@ -90,9 +90,9 @@ label.lab{font-size:13px;font-weight:700;color:#5c6478;display:block;margin-top:
 @keyframes wxs{to{transform:rotate(360deg)}}
 .mapimg{width:100%;height:auto;display:block;border-radius:14px;box-shadow:0 12px 32px rgba(31,111,183,.28)}
 .mkbtn{position:absolute;transform:translate(-50%,-50%);width:30px;width:8.5cqw;height:16px;height:4.5cqw;margin-top:1px;background:transparent;border:0;cursor:pointer;padding:0;z-index:3;line-height:0}
-#mapmk-nagoya{width:36px;width:10.2cqw;height:16px;height:4.5cqw;margin-top:1px}
+#mapmk-nagoya{width:36px;width:10.2cqw;height:16px;height:4.5cqw;margin-top:1px;margin-left:1px}
 #mapmk-kyoto{margin-top:0}
-
+#mapmk-sapporo{margin-top:0;margin-left:-2px}
 .mkname{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:7px;font-size:2cqw;font-weight:700;color:#20294a;letter-spacing:.05em;line-height:1.3;padding:0 2px;border-radius:2px;white-space:nowrap;pointer-events:none}
 .tapring{display:none;position:absolute;inset:0;border-radius:999px;border:2.5px solid #141b31;border-width:.72cqw;background:transparent;box-shadow:0 0 0 3px rgba(20,27,49,.22),0 0 14px rgba(20,27,49,.45);box-shadow:0 0 0 .87cqw rgba(20,27,49,.22),0 0 4cqw rgba(20,27,49,.45)}
 .mkbtn.sel .tapring{display:block}
@@ -184,7 +184,7 @@ footer a{color:#3c5a9e}
 </div>
 </div>
 <div class="mapwrap" id="mapwrap">
-<div id="jmap"><img class="mapimg" src="assets/japan-map-v4.webp" alt="日本地図"><img class="maphand" src="assets/tap-icon-clear.webp" alt=""><div id="mapNote">＊地図イメージ</div><div id="wxSrc" style="display:none"><span id="wxSrcTxt"></span><button id="wxRefresh" type="button" aria-label="天気データを更新"><svg viewBox="0 0 24 24" width="9" height="9" fill="#42506b" aria-hidden="true"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg></button></div></div>
+<div id="jmap"><img class="mapimg" src="assets/japan-map-v3.webp" alt="日本地図"><img class="maphand" src="assets/tap-icon-clear.webp" alt=""><div id="mapNote">＊地図イメージ</div><div id="wxSrc" style="display:none"><span id="wxSrcTxt"></span><button id="wxRefresh" type="button" aria-label="天気データを更新"><svg viewBox="0 0 24 24" width="9" height="9" fill="#42506b" aria-hidden="true"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg></button></div></div>
 </div>
 <p class="note" style="margin:8px 0 0;text-align:center">設定内容はこの端末内にのみ保存されます。</p>
 </section>
@@ -340,10 +340,10 @@ document.querySelectorAll("#ageChips .chip,#ageTop .chip").forEach(c=>c.classLis
 }
 const REPPREF={sapporo:"北海道",sendai:"宮城",tokyo:"東京",nagoya:"愛知",kyoto:"京都",osaka:"大阪",fukuoka:"福岡",naha:"沖縄"};
 let selectedPref=REPPREF[prefs.city]||"大阪";
-const MAPPOS={sapporo:[72.5,25.0],sendai:[64.8,38.5],tokyo:[58.6,48.6],nagoya:[51.3,56.0],kyoto:[46.7,55.0],osaka:[45.3,57.8],fukuoka:[19.2,47.8],naha:[22.9,84.6]};
-const DOTPOS={sapporo:[72.5,25.0],sendai:[64.8,38.5],tokyo:[58.6,48.6],nagoya:[51.3,56.0],kyoto:[46.7,55.0],osaka:[45.3,57.8],fukuoka:[19.2,47.8],naha:[22.9,84.6]};
+const MAPPOS={sapporo:[62.4,24.8],sendai:[75.8,45.0],tokyo:[70.6,58.7],nagoya:[56.8,70.9],kyoto:[50.6,45.9],osaka:[48.2,75.4],fukuoka:[25.0,64.6],naha:[16.6,76.6]};
+const DOTPOS={sapporo:[70.2,24.7],sendai:[68.9,44.8],tokyo:[63.0,58.6],nagoya:[54.6,60.3],kyoto:[50.6,59.0],osaka:[48.4,61.5],fukuoka:[31.8,64.6],naha:[23.4,76.6]};
 const WXSIDE={sapporo:"lt",sendai:"lt",tokyo:"lr2",nagoya:"lr",kyoto:"lt",osaka:"lb",fukuoka:"lt",naha:"lb"};
-const WXPOS={sapporo:[72.5,25.0],sendai:[64.8,38.5],tokyo:[58.6,48.6],nagoya:[51.3,56.0],kyoto:[46.7,55.0],osaka:[45.3,57.8],fukuoka:[19.2,47.8],naha:[22.9,84.6]};
+const WXPOS={sapporo:[62.4,24.8],sendai:[75.8,45.0],tokyo:[70.6,58.7],nagoya:[56.8,70.9],kyoto:[50.6,45.9],osaka:[48.2,75.4],fukuoka:[25.0,64.6],naha:[16.6,76.6]};
 function updateBadges(){
 CITIES.forEach(function(c){
 const el=document.getElementById("wxb-"+c.id); if(!el)return;
@@ -362,7 +362,7 @@ const b=document.createElement("button");
 b.type="button"; b.className="mkbtn"; b.id="mapmk-"+c.id;
 b.style.left=p[0]+"%"; b.style.top=p[1]+"%";
 b.setAttribute("aria-label",c.name+"を選ぶ");
-
+if(c.id==="tokyo"){b.style.marginLeft="calc(-.58cqw - 2px)";}
 if(MKBG[c.id]){b.style.background=MKBG[c.id];b.style.borderRadius="999px";}
 b.innerHTML='<span class="tapring"></span><span class="mkname">'+c.name+'</span>';
 b.onclick=function(){ pickCity(c.id); };
