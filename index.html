@@ -125,6 +125,7 @@ ul.items{margin:8px 0 4px;padding-left:20px}
 ul.items li{margin:3px 0;font-size:16.5px}
 ul.items a.shop{color:inherit;text-decoration:underline;text-decoration-color:rgba(32,41,74,.32);text-underline-offset:3px}
 ul.items a.shop .arr{font-size:.75em;color:#8a93a8}
+ul.items .tr{font-size:.72em;color:#9a7b1e}
 .tag{display:inline-block;background:#eef1f7;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#3c4a68;margin-right:6px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .gcard{border:1px solid #e3ddcd;border-radius:12px;overflow:hidden;background:#fff;cursor:pointer;text-align:left;padding:0}
@@ -206,7 +207,7 @@ footer a{color:#3c5a9e}
 <tr><td>25〜29℃</td><td>薄着</td><td>半袖＋冷房対策の羽織</td></tr>
 <tr><td>30℃以上</td><td>盛夏</td><td>速乾・UV対策・帽子</td></tr>
 </table>
-<p style="margin-top:12px">合わせる単品は、その季節の「流行」のなかから拾っています。季節のはじめに、大手アパレル各社の今季の提案と、主なファッションメディアの紹介とを静かに見比べ、どちらにも共通して現れるものだけを集めて「今季の商品プール」としました。そのなかから、気温の区分に合うものを優先して組み合わせています（★印が、今季の流行単品です）。アイテムは商品名のみで記し、メーカー名・ブランド名は付けていません。</p>
+<p style="margin-top:12px">合わせる単品は、その季節の「流行」のなかから拾っています。季節のはじめに、大手アパレル各社の今季の提案と、主なファッションメディアの紹介とを静かに見比べ、どちらにも共通して現れるものだけを集めて「今季の商品プール」としました。そのなかから、気温の区分に合うものを優先して組み合わせています（「今季流行」と小さく記したものが、今季の流行単品です）。アイテムは商品名のみで記し、メーカー名・ブランド名は付けていません。</p>
 <p class="note">天気による補正も、少しだけ加えています。雨の日は、降水確率に応じて折りたたみ傘と撥水の備えを足します。雪の日は傘ではなく、防寒の小物と、滑りにくい足元を優先します。晴れて暑い日にはUV対策を、気象庁が「やや強く」以上の風を予報する日には、防風素材の羽織をすすめます。昼と朝晩の体感差が大きい日は、脱ぎ着できる重ね着を一枚足してください。</p>
 <p class="note">学生（中学生・高校生）については、平日は制服を前提に、制服の上と下に足す防寒と雨の備えを示し、休日は私服のコーデを出します。60代・70代以上の方には、軽さ、前開きの着やすさ、滑りにくい靴底など、無理のないことを優先しました。</p>
 <p class="note">天気データは、気象庁（https://www.jma.go.jp）の天気予報を使用しています。当日の気温は、その日の発表の中で気象庁が発表した値を表示します（夕方の発表に当日の気温が含まれない場合は、その日の早い時間の発表の値を引き継いで表示します）。</p>
@@ -425,13 +426,13 @@ if(gapAdd&&!studentWeekday&&!items.some(i=>i.includes("カーディガン")))ite
 document.getElementById("dTitle").textContent=title;
 const AGE_WORD={jh:"中学生",hs:"高校生",u20:"20代",w30:"30代",w50:"50代",s60:"60代"};
 const shopQ=function(i){const base=i.replace(/ ★$/,"").replace(/（[^）]*）/g,"");return [base,prefs.gender==="f"?"レディース":"メンズ",AGE_WORD[prefs.age]||"",new Date().getFullYear()+"年",SEASON_NAME[season],c.name].filter(Boolean).join(" ");};
-document.getElementById("dItems").innerHTML=items.map(i=>'<li><a class="shop" target="_blank" rel="noopener" href="https://www.google.com/search?tbm=shop&q='+encodeURIComponent(shopQ(i))+'">'+i+' <svg class="arr" width="13" height="13" viewBox="0 0 24 24" style="vertical-align:-1px" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M16.3 16.3L21 21"/></svg></a></li>').join("");
+document.getElementById("dItems").innerHTML=items.map(i=>'<li><a class="shop" target="_blank" rel="noopener" href="https://www.google.com/search?tbm=shop&q='+encodeURIComponent(shopQ(i))+'">'+i.replace(/ ★$/,' <span class="tr">今季流行</span>')+' <svg class="arr" width="13" height="13" viewBox="0 0 24 24" style="vertical-align:-1px" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M16.3 16.3L21 21"/></svg></a></li>').join("");
 let notes="";
 if(studentWeekday)notes+='<p class="note">平日は制服が前提です。制服の上・下に足す防寒と雨対策を出しています。</p>';
 if(isStudent()&&autoDay()==="holiday")notes+='<p class="note">今日は休日なので私服コーデです。大手各社の実際の商品から選べる、具体的な組み合わせにしています。</p>';
 if(isSenior())notes+='<p class="note">シニアの配慮：軽くて前開きの羽織、滑りにくい靴底、体温調節しやすい重ね着を優先しています。</p>';
 if(!hasWx&&wxFailed)notes+='<p class="note">天気データを取得できなかったため、季節の目安で表示しています。通信環境のよい場所で開き直すと、実況に合わせて更新されます。</p>';
-if(trendHits.length)notes+='<p class="note">★＝今季（'+SEASON_NAME[season]+'）の流行単品です。大手各社の今季提案と主要メディア共通の要素から選んでいます。</p>';
+if(trendHits.length)notes+='<p class="note">「今季流行」と記した単品は、大手各社の今季提案と主要メディア共通の要素から選んでいます。</p>';
 if(trendHits.length>=2)notes+='<p class="note">今季の組み合わせ：「'+trendHits[0]+'」＋「'+trendHits[1]+'」が今季の公式です。素材のコントラストを付けると、今季らしくなります。</p>';
 const SILH={0:"ロング丈で縦のラインを意識すると、厚着でも重く見えません。",1:"アウターは短め〜ミドル丈、ボトムはすっきりさせるとバランスが取れます。薄手の重ね着で調整すると、暖冬でも着膨れしません。",2:"上下どちらかにゆとりを持たせる（上はコンパクト／下はワイド、など）と、今季のバランスになります。",3:"軽いアウターに引き締め色のボトムを合わせると、だらしなく見えません。"};
 if(hasWx&&!studentWeekday&&SILH[band])notes+='<p class="note">シルエットの目安：'+SILH[band]+'</p>';
