@@ -347,7 +347,7 @@ b.innerHTML='<span class="tapring"></span><span class="mkname">'+c.name+'</span>
 b.onclick=function(){ pickCity(c.id); };
 wrap.appendChild(b);
 const dp=WXPOS[c.id]||DOTPOS[c.id];
-if(dp){const s=document.createElement("span");s.className="wxbadge wxb-"+WXSIDE[c.id];s.id="wxb-"+c.id;s.style.left=dp[0]+"%";s.style.top=dp[1]+"%";if(c.id==="naha")s.style.marginLeft="8px";wrap.appendChild(s);}
+if(dp){const s=document.createElement("span");s.className="wxbadge wxb-"+WXSIDE[c.id];s.id="wxb-"+c.id;s.style.left=dp[0]+"%";s.style.top=dp[1]+"%";if(c.id==="naha")s.style.marginLeft="10px";wrap.appendChild(s);}
 });
 }
 function pickCity(id){prefs.city=id;selectedPref=REPPREF[id];savePrefs();render();}
