@@ -96,7 +96,7 @@ label.lab{font-size:13px;font-weight:700;color:#5c6478;display:block;margin-top:
 .mkbtn.sel .tapring{display:block}
 .wxbadge{position:absolute;z-index:2;pointer-events:none;background:rgba(255,255,255,.85);border:1px solid rgba(120,140,170,.35);border-radius:999px;padding:0 4px;padding:0 1.16cqw;font-size:9.5px;font-size:2.75cqw;line-height:1.55;color:#22304a;white-space:nowrap;box-shadow:0 1px 3px rgba(31,80,140,.18)}
 .wxbadge:empty{display:none}
-.tx{color:#d92d20}.tn{color:#1c6dd0}
+.tx{color:#d92d20}.tn{color:#1c6dd0}.tp{color:#1d4f91;font-weight:700}
 .wxb-r{transform:translate(9px,-50%)}
 .wxb-l{transform:translate(calc(-100% - 9px),-50%)}
 .wxb-t{transform:translate(-30%,calc(-100% - 5px))}
@@ -322,7 +322,7 @@ const el=document.getElementById("wxb-"+c.id); if(!el)return;
 const w=wxData[c.id];
 if(!w){el.textContent="";return;}
 const ic=LABELWX[w.label]||"";
-el.innerHTML=(w.tmax==null)?ic:(ic+" "+"<span class=\"tx\">"+Math.round(w.tmax)+"</span>"+(w.tmin==null?"":"／<span class=\"tn\">"+Math.round(w.tmin)+"</span>")+"°");
+let bt=ic;if(w.tmax!=null){bt+=" <span class=\"tx\">"+Math.round(w.tmax)+"</span>";if(w.tmin!=null)bt+=" <span class=\"tn\">"+Math.round(w.tmin)+"</span>";bt+="°";}if(w.pop!=null)bt+=" <span class=\"tp\">"+Math.round(w.pop)+"%</span>";el.innerHTML=bt;
 });
 }
 const MKBG={sapporo:"#a4d0f2",sendai:"#9ecbef",tokyo:"#97c7ed",nagoya:"#92c4ea",kyoto:"#a9d1f1",osaka:"#9dc9ec",fukuoka:"#b2d8f6",naha:"#aad0f1"};
@@ -376,12 +376,12 @@ const band=hasWx?bandOf(w.tmax!=null?w.tmax:(w.tmax2!=null?w.tmax2:15)):FALLBACK
 if(!hasWx){wxEl.innerHTML='<p class="note">天気を読み込み中です…</p>';document.getElementById("dWxSide").textContent="";const se0=document.getElementById("wxSrc");if(se0)se0.style.display="none";}
 else{
 const wtxt=w.label;const wico=LABELWX[w.label]||"🌡️";
-let tseg="";if(w.tmax!=null)tseg+="　<b class=\"tx\">"+Math.round(w.tmax)+"℃</b>";if(w.tmin!=null)tseg+=(tseg?"／":"　")+"<b class=\"tn\">"+Math.round(w.tmin)+"℃</b>";
+let tseg="";if(w.tmax!=null)tseg+="　<b class=\"tx\">"+Math.round(w.tmax)+"℃</b>";if(w.tmin!=null)tseg+="　<b class=\"tn\">"+Math.round(w.tmin)+"℃</b>";
 let html='<p class="wxline">今日：'+wico+' <b>'+wtxt+'</b>'+tseg+'</p>';
 
-let side="";if(w.pop!=null)side="降水確率 "+Math.round(w.pop)+"%";if(w.wind)side+=(side?"　":"")+"風："+w.wind.replace(/の風/g,"");document.getElementById("dWxSide").textContent=side;
+let side="";if(w.pop!=null)side="降水確率 <span class=\"tp\">"+Math.round(w.pop)+"%</span>";if(w.wind)side+=(side?"　":"")+"風："+w.wind.replace(/の風/g,"");document.getElementById("dWxSide").innerHTML=side;
 const se1=document.getElementById("wxSrc");const st1=document.getElementById("wxSrcTxt");if(st1)st1.textContent=(w.tsrc==="om")?("Open-Meteo "+(w.omTxt||"")+"（代替）"):(w.tsrc==="mix")?("気象庁 "+(w.issuedTxt||"")+"（一部代替）"):(w.issuedTxt?("気象庁 "+w.issuedTxt):"");if(se1)se1.style.display=(w.issuedTxt||w.tsrc==="om")?"":"none";updateRefreshState();
-if(w.label2){const wi2=LABELWX[w.label2]||"🌡️";let tseg2="";if(w.tmax2!=null)tseg2+="　<b class=\"tx\">"+Math.round(w.tmax2)+"℃</b>";if(w.tmin2!=null)tseg2+=(tseg2?"／":"　")+"<b class=\"tn\">"+Math.round(w.tmin2)+"℃</b>";html+='<p class="wxline">明日：'+wi2+' <b>'+w.label2+'</b>'+tseg2+'</p>';}
+if(w.label2){const wi2=LABELWX[w.label2]||"🌡️";let tseg2="";if(w.tmax2!=null)tseg2+="　<b class=\"tx\">"+Math.round(w.tmax2)+"℃</b>";if(w.tmin2!=null)tseg2+="　<b class=\"tn\">"+Math.round(w.tmin2)+"℃</b>";html+='<p class="wxline">明日：'+wi2+' <b>'+w.label2+'</b>'+tseg2+'</p>';}
 wxEl.innerHTML=html;
 }
 document.getElementById("dBand").innerHTML=BANDS[band].name+((hasWx&&w.tmax!=null)?("（最高 <span class=\"tx\">"+Math.round(w.tmax)+"℃</span>）"):"（季節の目安）");
