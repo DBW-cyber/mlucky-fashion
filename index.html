@@ -366,7 +366,7 @@ const GALORDER=["tokyo","osaka","nagoya","sapporo","fukuoka","kyoto","sendai","n
 GALORDER.map(id=>CITIES.find(c=>c.id===id)).filter(Boolean).forEach(c=>{
 const b=document.createElement("button");
 b.type="button";b.className="gcard";
-b.innerHTML='<span class="phwrap"><img id="gimg-'+c.id+'" src="'+c.photo+'" alt="'+c.name+'のコーデ写真"><span class="aitag">AI生成画像</span></span><div class="gt"><div class="gn">'+c.name+'</div><div class="gs" id="gcap-'+c.id+'">'+captionFor(c)+'</div></div>';
+b.innerHTML='<span class="phwrap"><img id="gimg-'+c.id+'" src="'+c.photo+'" alt="'+c.name+'のコーデ写真"></span><div class="gt"><div class="gn">'+c.name+'</div><div class="gs" id="gcap-'+c.id+'">'+captionFor(c)+'</div></div>';
 b.addEventListener("click",()=>{prefs.city=c.id;selectedPref=REPPREF[c.id];savePrefs();render();document.getElementById("detail").scrollIntoView({behavior:"smooth",block:"start"});});
 g.appendChild(b);
 });
