@@ -353,7 +353,8 @@ if(dp){const s=document.createElement("span");s.className="wxbadge wxb-"+WXSIDE[
 function pickCity(id){prefs.city=id;selectedPref=REPPREF[id];savePrefs();render();}
 function buildGallery(){
 const g=document.getElementById("gallery");
-CITIES.forEach(c=>{
+const GALORDER=["tokyo","osaka","nagoya","sapporo","fukuoka","kyoto","sendai","naha"];
+GALORDER.map(id=>CITIES.find(c=>c.id===id)).filter(Boolean).forEach(c=>{
 const b=document.createElement("button");
 b.type="button";b.className="gcard";
 b.innerHTML='<img id="gimg-'+c.id+'" src="'+c.photo+'" alt="'+c.name+'のコーデ写真"><div class="gt"><div class="gn">'+c.name+'</div><div class="gs">'+c.spot+'</div></div>';
