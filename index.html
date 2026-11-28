@@ -118,6 +118,8 @@ label.lab{font-size:13px;font-weight:700;color:#5c6478;display:block;margin-top:
 .big{font-size:21px;font-weight:800;color:#141b31}
 .photo{width:100%;border-radius:12px;display:block}
 .phwrap{position:relative;display:block}
+.phnote{position:absolute;right:6px;bottom:6px;font-size:9px;line-height:1.3;color:#42506b;background:rgba(198,204,214,.25);padding:1px 6px;border-radius:999px;white-space:nowrap;pointer-events:none}
+.dph .aitag{bottom:25px}
 .aitag{position:absolute;right:6px;bottom:6px;font-size:10px;line-height:1.3;color:#42506b;background:rgba(198,204,214,.25);padding:2px 6px;border-radius:999px;pointer-events:none}
 ul.items{margin:8px 0 4px;padding-left:20px}
 ul.items li{margin:3px 0;font-size:16.5px}
@@ -177,7 +179,7 @@ footer a{color:#3c5a9e}
 <div class="cityrow"><h2 id="dCity">大阪</h2><span class="wxside" id="dWxSide"></span></div>
 <div id="dWx"><p class="note">天気を読み込み中です…</p></div>
 <p class="note" id="dProxy"></p>
-<span class="phwrap"><img class="photo" id="dPhoto" src="assets/osaka.webp" alt="おすすめコーデの全身写真"><span class="aitag">AI生成画像</span></span>
+<span class="phwrap dph"><img class="photo" id="dPhoto" src="assets/osaka.webp" alt="おすすめコーデの全身写真"><span class="aitag">AI生成画像</span><span class="phnote">写真はイメージです。実際のお出かけでは、どうぞ体感や体調に合わせて調整してください。</span></span>
 <p class="big" id="dTitle" style="margin:12px 0 2px"></p>
 <p style="margin:0"><span class="tag" id="dBand"></span><span class="note" id="dSpot"></span></p>
 <ul class="items" id="dItems"></ul>
@@ -207,7 +209,7 @@ footer a{color:#3c5a9e}
 <p style="margin-top:12px">合わせる単品は、その季節の「流行」のなかから拾っています。季節のはじめに、大手アパレル各社の今季の提案と、主なファッションメディアの紹介とを静かに見比べ、どちらにも共通して現れるものだけを集めて「今季の商品プール」としました。そのなかから、気温の区分に合うものを優先して組み合わせています（★印が、今季の流行単品です）。アイテムは商品名のみで記し、メーカー名・ブランド名は付けていません。</p>
 <p class="note">天気による補正も、少しだけ加えています。雨の日は、降水確率に応じて折りたたみ傘と撥水の備えを足します。雪の日は傘ではなく、防寒の小物と、滑りにくい足元を優先します。晴れて暑い日にはUV対策を、気象庁が「やや強く」以上の風を予報する日には、防風素材の羽織をすすめます。昼と朝晩の体感差が大きい日は、脱ぎ着できる重ね着を一枚足してください。</p>
 <p class="note">学生（中学生・高校生）については、平日は制服を前提に、制服の上と下に足す防寒と雨の備えを示し、休日は私服のコーデを出します。60代・70代以上の方には、軽さ、前開きの着やすさ、滑りにくい靴底など、無理のないことを優先しました。</p>
-<p class="note">天気データは、気象庁（https://www.jma.go.jp）の天気予報を使用しています。当日の気温は、その日の発表の中で気象庁が発表した値を表示します（夕方の発表に当日の気温が含まれない場合は、その日の早い時間の発表の値を引き継いで表示します）。写真はイメージです。実際のお出かけでは、どうぞ体感や体調に合わせて調整してください。</p>
+<p class="note">天気データは、気象庁（https://www.jma.go.jp）の天気予報を使用しています。当日の気温は、その日の発表の中で気象庁が発表した値を表示します（夕方の発表に当日の気温が含まれない場合は、その日の早い時間の発表の値を引き継いで表示します）。</p>
 <p class="note">天気データは、気象庁の予報を主に用いています。値が取得できないときや、予報のあいだに不整合があるときは、Open-Meteo の値で代替します。</p>
 </section>
 </main>
