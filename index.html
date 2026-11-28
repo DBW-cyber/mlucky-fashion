@@ -465,7 +465,7 @@ window.addEventListener("load",()=>alignGender());
 function shortWind(t){if(!t)return "";const toks=t.replace(/　/g," ").split(/\s+/).filter(Boolean);let cut=toks.length;for(let i=0;i<toks.length;i++){if(toks[i]==="では"){cut=i;break;}}
 let main=toks.slice(0,cut);
 while(main.length&&!/風|強く|弱く/.test(main[main.length-1]))main.pop();
-return main.join(" ").replace(/の風/g,"");}
+return main.join("　");}
 function loadWx(){
 fetch("wxdata.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("wxdata");return r.json();}).then(function(d){
 if(!d||!d.cities)throw new Error("wxdata");
@@ -510,7 +510,7 @@ if(tmin2!=null&&tmax2!=null&&tmin2>tmax2){tmax2=tmin2;tmin2=null;}
 let pop=null;let pop2=null;
 if(A1){const dp=today.split("-").map(Number);const yst=new Date(Date.UTC(dp[0],dp[1]-1,dp[2]-1)).toISOString().slice(0,10);
 s1.timeDefines.forEach(function(td,i){const sd=dstr(td);const hr=parseInt(td.slice(11,13),10);if(sd===today||(sd===yst&&hr===18)){const v=parseInt(A1.pops[i],10);if(!isNaN(v)&&(pop==null||v>pop))pop=v;}if(sd===tmr){const v2=parseInt(A1.pops[i],10);if(!isNaN(v2)&&(pop2==null||v2>pop2))pop2=v2;}});}
-const wind=(A0.winds&&A0.winds[0])?A0.winds[0]:"";
+const wind=(A0.winds&&A0.winds[0])?shortWind(A0.winds[0]):"";
 const entry={issuedMs:issued.getTime(),issuedTxt:issued.getDate()+"日"+issued.getHours()+"時",label:jmaLabel(A0.weatherCodes[0],A0.weathers?A0.weathers[0]:""),tmax:fTmax,tmin:fTmin,pop:pop,wind:wind,label2:A0.weatherCodes[1]?jmaLabel(A0.weatherCodes[1],A0.weathers?A0.weathers[1]:""):null,tmax2:tmax2,tmin2:tmin2,pop2:pop2};
 if((fTmax==null||fTmin==null||tmin2==null||tmax2==null)&&c.lat!=null){
 fetch("https://api.open-meteo.com/v1/forecast?latitude="+c.lat+"&longitude="+c.lon+"&daily=temperature_2m_max,temperature_2m_min&timezone=Asia%2FTokyo&forecast_days=3",{cache:"no-store"}).then(function(r){return r.json();}).then(function(o){
